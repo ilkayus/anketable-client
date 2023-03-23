@@ -8,8 +8,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Pages.Homepage />} />
-          <Route path="create" element={<Pages.CreatePoll />} />
-          <Route path="join" element={<Pages.JoinPoll />} />
+          <Route path="createPoll" element={<Pages.CreatePoll />} />
+          <Route path="joinPoll" element={<Pages.JoinPoll />} />
           <Route path="*" element={<Pages.NoMatch />} />
         </Route>
       </Routes>

@@ -10,7 +10,9 @@ const Layout = () => {
         </Link>
       </nav>
       <hr />
-      <Outlet />
+      <div className="max-w-screen-sm h-screen mx-auto py-8 px-4 overflow-y-hidden flex flex-col justify-center">
+        <Outlet />
+      </div>
     </div>
   );
 };
