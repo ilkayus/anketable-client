@@ -5,10 +5,12 @@ import { HomepageButtonLinks, HomepageButtonValues } from "./HomepageHelpers";
 const HomepageActions = () => {
   const navigate = useNavigate();
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (e.currentTarget.name === HomepageButtonLinks.CREATE_POLL)
-      navigate(HomepageButtonLinks.CREATE_POLL);
-    if (e.currentTarget.name === HomepageButtonLinks.JOIN_POLL)
-      navigate(HomepageButtonLinks.JOIN_POLL);
+    if (
+      Object.values(HomepageButtonLinks).includes(
+        e.currentTarget.name as HomepageButtonLinks
+      )
+    )
+      navigate(e.currentTarget.name);
   };
   return (
     <div className="my-12 flex flex-col justify-center">
