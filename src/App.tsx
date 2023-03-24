@@ -1,7 +1,7 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
-import { PageLinks } from "./components/utils/constants";
-import Pages from "./pages";
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
+import { PageLinks } from './components/utils/constants';
+import Pages from './pages';
 
 function App() {
   return (
@@ -15,6 +15,10 @@ function App() {
             element={<Pages.CreatePoll />}
           />
           <Route path={PageLinks.JOIN_POLL_PAGE} element={<Pages.JoinPoll />} />
+          <Route
+            path={PageLinks.WAITING_ROOM}
+            element={<Pages.WaitingRoom />}
+          />
           <Route path="*" element={<Pages.NoMatch />} />
         </Route>
       </Routes>

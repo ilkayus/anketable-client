@@ -9,6 +9,7 @@ export enum PageLinks {
   HOMEPAGE = "",
   CREATE_POLL_PAGE = "createPoll",
   JOIN_POLL_PAGE = "joinPoll",
+  WAITING_ROOM = "waitingRoom",
 }
 
 export type ButtonColors = "orange" | "purple" | "blue" | "red";
