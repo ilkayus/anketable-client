@@ -5,6 +5,7 @@ export interface Props<T> {
   type?: "text" | "number";
   log?: boolean;
   placeholder?: string;
+  invalid?: boolean;
 }
 
 const InputWithLabel = <T extends string | number>({
@@ -14,15 +15,23 @@ const InputWithLabel = <T extends string | number>({
   type = "text",
   log = false,
   placeholder = "",
+  invalid = false,
 }: Props<T>) => {
   if (log) console.log(`${label}:${value}`);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (typeof value === "string") setValue(event.target.value as T);
     if (typeof value === "number") setValue(parseInt(event.target.value) as T);
   };
+
   return (
-    <div className="border-green-600 border-2 box-border m-2 rounded-lg grid grid-rows-2">
-      <h2 className="bg-green-300 p-2">{label}</h2>
+    <div
+      className={`${
+        invalid ? "border-red-600" : "border-green-600"
+      } border-2 box-border m-2 rounded-lg grid grid-rows-2`}
+    >
+      <h2 className={`${invalid ? "bg-red-300 " : "bg-green-300 "}p-2`}>
+        {label}
+      </h2>
       <input
         className="focus:outline-none text-lg text-center p-2"
         type={type}

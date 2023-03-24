@@ -35,6 +35,10 @@ body {
   @apply border-blue-700 text-blue-800;
 }
 
+.btn-red {
+  @apply border-red-600 text-red-800;
+}
+
 .info {
   @apply focus:ring-0 focus:outline-none;
 }
