@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PageLinks, LinkButtonTitles } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
+import * as API from '../../api/api';
 
 const CreatePollForm = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [topic, setTopic] = useState('');
   const [votesPerParticipant, setVotesPerParticipant] = useState(1);
@@ -13,7 +16,12 @@ const CreatePollForm = () => {
   const isCreateable = !(isNameValid && isTopicValid && isVotesValid);
 
   const handleCreateClick = async () => {
-    console.log('asdasdasda');
+    const pollData = await API.createPoll({
+      name,
+      topic,
+      votesPerVoter: votesPerParticipant,
+    });
+    navigate(`/${PageLinks.WAITING_ROOM}`, { state: pollData });
   };
 
   return (

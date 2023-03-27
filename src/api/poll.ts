@@ -1,6 +1,13 @@
 import axios from 'axios';
-import { CreatePollFields } from '../types/polls.types';
+import { CreatePollFields, CreatePollReturn } from '../types/polls.types';
 
-const createPoll = async (pollData: CreatePollFields) => {};
+const baseUrl = 'http://localhost:4000/polls';
 
-export {};
+const createPoll = async (
+  pollData: CreatePollFields,
+): Promise<CreatePollReturn> => {
+  const response = await axios.post(baseUrl, pollData);
+  return response.data;
+};
+
+export { createPoll };

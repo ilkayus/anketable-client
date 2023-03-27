@@ -101,3 +101,8 @@ export type PollAuthPayload = {
 };
 
 export type PollRequestWithAuth = Request & PollAuthPayload;
+
+export type CreatePollReturn = {
+  poll: Poll;
+  accessToken: string;
+};
