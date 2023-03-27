@@ -1,16 +1,21 @@
-import { useState } from "react";
-import { PageLinks, LinkButtonTitles } from "../utils/constants";
-import InputWithLabel from "../utils/InputWithLabel";
-import LinkButton from "../utils/LinkButton";
+import { useState } from 'react';
+import { PageLinks, LinkButtonTitles } from '../utils/constants';
+import InputWithLabel from '../utils/InputWithLabel';
+import LinkButton from '../utils/LinkButton';
 
 const CreatePollForm = () => {
-  const [name, setName] = useState("");
-  const [topic, setTopic] = useState("");
+  const [name, setName] = useState('');
+  const [topic, setTopic] = useState('');
   const [votesPerParticipant, setVotesPerParticipant] = useState(1);
   const isNameValid = name.length > 0 && name.length < 36;
   const isTopicValid = topic.length > 0 && topic.length < 36;
   const isVotesValid = votesPerParticipant > 0 && votesPerParticipant < 6;
   const isCreateable = !(isNameValid && isTopicValid && isVotesValid);
+
+  const handleCreateClick = async () => {
+    console.log('asdasdasda');
+  };
+
   return (
     <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto">
       <div>
@@ -42,6 +47,7 @@ const CreatePollForm = () => {
           link={PageLinks.HOMEPAGE}
           color="orange"
           disabled={isCreateable}
+          handleClick={handleCreateClick}
         />
         <LinkButton
           label={LinkButtonTitles.START_OVER}
