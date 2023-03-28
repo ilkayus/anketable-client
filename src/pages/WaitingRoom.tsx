@@ -8,7 +8,7 @@ const WaitingRoom = () => {
   return (
     <AnimatedPage>
       <>
-        <div>WaitingRoom</div>;
+        <div>WaitingRoom</div>
       </>
     </AnimatedPage>
   );
