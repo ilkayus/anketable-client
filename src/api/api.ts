@@ -1,3 +1,3 @@
-import { createPoll } from './poll';
+import { createPoll, joinPoll } from './poll';
 
-export { createPoll };
+export { createPoll, joinPoll };

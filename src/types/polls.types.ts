@@ -106,3 +106,5 @@ export type CreatePollReturn = {
   poll: Poll;
   accessToken: string;
 };
+
+export type JoinPollReturn = CreatePollReturn;
