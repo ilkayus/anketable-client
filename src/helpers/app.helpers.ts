@@ -25,3 +25,9 @@ export const webSocketHelper = {
   WS_NAMESPACE,
   WS_URL,
 };
+
+export enum WebSocketActions {
+  CONNECTED = 'connected',
+  CONNECT = 'connect',
+  POLL_UPDATE = 'poll_updated',
+}
