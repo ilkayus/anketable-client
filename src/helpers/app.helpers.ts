@@ -13,3 +13,15 @@ export const urlHelper = {
   API_JOIN_POLL,
   API_REJOIN_POLL,
 };
+
+const WS_BASE_URL = '127.0.0.1';
+const WS_PORT = '4000';
+const WS_NAMESPACE = 'polls';
+const WS_URL = `http://${WS_BASE_URL}:${WS_PORT}/${WS_NAMESPACE}`;
+
+export const webSocketHelper = {
+  WS_BASE_URL,
+  WS_PORT,
+  WS_NAMESPACE,
+  WS_URL,
+};

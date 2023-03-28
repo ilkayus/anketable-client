@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance as axios, setBearerToken } from './axios';
 import {
   CreatePollFields,
   CreatePollReturn,
@@ -7,25 +7,19 @@ import {
 } from '../types/polls.types';
 import { urlHelper } from '../helpers/app.helpers';
 
-const baseUrl = urlHelper.API_URL;
-
 const createPoll = async (
   pollData: CreatePollFields,
 ): Promise<CreatePollReturn> => {
-  const response = await axios.post(
-    baseUrl + urlHelper.API_POLLS_ROUTE,
-    pollData,
-  );
+  const response = await axios.post(urlHelper.API_POLLS_ROUTE, pollData);
+  setBearerToken(response.data.accessToken);
   return response.data;
 };
 
 const joinPoll = async (
   joinPollData: JoinPollFields,
 ): Promise<JoinPollReturn> => {
-  const response = await axios.post(
-    baseUrl + urlHelper.API_JOIN_POLL,
-    joinPollData,
-  );
+  const response = await axios.post(urlHelper.API_JOIN_POLL, joinPollData);
+  setBearerToken(response.data.accessToken);
   return response.data;
 };
 
