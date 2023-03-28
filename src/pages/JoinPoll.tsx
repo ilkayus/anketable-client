@@ -1,7 +1,15 @@
-import React from "react";
+import React from 'react';
+import JoinPollForm from '../components/JoinPoll/JoinPollForm';
+import AnimatedPage from '../components/utils/AnimatedPage';
 
 const JoinPoll = () => {
-  return <div>Join Exsiting Poll</div>;
+  return (
+    <AnimatedPage>
+      <>
+        <JoinPollForm />
+      </>
+    </AnimatedPage>
+  );
 };
 
 export default JoinPoll;

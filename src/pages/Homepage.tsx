@@ -1,13 +1,16 @@
-import React from "react";
-import HomepageActions from "../components/Homepage/HomepageActions";
-import HomepageHeader from "../components/Homepage/HomepageHeader";
+import React from 'react';
+import HomepageActions from '../components/Homepage/HomepageActions';
+import HomepageHeader from '../components/Homepage/HomepageHeader';
+import AnimatedPage from '../components/utils/AnimatedPage';
 
 const Homepage = () => {
   return (
-    <>
-      <HomepageHeader />
-      <HomepageActions />
-    </>
+    <AnimatedPage>
+      <>
+        <HomepageHeader />
+        <HomepageActions />
+      </>
+    </AnimatedPage>
   );
 };
 

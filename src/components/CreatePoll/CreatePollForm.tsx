@@ -25,7 +25,7 @@ const CreatePollForm = () => {
   };
 
   return (
-    <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto">
+    <div className="flex flex-col w-full justify-around gap-[10vh] items-stretch h-full mx-auto">
       <div>
         <InputWithLabel
           label="Who is creating"
