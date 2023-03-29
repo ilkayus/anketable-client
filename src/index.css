@@ -39,6 +39,10 @@ body {
   @apply border-red-600 text-red-800;
 }
 
+.btn-green {
+  @apply border-green-600 text-green-800;
+}
+
 .info {
   @apply focus:ring-0 focus:outline-none;
 }

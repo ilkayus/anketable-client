@@ -1,5 +1,6 @@
-import LinkButton from "../utils/LinkButton";
-import { PageLinks, LinkButtonTitles } from "../utils/constants";
+import LinkButton from '../utils/LinkButton';
+import { PageLinks, LinkButtonTitles } from '../utils/constants';
+import GoToLastPoll from '../utils/GoToLastPoll';
 
 const HomepageActions = () => {
   return (
@@ -14,6 +15,7 @@ const HomepageActions = () => {
         link={PageLinks.JOIN_POLL_PAGE}
         color="purple"
       />
+      <GoToLastPoll />
     </div>
   );
 };

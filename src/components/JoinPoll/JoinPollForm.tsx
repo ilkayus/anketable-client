@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { generateUsername } from '../../api/api.helpers';
+import { generateUsername } from '../../helpers/app.helpers';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';

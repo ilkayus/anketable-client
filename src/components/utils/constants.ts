@@ -13,4 +13,4 @@ export enum PageLinks {
   WAITING_ROOM = 'waitingRoom',
 }
 
-export type ButtonColors = 'orange' | 'purple' | 'blue' | 'red';
+export type ButtonColors = 'orange' | 'purple' | 'blue' | 'red' | 'green';

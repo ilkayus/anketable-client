@@ -12,6 +12,7 @@ const createPoll = async (
 ): Promise<CreatePollReturn> => {
   const response = await axios.post(urlHelper.API_POLLS_ROUTE, pollData);
   setBearerToken(response.data.accessToken);
+  localStorage.setItem('pollAccessToken', response.data.accessToken);
   return response.data;
 };
 
@@ -20,6 +21,7 @@ const joinPoll = async (
 ): Promise<JoinPollReturn> => {
   const response = await axios.post(urlHelper.API_JOIN_POLL, joinPollData);
   setBearerToken(response.data.accessToken);
+  localStorage.setItem('pollAccessToken', response.data.accessToken);
   return response.data;
 };
 
