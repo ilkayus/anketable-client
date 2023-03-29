@@ -10,6 +10,7 @@ export type JoinPollFields = {
 };
 
 export type RejoinPollFields = {
+  token: string;
   pollID: string;
   userID: string;
   name: string;
@@ -108,3 +109,12 @@ export type CreatePollReturn = {
 };
 
 export type JoinPollReturn = CreatePollReturn;
+export type RejoinPollReturn = Poll;
+
+export type PollAccessTokenDecodeReturn = {
+  pollID: string;
+  name: string;
+  iat: number;
+  exp: number;
+  sub: string;
+};

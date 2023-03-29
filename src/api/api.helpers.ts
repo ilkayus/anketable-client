@@ -1,3 +1,6 @@
+// const API_URL = 'http://192.168.1.143:4000/';
+// const WS_BASE_URL = '192.168.1.143';
+
 const API_URL = 'http://localhost:4000/';
 const API_POLLS_ROUTE = 'polls';
 const API_JOIN_POLL = 'polls/join';

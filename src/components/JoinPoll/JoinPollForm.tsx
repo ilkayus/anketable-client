@@ -4,7 +4,7 @@ import { generateUsername } from '../../helpers/app.helpers';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
-import * as API from '../../api/api';
+import * as API from '../../api';
 
 const JoinPollForm = () => {
   const navigate = useNavigate();

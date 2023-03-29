@@ -4,6 +4,7 @@ export enum LinkButtonTitles {
   START_OVER = 'Start Over',
   CREATE_BUTTON = 'Create',
   JOIN_BUTTON = 'Join',
+  GOTO_LAST_BUTTON = 'Go To Last Poll',
 }
 
 export enum PageLinks {

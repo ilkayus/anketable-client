@@ -4,6 +4,8 @@ import {
   CreatePollReturn,
   JoinPollFields,
   JoinPollReturn,
+  RejoinPollFields,
+  RejoinPollReturn,
 } from '../types/polls.types';
 import { urlHelper } from './api.helpers';
 
@@ -25,4 +27,16 @@ const joinPoll = async (
   return response.data;
 };
 
-export { createPoll, joinPoll };
+const rejoinPoll = async (
+  rejoinPollData: RejoinPollFields,
+): Promise<RejoinPollReturn> => {
+  setBearerToken(rejoinPollData.token);
+  const response = await axios.post(urlHelper.API_REJOIN_POLL, {
+    pollID: rejoinPollData.pollID,
+    name: rejoinPollData.name,
+    userID: rejoinPollData.userID,
+  });
+  return response.data;
+};
+
+export { createPoll, joinPoll, rejoinPoll };

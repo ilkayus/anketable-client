@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { PageLinks, LinkButtonTitles } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
-import * as API from '../../api/api';
+import * as API from '../../api';
 
 const CreatePollForm = () => {
   const navigate = useNavigate();
