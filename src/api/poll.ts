@@ -5,7 +5,7 @@ import {
   JoinPollFields,
   JoinPollReturn,
 } from '../types/polls.types';
-import { urlHelper } from '../helpers/app.helpers';
+import { urlHelper } from './api.helpers';
 
 const createPoll = async (
   pollData: CreatePollFields,

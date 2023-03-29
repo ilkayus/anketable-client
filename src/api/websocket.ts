@@ -1,10 +1,10 @@
 import io, { Socket } from 'socket.io-client';
 
-import { WebSocketActions, webSocketHelper } from '../helpers/app.helpers';
+import { WebSocketActions, webSocketHelper } from './api.helpers';
 
 let socket: Socket;
 
-const createSocketConnection = async (token?: string) => {
+const createSocketConnection = (token?: string) => {
   if (socket === undefined) {
     socket = io(webSocketHelper.WS_URL, {
       auth: {
@@ -17,6 +17,11 @@ const createSocketConnection = async (token?: string) => {
       console.log(`Connected with socket ID: ${socket.id}. `);
     });
   }
+};
+
+const updateSocket = (action: WebSocketActions, data?: string | string[]) => {
+  if (socket === undefined) return;
+  socket.emit(action, data);
 };
 
 const listenSocket = (
@@ -34,4 +39,4 @@ const closeSocket = () => {
   socket.close();
 };
 
-export { createSocketConnection, listenSocket, closeSocket };
+export { createSocketConnection, listenSocket, closeSocket, updateSocket };

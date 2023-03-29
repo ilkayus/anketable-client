@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { urlHelper } from '../helpers/app.helpers';
+import { urlHelper } from './api.helpers';
 
 const axiosInstance = axios.create({
   baseURL: urlHelper.API_URL,
