@@ -35,7 +35,7 @@ const WaitingRoomActions = ({ poll }: Props) => {
   };
 
   const submitRemoveParticipant = () => {
-    participantToRemove && WS.removeParticipant(participantToRemove);
+    participantToRemove && WS.removeParticipant({ id: participantToRemove });
     setShowConfirmationMessage(false);
   };
 
@@ -46,10 +46,10 @@ const WaitingRoomActions = ({ poll }: Props) => {
   };
 
   const handleSubmitNomination = (nomination: string) =>
-    WS.nominate(nomination);
+    WS.nominate({ text: nomination });
 
-  const handleRemoveNomination = (nomination: string) =>
-    WS.removeNomination(nomination);
+  const handleRemoveNomination = (nominationID: string) =>
+    WS.removeNomination({ id: nominationID });
 
   const pollInfo = getPollInfoFromStorage();
   const isAdmin = poll.adminID === pollInfo.sub;

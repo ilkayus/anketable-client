@@ -118,3 +118,14 @@ export type PollAccessTokenDecodeReturn = {
   exp: number;
   sub: string;
 };
+
+export type NominationDto = {
+  text: string;
+};
+export type RemoveNominationDto = {
+  id: string;
+};
+export type RemoveParticipantDto = RemoveNominationDto;
+export type SubmitRankingsDto = {
+  rankings: string[];
+};

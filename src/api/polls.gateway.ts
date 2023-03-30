@@ -1,6 +1,12 @@
 import * as gateway from './websocket';
 import { WebSocketActions } from './api.helpers';
-import { Poll } from '../types/polls.types';
+import {
+  NominationDto,
+  Poll,
+  RemoveNominationDto,
+  RemoveParticipantDto,
+  SubmitRankingsDto,
+} from '../types/polls.types';
 
 const subscribeToPoll = (
   token: string,
@@ -20,24 +26,24 @@ const getPollUpdates = (cb: (value: React.SetStateAction<Poll>) => void) => {
   );
 };
 
-const nominate = (nominationID: string) => {
-  gateway.updateSocket(WebSocketActions.NOMINATE, nominationID);
+const nominate = (data: NominationDto) => {
+  gateway.updateSocket(WebSocketActions.NOMINATE, data);
 };
 
-const removeNomination = (participantID: string) => {
-  gateway.updateSocket(WebSocketActions.REMOVE_NOMINATION, participantID);
+const removeNomination = (data: RemoveNominationDto) => {
+  gateway.updateSocket(WebSocketActions.REMOVE_NOMINATION, data);
 };
 
-const removeParticipant = (nominationID: string) => {
-  gateway.updateSocket(WebSocketActions.REMOVE_PARTICIPANT, nominationID);
+const removeParticipant = (data: RemoveParticipantDto) => {
+  gateway.updateSocket(WebSocketActions.REMOVE_PARTICIPANT, data);
 };
 
 const startVote = () => {
   gateway.updateSocket(WebSocketActions.START_VOTE);
 };
 
-const submitRankings = (rankings: string[]) => {
-  gateway.updateSocket(WebSocketActions.SUBMIT_RANKINGS, rankings);
+const submitRankings = (data: SubmitRankingsDto) => {
+  gateway.updateSocket(WebSocketActions.SUBMIT_RANKINGS, data);
 };
 
 const closePoll = () => {

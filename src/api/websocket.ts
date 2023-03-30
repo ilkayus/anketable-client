@@ -19,9 +19,10 @@ const createSocketConnection = (token?: string) => {
   }
 };
 
-const updateSocket = (action: WebSocketActions, data?: string | string[]) => {
+const updateSocket = (action: WebSocketActions, data?: any | undefined) => {
   if (socket === undefined) return;
-  socket.emit(action, { data });
+  console.log('socket update with action:', action, ' // data:', data);
+  socket.emit(action, data);
 };
 
 const listenSocket = (
