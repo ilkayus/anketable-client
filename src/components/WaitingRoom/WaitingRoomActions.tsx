@@ -30,7 +30,7 @@ const WaitingRoomActions = ({ poll }: Props) => {
 
   const handleStartVoteClick = () => WS.startVote();
 
-  const handleLeavePollClick = async () => {
+  const handleLeavePollClick = () => {
     navigate(`/${PageLinks.HOMEPAGE}`);
   };
 

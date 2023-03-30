@@ -9,19 +9,23 @@ import { Poll, PollAccessTokenDecodeReturn } from '../../types/polls.types';
 import { LinkButtonTitles, PageLinks } from './constants';
 import LinkButton from './LinkButton';
 
-const GoToLastPoll = () => {
+export interface Props {
+  token: string | null;
+}
+
+const GoToLastPoll = ({ token }: Props) => {
   const navigate = useNavigate();
-  const accessToken = getAccessToken();
+
   const onclick = async () => {
-    if (accessToken) {
-      const pollInfo = getPollInfoFromToken(accessToken);
+    if (token) {
+      const pollInfo = getPollInfoFromToken(token);
       const poll: Poll = await rejoinPoll({
-        token: accessToken,
+        token: token,
         pollID: pollInfo.pollID,
         name: pollInfo.name,
         userID: pollInfo.sub,
       });
-      navigate(`/${PageLinks.WAITING_ROOM}`, { state: { poll, accessToken } });
+      navigate(`/${PageLinks.WAITING_ROOM}`, { state: { poll, token } });
     }
   };
 
@@ -31,7 +35,7 @@ const GoToLastPoll = () => {
       link={PageLinks.WAITING_ROOM}
       color="green"
       handleClick={onclick}
-      disabled={!accessToken}
+      disabled={!token}
     />
   );
 };
