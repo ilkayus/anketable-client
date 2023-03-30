@@ -6,6 +6,8 @@ import { Nominations, Participants, Poll } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles } from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
+import NominationForm from './NominationForm';
+import ParticipantList from './ParticipantList';
 
 export interface Props {
   poll: Poll;
@@ -13,10 +15,21 @@ export interface Props {
 
 const WaitingRoomActions = ({ poll }: Props) => {
   const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
+  const [
+    showRemoveParticipantConfirmation,
+    setShowRemoveParticipantConfirmation,
+  ] = useState(false);
+  const [showParticipantList, setShowParticipantList] = useState(false);
+  const [showNominationForm, setShowNominationForm] = useState(false);
   const handleParticipantsClick = () => console.log('participants');
   const handleNominationsClick = () => console.log('nominations');
   const handleStartVoteClick = () => console.log('start vote');
   const handleLeavePollClick = () => console.log('leave poll');
+  const submitRemoveParticipant = () =>
+    console.log('submit remove participant');
+  const handleRemoveParticipant = () => console.log('remove participant');
+  const handleSubmitNomination = () => console.log('submit nomination');
+  const handleRemoveNomination = () => console.log('remove nomination');
   const pollInfo = getPollInfoFromStorage();
   const isAdmin = poll.adminID === pollInfo.sub;
   const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
@@ -74,6 +87,30 @@ const WaitingRoomActions = ({ poll }: Props) => {
           onConfirm={() => handleLeavePollClick()}
         />
       </div>
+      <ParticipantList
+        isOpen={showParticipantList}
+        onClose={() => setShowParticipantList(false)}
+        participants={poll.participants}
+        onRemoveParticipant={handleRemoveParticipant}
+        isAdmin={isAdmin}
+        userID={pollInfo.sub}
+      />
+      <NominationForm
+        title={poll.topic}
+        isOpen={showNominationForm}
+        onClose={() => setShowNominationForm(false)}
+        onSubmitNomination={handleSubmitNomination}
+        nominations={poll.nominations}
+        userID={pollInfo.sub}
+        onRemoveNomination={handleRemoveNomination}
+        isAdmin={isAdmin}
+      />
+      <ConfirmationDialog
+        showDialog={showRemoveParticipantConfirmation}
+        message={'confirmationMessage'}
+        onConfirm={() => submitRemoveParticipant()}
+        onCancel={() => setShowRemoveParticipantConfirmation(false)}
+      />
     </>
   );
 };
