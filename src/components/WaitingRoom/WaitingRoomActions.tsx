@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdPeopleOutline } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import * as WS from '../../api/polls.gateway';
 import { getPollInfoFromStorage } from '../../helpers/app.helpers';
-import { Nominations, Participants, Poll } from '../../types/polls.types';
+import { Poll } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
-import { LinkButtonTitles } from '../utils/constants';
+import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
 import NominationForm from './NominationForm';
 import ParticipantList from './ParticipantList';
@@ -14,22 +16,41 @@ export interface Props {
 }
 
 const WaitingRoomActions = ({ poll }: Props) => {
+  const navigate = useNavigate();
+  const [confirmationMessage, setConfirmationMessage] = useState('');
   const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
-  const [
-    showRemoveParticipantConfirmation,
-    setShowRemoveParticipantConfirmation,
-  ] = useState(false);
+  const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
+  const [participantToRemove, setParticipantToRemove] = useState('');
   const [showParticipantList, setShowParticipantList] = useState(false);
   const [showNominationForm, setShowNominationForm] = useState(false);
-  const handleParticipantsClick = () => console.log('participants');
-  const handleNominationsClick = () => console.log('nominations');
-  const handleStartVoteClick = () => console.log('start vote');
-  const handleLeavePollClick = () => console.log('leave poll');
-  const submitRemoveParticipant = () =>
-    console.log('submit remove participant');
-  const handleRemoveParticipant = () => console.log('remove participant');
-  const handleSubmitNomination = () => console.log('submit nomination');
-  const handleRemoveNomination = () => console.log('remove nomination');
+
+  const handleParticipantsClick = () => setShowParticipantList(true);
+
+  const handleNominationsClick = () => setShowNominationForm(true);
+
+  const handleStartVoteClick = () => WS.startVote();
+
+  const handleLeavePollClick = async () => {
+    navigate(`/${PageLinks.HOMEPAGE}`);
+  };
+
+  const submitRemoveParticipant = () => {
+    participantToRemove && WS.removeParticipant(participantToRemove);
+    setShowConfirmationMessage(false);
+  };
+
+  const handleRemoveParticipant = (id: string) => {
+    setConfirmationMessage(`Remove ${poll.participants[id]} from poll?`);
+    setParticipantToRemove(id);
+    setShowConfirmationMessage(true);
+  };
+
+  const handleSubmitNomination = (nomination: string) =>
+    WS.nominate(nomination);
+
+  const handleRemoveNomination = (nomination: string) =>
+    WS.removeNomination(nomination);
+
   const pollInfo = getPollInfoFromStorage();
   const isAdmin = poll.adminID === pollInfo.sub;
   const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
@@ -106,10 +127,10 @@ const WaitingRoomActions = ({ poll }: Props) => {
         isAdmin={isAdmin}
       />
       <ConfirmationDialog
-        showDialog={showRemoveParticipantConfirmation}
-        message={'confirmationMessage'}
+        showDialog={showConfirmationMessage}
+        message={confirmationMessage}
         onConfirm={() => submitRemoveParticipant()}
-        onCancel={() => setShowRemoveParticipantConfirmation(false)}
+        onCancel={() => setShowConfirmationMessage(false)}
       />
     </>
   );
