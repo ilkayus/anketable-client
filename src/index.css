@@ -143,3 +143,11 @@ body {
     transform: scale(0.97, 0.97);
   }
 }
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}

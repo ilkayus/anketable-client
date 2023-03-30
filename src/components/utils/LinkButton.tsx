@@ -1,9 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import type { ButtonColors } from "./constants";
+import { useNavigate } from 'react-router-dom';
+import type { ButtonColors } from './constants';
 
 export interface Props {
-  label: string;
-  link: string;
+  label?: string;
+  children?: JSX.Element[];
+  link?: string;
   color?: ButtonColors;
   style?: string;
   handleClick?: () => void;
@@ -12,8 +13,9 @@ export interface Props {
 
 const LinkButton = ({
   label,
+  children,
   link,
-  color = "red",
+  color = 'red',
   style,
   handleClick,
   disabled = false,
@@ -29,6 +31,7 @@ const LinkButton = ({
       disabled={disabled}
     >
       {label}
+      {children}
     </button>
   );
 };
