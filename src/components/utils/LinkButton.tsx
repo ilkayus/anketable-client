@@ -3,7 +3,7 @@ import type { ButtonColors } from './constants';
 
 export interface Props {
   label?: string;
-  children?: JSX.Element[];
+  children?: JSX.Element[] | string;
   link?: string;
   color?: ButtonColors;
   style?: string;
