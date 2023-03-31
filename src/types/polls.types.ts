@@ -119,6 +119,8 @@ export type PollAccessTokenDecodeReturn = {
   sub: string;
 };
 
+export type UserInfo = PollAccessTokenDecodeReturn;
+
 export type NominationDto = {
   text: string;
 };
