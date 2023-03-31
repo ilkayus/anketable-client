@@ -25,6 +25,7 @@ function App() {
               path={PageLinks.WAITING_ROOM}
               element={<Pages.WaitingRoom />}
             />
+            <Route path={PageLinks.ERROR_PAGE} element={<Pages.ErrorPage />} />
             <Route path="*" element={<Pages.NoMatch />} />
           </Route>
         </Routes>

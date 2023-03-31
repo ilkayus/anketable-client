@@ -1,7 +1,7 @@
-import { useCopyToClipboard } from 'react-use';
 import { MdContentCopy } from 'react-icons/md';
 import ColorizedText from '../utils/ColorizedText';
 import { useState } from 'react';
+import { copyToClipboard } from '../../helpers/app.helpers';
 
 export interface Props {
   topic: string;
@@ -9,7 +9,6 @@ export interface Props {
 }
 
 const DisplayShortPollInfo = ({ topic, id }: Props) => {
-  const [_copiedText, copyToClipboard] = useCopyToClipboard();
   const [tooltip, setTooltip] = useState('Click to copy!');
 
   const handleCopyClick = () => {

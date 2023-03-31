@@ -3,7 +3,10 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { MdPeopleOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import * as WS from '../../api/polls.gateway';
-import { getPollInfoFromStorage } from '../../helpers/app.helpers';
+import {
+  getPollInfoFromStorage,
+  removeAccessToPoll,
+} from '../../helpers/app.helpers';
 import { Poll } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
@@ -31,6 +34,7 @@ const WaitingRoomActions = ({ poll }: Props) => {
   const handleStartVoteClick = () => WS.startVote();
 
   const handleLeavePollClick = () => {
+    removeAccessToPoll();
     navigate(`/${PageLinks.HOMEPAGE}`);
   };
 
@@ -51,10 +55,12 @@ const WaitingRoomActions = ({ poll }: Props) => {
   const handleRemoveNomination = (nominationID: string) =>
     WS.removeNomination({ id: nominationID });
 
-  const pollInfo = getPollInfoFromStorage();
-  const isAdmin = poll.adminID === pollInfo.sub;
   const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
   const canStart = Object.keys(poll.nominations).length >= minimumNominations;
+
+  const pollInfo = getPollInfoFromStorage();
+  if (!pollInfo) return null;
+  const isAdmin = poll.adminID === pollInfo.sub;
 
   return (
     <>

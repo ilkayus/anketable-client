@@ -5,11 +5,7 @@ import { useEffect, useState } from 'react';
 import { getAccessToken } from '../../helpers/app.helpers';
 
 const HomepageActions = () => {
-  const [token, setToken] = useState<null | string>(null);
-  useEffect(() => {
-    setToken(() => getAccessToken());
-  }, []);
-
+  const token = getAccessToken();
   return (
     <div className="my-12 flex flex-col">
       <LinkButton
@@ -28,3 +24,11 @@ const HomepageActions = () => {
 };
 
 export default HomepageActions;
+
+// const useLastPollToken = () => {
+//   const [token, setToken] = useState<null | string>(null);
+//   useEffect(() => {
+//     setToken(() => getAccessToken());
+//   }, []);
+//   return token;
+// };

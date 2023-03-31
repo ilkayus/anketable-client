@@ -1,11 +1,8 @@
-import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { rejoinPoll } from '../../api';
-import {
-  getAccessToken,
-  getPollInfoFromToken,
-} from '../../helpers/app.helpers';
-import { Poll, PollAccessTokenDecodeReturn } from '../../types/polls.types';
+import { getPollInfoFromToken } from '../../helpers/app.helpers';
+import ErrorPage from '../../pages/ErrorPage';
+import { Poll } from '../../types/polls.types';
 import { LinkButtonTitles, PageLinks } from './constants';
 import LinkButton from './LinkButton';
 
@@ -19,13 +16,16 @@ const GoToLastPoll = ({ token }: Props) => {
   const onclick = async () => {
     if (token) {
       const pollInfo = getPollInfoFromToken(token);
+      if (!pollInfo) return <ErrorPage />;
       const poll: Poll = await rejoinPoll({
         token: token,
         pollID: pollInfo.pollID,
         name: pollInfo.name,
         userID: pollInfo.sub,
       });
-      navigate(`/${PageLinks.WAITING_ROOM}`, { state: { poll, token } });
+      navigate(`/${PageLinks.WAITING_ROOM}`, {
+        state: { poll, accessToken: token },
+      });
     }
   };
 

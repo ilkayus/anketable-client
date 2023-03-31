@@ -14,6 +14,7 @@ export enum PageLinks {
   CREATE_POLL_PAGE = 'createPoll',
   JOIN_POLL_PAGE = 'joinPoll',
   WAITING_ROOM = 'waitingRoom',
+  ERROR_PAGE = 'error',
 }
 
 export type ButtonColors = 'orange' | 'purple' | 'blue' | 'red' | 'green';
