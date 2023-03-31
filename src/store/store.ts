@@ -3,7 +3,7 @@ import pollReducer from '../features/poll/pollSlice';
 
 const store = configureStore({
   reducer: {
-    poll: pollReducer,
+    pollState: pollReducer,
   },
 });
 

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { WaitingRoomState } from '../../types/polls.types';
 import type { ButtonColors } from './constants';
 
 export interface Props {
@@ -9,6 +10,7 @@ export interface Props {
   style?: string;
   handleClick?: () => void;
   disabled?: boolean;
+  state?: WaitingRoomState;
 }
 
 const LinkButton = ({
@@ -19,9 +21,12 @@ const LinkButton = ({
   style,
   handleClick,
   disabled = false,
+  state,
 }: Props) => {
   const navigate = useNavigate();
-  const onClick = handleClick ? handleClick : () => navigate(`/${link}`);
+  const onClick = handleClick
+    ? handleClick
+    : () => navigate(`/${link}`, { state: state });
   const defStyle = style ? style : `box my-2 btn-${color}`;
   return (
     <button

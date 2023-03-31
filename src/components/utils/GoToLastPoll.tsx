@@ -1,41 +1,23 @@
-import { useNavigate } from 'react-router-dom';
-import { rejoinPoll } from '../../api';
-import { getPollInfoFromToken } from '../../helpers/app.helpers';
-import ErrorPage from '../../pages/ErrorPage';
-import { Poll } from '../../types/polls.types';
 import { LinkButtonTitles, PageLinks } from './constants';
 import LinkButton from './LinkButton';
+import { useAppSelector, useAppDispatch } from '../../hooks/typedReduxHooks';
+import { selectPollState, checkLastPoll } from '../../features/poll/pollSlice';
+import { useEffect } from 'react';
 
-export interface Props {
-  token: string | null;
-}
-
-const GoToLastPoll = ({ token }: Props) => {
-  const navigate = useNavigate();
-
-  const onclick = async () => {
-    if (token) {
-      const pollInfo = getPollInfoFromToken(token);
-      if (!pollInfo) return <ErrorPage />;
-      const poll: Poll = await rejoinPoll({
-        token: token,
-        pollID: pollInfo.pollID,
-        name: pollInfo.name,
-        userID: pollInfo.sub,
-      });
-      navigate(`/${PageLinks.WAITING_ROOM}`, {
-        state: { poll, accessToken: token },
-      });
-    }
-  };
+const GoToLastPoll = () => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(checkLastPoll());
+  }, []);
+  const { pollExists } = useAppSelector(selectPollState);
 
   return (
     <LinkButton
       label={LinkButtonTitles.GOTO_LAST_BUTTON}
       link={PageLinks.WAITING_ROOM}
+      state={'REJOIN'}
       color="green"
-      handleClick={onclick}
-      disabled={!token}
+      disabled={!pollExists}
     />
   );
 };

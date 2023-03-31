@@ -4,6 +4,11 @@ import type { RootState } from '../../store/store';
 import { Socket } from 'socket.io-client';
 import { Poll, UserInfo } from '../../types/polls.types';
 import { PageLinks } from '../../components/utils/constants';
+import {
+  getAccessToken,
+  getPollInfoFromStorage,
+} from '../../helpers/app.helpers';
+import jwtDecode from 'jwt-decode';
 
 // type ValueOf<T> = T[keyof T];
 // currentPage: (typeof PageLinks)[keyof typeof PageLinks];
@@ -12,8 +17,11 @@ type PollState = {
   socket?: Socket;
   poll?: Poll;
   user?: UserInfo;
-  accessToken?: string;
+  accessToken: string | null;
   pending: boolean;
+  updated: boolean;
+  connected: boolean;
+  pollExists: boolean;
   currentPage: keyof typeof PageLinks;
   isAdmin: boolean;
   nominationCount: number;
@@ -27,18 +35,31 @@ const initialState: PollState = {
   isAdmin: false,
   canVotingStart: false,
   hasVoted: false,
+  updated: false,
+  connected: false,
+  pollExists: false,
   nominationCount: 0,
   participantCount: 0,
   rankingsCount: 0,
   currentPage: 'HOMEPAGE',
+  accessToken: null,
 };
 
 export const pollSlice = createSlice({
-  name: 'poll',
+  name: 'pollState',
   initialState,
-  reducers: {},
+  reducers: {
+    checkLastPoll: (state, action: PayloadAction<undefined>) => {
+      state.user = getPollInfoFromStorage();
+      state.pollExists = true;
+      if (!state.user?.sub) {
+        state.pollExists = false;
+        state.accessToken = null;
+      } else state.accessToken = getAccessToken();
+    },
+  },
 });
 
-export const {} = pollSlice.actions;
-export const selectPollState = (state: RootState) => state.poll;
+export const { checkLastPoll } = pollSlice.actions;
+export const selectPollState = (state: RootState) => state.pollState;
 export default pollSlice.reducer;

@@ -131,3 +131,5 @@ export type RemoveParticipantDto = RemoveNominationDto;
 export type SubmitRankingsDto = {
   rankings: string[];
 };
+
+export type WaitingRoomState = 'CREATE' | 'JOIN' | 'REJOIN';
