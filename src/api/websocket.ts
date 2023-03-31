@@ -2,9 +2,16 @@ import io, { Socket } from 'socket.io-client';
 
 import { WebSocketActions, webSocketHelper } from './api.helpers';
 
-let socket: Socket;
+let socket: Socket | undefined;
 
-const createSocketConnection = (token?: string) => {
+const createSocketConnection = (
+  setConnected: React.Dispatch<React.SetStateAction<boolean>>,
+  token?: string,
+) => {
+  if (socket) {
+    if (socket.connected) return;
+    socket.connect();
+  }
   if (socket === undefined) {
     socket = io(webSocketHelper.WS_URL, {
       auth: {
@@ -14,7 +21,11 @@ const createSocketConnection = (token?: string) => {
     });
 
     listenSocket(WebSocketActions.CONNECT, () => {
-      console.log(`Connected with socket ID: ${socket.id}. `);
+      console.log(`Connected with socket ID: ${socket?.id}. `);
+      setConnected(true);
+    });
+    listenSocket(WebSocketActions.ERROR, (error) => {
+      console.log(error);
     });
   }
 };
@@ -40,4 +51,18 @@ const closeSocket = () => {
   socket.close();
 };
 
-export { createSocketConnection, listenSocket, closeSocket, updateSocket };
+const isConnected = () => {
+  if (socket === undefined || !socket.connected) return false;
+  return true;
+};
+
+const getSocket = () => socket;
+
+export {
+  createSocketConnection,
+  listenSocket,
+  closeSocket,
+  updateSocket,
+  isConnected,
+  getSocket,
+};

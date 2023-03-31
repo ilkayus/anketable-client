@@ -1,8 +1,8 @@
 import classes from './Loader.module.css';
 
 export interface Props {
-  color: 'blue' | 'orange' | 'purple';
-  isLoading: boolean;
+  color?: 'blue' | 'orange' | 'purple';
+  isLoading?: boolean;
   width?: number;
 }
 
@@ -12,7 +12,7 @@ const colorStyles = {
   purple: 'bg-purple',
 };
 
-const Loader = ({ color, isLoading, width = 80 }: Props) => {
+const Loader = ({ color = 'orange', isLoading = true, width = 80 }: Props) => {
   const colorStyle = colorStyles[color] || 'bg-purple';
 
   const d = width / 7;

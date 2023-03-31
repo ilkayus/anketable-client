@@ -9,21 +9,30 @@ import {
 } from '../types/polls.types';
 
 const subscribeToPoll = (
-  token: string,
   cb: (value: React.SetStateAction<Poll>) => void,
+  setConnected: React.Dispatch<React.SetStateAction<boolean>>,
+  setUpdated: React.Dispatch<React.SetStateAction<boolean>>,
+  token: string,
 ) => {
-  gateway.createSocketConnection(token);
-  getPollUpdates(cb);
+  gateway.createSocketConnection(setConnected, token);
+  getPollUpdates(cb, setUpdated);
 };
 
 const unSubscribeFromPoll = () => {
   gateway.closeSocket();
 };
 
-const getPollUpdates = (cb: (value: React.SetStateAction<Poll>) => void) => {
-  gateway.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) =>
-    cb(updatedPoll),
-  );
+const getSocket = () => gateway.getSocket();
+const isConnected = () => gateway.isConnected();
+
+const getPollUpdates = (
+  cb: React.Dispatch<React.SetStateAction<Poll>>,
+  setUpdated: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  gateway.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
+    cb(updatedPoll);
+    setUpdated(true);
+  });
 };
 
 const nominate = (data: NominationDto) => {
@@ -65,4 +74,6 @@ export {
   submitRankings,
   cancelPoll,
   closePoll,
+  isConnected,
+  getSocket,
 };

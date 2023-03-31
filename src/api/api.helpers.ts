@@ -27,6 +27,7 @@ export const webSocketHelper = {
 
 export enum WebSocketActions {
   CONNECTED = 'connected',
+  ERROR = 'connect_error',
   CONNECT = 'connect',
   POLL_UPDATE = 'poll_updated',
   REMOVE_PARTICIPANT = 'remove_participant',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdPeopleOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -34,8 +34,9 @@ const WaitingRoomActions = ({ poll }: Props) => {
   const handleStartVoteClick = () => WS.startVote();
 
   const handleLeavePollClick = () => {
-    removeAccessToPoll();
+    if (pollInfo) WS.removeParticipant({ id: pollInfo.sub });
     navigate(`/${PageLinks.HOMEPAGE}`);
+    removeAccessToPoll();
   };
 
   const submitRemoveParticipant = () => {
@@ -61,6 +62,12 @@ const WaitingRoomActions = ({ poll }: Props) => {
   const pollInfo = getPollInfoFromStorage();
   if (!pollInfo) return null;
   const isAdmin = poll.adminID === pollInfo.sub;
+
+  useEffect(() => {
+    if (!poll.participants[pollInfo.sub]) {
+      navigate(`/${PageLinks.HOMEPAGE}`);
+    }
+  }, [poll.participants]);
 
   return (
     <>
