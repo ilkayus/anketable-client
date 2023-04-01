@@ -1,4 +1,4 @@
-import * as gateway from './websocket';
+import * as webSocket from './websocket';
 import { WebSocketActions } from './api.helpers';
 import {
   NominationDto,
@@ -7,60 +7,54 @@ import {
   RemoveParticipantDto,
   SubmitRankingsDto,
 } from '../types/polls.types';
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
-const subscribeToPoll = (
-  cb: (value: React.SetStateAction<Poll>) => void,
-  setConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  setUpdated: React.Dispatch<React.SetStateAction<boolean>>,
-  token: string,
-) => {
-  gateway.createSocketConnection(setConnected, token);
-  getPollUpdates(cb, setUpdated);
+const subscribeToPoll = (token?: string) => {
+  // getPollUpdates(cb);
+  webSocket.createSocketConnection(token);
 };
 
 const unSubscribeFromPoll = () => {
-  gateway.closeSocket();
+  webSocket.closeSocket();
 };
 
-const getSocket = () => gateway.getSocket();
-const isConnected = () => gateway.isConnected();
+const getSocket = () => webSocket.getSocket();
+const isConnected = () => webSocket.isConnected();
 
 const getPollUpdates = (
-  cb: React.Dispatch<React.SetStateAction<Poll>>,
-  setUpdated: React.Dispatch<React.SetStateAction<boolean>>,
+  cb: ActionCreatorWithPayload<Poll, 'pollState/setPoll'>,
 ) => {
-  gateway.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
+  webSocket.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
     cb(updatedPoll);
-    setUpdated(true);
   });
 };
 
 const nominate = (data: NominationDto) => {
-  gateway.updateSocket(WebSocketActions.NOMINATE, data);
+  webSocket.updateSocket(WebSocketActions.NOMINATE, data);
 };
 
 const removeNomination = (data: RemoveNominationDto) => {
-  gateway.updateSocket(WebSocketActions.REMOVE_NOMINATION, data);
+  webSocket.updateSocket(WebSocketActions.REMOVE_NOMINATION, data);
 };
 
 const removeParticipant = (data: RemoveParticipantDto) => {
-  gateway.updateSocket(WebSocketActions.REMOVE_PARTICIPANT, data);
+  webSocket.updateSocket(WebSocketActions.REMOVE_PARTICIPANT, data);
 };
 
 const startVote = () => {
-  gateway.updateSocket(WebSocketActions.START_VOTE);
+  webSocket.updateSocket(WebSocketActions.START_VOTE);
 };
 
 const submitRankings = (data: SubmitRankingsDto) => {
-  gateway.updateSocket(WebSocketActions.SUBMIT_RANKINGS, data);
+  webSocket.updateSocket(WebSocketActions.SUBMIT_RANKINGS, data);
 };
 
 const closePoll = () => {
-  gateway.updateSocket(WebSocketActions.CLOSE_POLL);
+  webSocket.updateSocket(WebSocketActions.CLOSE_POLL);
 };
 
 const cancelPoll = () => {
-  gateway.updateSocket(WebSocketActions.CANCEL_POLL);
+  webSocket.updateSocket(WebSocketActions.CANCEL_POLL);
 };
 
 export {

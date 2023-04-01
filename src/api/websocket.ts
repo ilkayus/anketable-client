@@ -4,10 +4,7 @@ import { WebSocketActions, webSocketHelper } from './api.helpers';
 
 let socket: Socket | undefined;
 
-const createSocketConnection = (
-  setConnected: React.Dispatch<React.SetStateAction<boolean>>,
-  token?: string,
-) => {
+const createSocketConnection = (token?: string) => {
   if (socket) {
     if (socket.connected) return;
     socket.connect();
@@ -22,7 +19,6 @@ const createSocketConnection = (
 
     listenSocket(WebSocketActions.CONNECT, () => {
       console.log(`Connected with socket ID: ${socket?.id}. `);
-      setConnected(true);
     });
     listenSocket(WebSocketActions.ERROR, (error) => {
       console.log(error);
@@ -52,11 +48,15 @@ const closeSocket = () => {
 };
 
 const isConnected = () => {
-  if (socket === undefined || !socket.connected) return false;
-  return true;
+  return socket?.connected;
 };
 
-const getSocket = () => socket;
+const getSocket = () => {
+  if (socket) return socket;
+  createSocketConnection();
+  console.log('WS', socket);
+  return socket;
+};
 
 export {
   createSocketConnection,

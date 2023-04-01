@@ -9,12 +9,15 @@ import {
   getPollInfoFromStorage,
 } from '../../helpers/app.helpers';
 import jwtDecode from 'jwt-decode';
+import * as gateway from '../../api/polls.gateway';
+import { WebSocketActions } from '../../api/api.helpers';
+// import { socket } from '../../api/websocket';
 
 // type ValueOf<T> = T[keyof T];
 // currentPage: (typeof PageLinks)[keyof typeof PageLinks];
 
 type PollState = {
-  socket?: Socket;
+  socket?: any;
   poll?: Poll;
   user?: UserInfo;
   accessToken: string | null;
@@ -31,6 +34,7 @@ type PollState = {
   rankingsCount: number;
 };
 const initialState: PollState = {
+  // socket: socket,
   pending: false,
   isAdmin: false,
   canVotingStart: false,
@@ -49,6 +53,9 @@ export const pollSlice = createSlice({
   name: 'pollState',
   initialState,
   reducers: {
+    initSocket: (state, action: PayloadAction<undefined>) => {
+      gateway.getSocket();
+    },
     checkLastPoll: (state, action: PayloadAction<undefined>) => {
       state.user = getPollInfoFromStorage();
       state.pollExists = true;
@@ -57,9 +64,34 @@ export const pollSlice = createSlice({
         state.accessToken = null;
       } else state.accessToken = getAccessToken();
     },
+    setPoll: (state, action: PayloadAction<Poll>) => {
+      state.poll = action.payload;
+    },
+    setConnected: (state, action: PayloadAction<boolean>) => {
+      console.log('sadasdasdasd');
+      state.connected = action.payload;
+    },
+    setUpdated: (state, action: PayloadAction<boolean>) => {
+      state.updated = action.payload;
+    },
+    enterRoom: (state, action: PayloadAction<undefined>) => {
+      console.log('asdasdasdda');
+      gateway.subscribeToPoll(state.accessToken as string);
+    },
+    exitRoom: (state, action: PayloadAction<undefined>) => {
+      gateway.unSubscribeFromPoll();
+    },
   },
 });
 
-export const { checkLastPoll } = pollSlice.actions;
+export const {
+  initSocket,
+  checkLastPoll,
+  enterRoom,
+  setPoll,
+  setConnected,
+  setUpdated,
+  exitRoom,
+} = pollSlice.actions;
 export const selectPollState = (state: RootState) => state.pollState;
 export default pollSlice.reducer;
