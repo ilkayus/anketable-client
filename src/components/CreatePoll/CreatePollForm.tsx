@@ -3,25 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { PageLinks, LinkButtonTitles } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
-import * as API from '../../api';
+import { createPoll } from '../../features/poll/pollSlice';
+import { useAppDispatch } from '../../hooks/typedReduxHooks';
 
 const CreatePollForm = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [topic, setTopic] = useState('');
-  const [votesPerParticipant, setVotesPerParticipant] = useState(1);
+  const [votesPerVoter, setVotesPerVoter] = useState(1);
   const isNameValid = name.length > 0 && name.length < 36;
   const isTopicValid = topic.length > 0 && topic.length < 36;
-  const isVotesValid = votesPerParticipant > 0 && votesPerParticipant < 6;
+  const isVotesValid = votesPerVoter > 0 && votesPerVoter < 6;
   const isCreateable = !(isNameValid && isTopicValid && isVotesValid);
 
   const handleCreateClick = async () => {
-    const pollData = await API.createPoll({
-      name,
-      topic,
-      votesPerVoter: votesPerParticipant,
-    });
-    navigate(`/${PageLinks.WAITING_ROOM}`, { state: pollData });
+    dispatch(
+      createPoll({
+        name,
+        topic,
+        votesPerVoter,
+      }),
+    );
+    navigate(`/${PageLinks.WAITING_ROOM}`, { state: 'CREATE' });
   };
 
   return (
@@ -43,8 +47,8 @@ const CreatePollForm = () => {
         />
         <InputWithLabel
           label="Votes Per Participant"
-          value={votesPerParticipant}
-          setValue={setVotesPerParticipant}
+          value={votesPerVoter}
+          setValue={setVotesPerVoter}
           type="number"
           invalid={!isVotesValid}
         />

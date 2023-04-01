@@ -21,9 +21,8 @@ const WaitingRoom = () => {
   const { poll, connected, updated, pending, accessToken } =
     useAppSelector(selectPollState);
   useEffect(() => {
-    gateway.subscribeToPoll(accessToken === null ? undefined : accessToken);
-    const a = dispatch(setPoll);
-    gateway.getPollUpdates(a);
+    dispatch(enterRoom());
+    // if (accessToken) gateway.subscribeToPoll(accessToken, updateFc);
     return () => {
       dispatch(exitRoom());
     };

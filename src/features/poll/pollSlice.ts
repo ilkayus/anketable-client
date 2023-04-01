@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
 import { Socket } from 'socket.io-client';
-import { Poll, UserInfo } from '../../types/polls.types';
+import { CreatePollFields, Poll, UserInfo } from '../../types/polls.types';
 import { PageLinks } from '../../components/utils/constants';
 import {
   getAccessToken,
@@ -11,6 +11,8 @@ import {
 import jwtDecode from 'jwt-decode';
 import * as gateway from '../../api/polls.gateway';
 import { WebSocketActions } from '../../api/api.helpers';
+import * as API from '../../api';
+import { Action } from '@remix-run/router';
 // import { socket } from '../../api/websocket';
 
 // type ValueOf<T> = T[keyof T];
@@ -48,13 +50,22 @@ const initialState: PollState = {
   currentPage: 'HOMEPAGE',
   accessToken: null,
 };
+// __________________________________________________________________________
+export const createPoll = createAsyncThunk(
+  'pollState/createPoll',
+  async ({ ...params }: CreatePollFields) => {
+    const pollData = await API.createPoll({ ...params });
+    return pollData;
+  },
+);
+// __________________________________________________________________________
 
 export const pollSlice = createSlice({
   name: 'pollState',
   initialState,
   reducers: {
-    initSocket: (state, action: PayloadAction<undefined>) => {
-      gateway.getSocket();
+    initSocket: (state, action: PayloadAction<string>) => {
+      gateway.getSocket(action.payload);
     },
     checkLastPoll: (state, action: PayloadAction<undefined>) => {
       state.user = getPollInfoFromStorage();
@@ -68,19 +79,23 @@ export const pollSlice = createSlice({
       state.poll = action.payload;
     },
     setConnected: (state, action: PayloadAction<boolean>) => {
-      console.log('sadasdasdasd');
       state.connected = action.payload;
     },
     setUpdated: (state, action: PayloadAction<boolean>) => {
       state.updated = action.payload;
     },
     enterRoom: (state, action: PayloadAction<undefined>) => {
-      console.log('asdasdasdda');
-      gateway.subscribeToPoll(state.accessToken as string);
+      gateway.subscribeToPoll(state.accessToken as string, setPoll);
     },
     exitRoom: (state, action: PayloadAction<undefined>) => {
       gateway.unSubscribeFromPoll();
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(createPoll.fulfilled, (state, action) => {
+      state.poll = action.payload.poll;
+      state.accessToken = action.payload.accessToken;
+    });
   },
 });
 

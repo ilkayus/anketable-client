@@ -4,7 +4,7 @@ import { WebSocketActions, webSocketHelper } from './api.helpers';
 
 let socket: Socket | undefined;
 
-const createSocketConnection = (token?: string) => {
+const createSocketConnection = (token: string) => {
   if (socket) {
     if (socket.connected) return;
     socket.connect();
@@ -51,10 +51,9 @@ const isConnected = () => {
   return socket?.connected;
 };
 
-const getSocket = () => {
+const getSocket = (token: string) => {
   if (socket) return socket;
-  createSocketConnection();
-  console.log('WS', socket);
+  createSocketConnection(token);
   return socket;
 };
 

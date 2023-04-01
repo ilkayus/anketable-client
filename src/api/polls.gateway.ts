@@ -9,16 +9,19 @@ import {
 } from '../types/polls.types';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
-const subscribeToPoll = (token?: string) => {
-  // getPollUpdates(cb);
+const subscribeToPoll = (
+  token: string,
+  cb: ActionCreatorWithPayload<Poll, 'pollState/setPoll'>,
+) => {
   webSocket.createSocketConnection(token);
+  getPollUpdates(cb);
 };
 
 const unSubscribeFromPoll = () => {
   webSocket.closeSocket();
 };
 
-const getSocket = () => webSocket.getSocket();
+const getSocket = (token: string) => webSocket.getSocket(token);
 const isConnected = () => webSocket.isConnected();
 
 const getPollUpdates = (
