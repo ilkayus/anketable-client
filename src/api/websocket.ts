@@ -6,8 +6,7 @@ let socket: Socket | undefined;
 
 const createSocketConnection = (token: string) => {
   if (socket) {
-    if (socket.connected) return;
-    socket.connect();
+    if (!socket.connected) socket.connect();
   }
   if (socket === undefined) {
     socket = io(webSocketHelper.WS_URL, {
@@ -16,14 +15,8 @@ const createSocketConnection = (token: string) => {
       },
       transports: ['websocket', 'polling'],
     });
-
-    listenSocket(WebSocketActions.CONNECT, () => {
-      console.log(`Connected with socket ID: ${socket?.id}. `);
-    });
-    listenSocket(WebSocketActions.ERROR, (error) => {
-      console.log(error);
-    });
   }
+  return socket;
 };
 
 const updateSocket = (action: WebSocketActions, data?: any | undefined) => {
@@ -52,8 +45,8 @@ const isConnected = () => {
 };
 
 const getSocket = (token: string) => {
-  if (socket) return socket;
-  createSocketConnection(token);
+  // if (socket) return socket;
+  // createSocketConnection(token);
   return socket;
 };
 

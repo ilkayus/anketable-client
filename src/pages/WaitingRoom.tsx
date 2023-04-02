@@ -18,24 +18,24 @@ import Loader from '../components/utils/Loader';
 
 const WaitingRoom = () => {
   const dispatch = useAppDispatch();
-  const { poll, connected, updated, pending, accessToken } =
-    useAppSelector(selectPollState);
+  const { poll, connected, updated } = useAppSelector(selectPollState);
   useEffect(() => {
     dispatch(enterRoom());
-    // if (accessToken) gateway.subscribeToPoll(accessToken, updateFc);
     return () => {
       dispatch(exitRoom());
     };
   }, []);
-
-  return connected && updated ? (
+  return !(connected && updated) ? (
     <Loader />
   ) : (
     <AnimatedPage>
       <>
         <div className="flex flex-col w-full justify-between items-center h-full">
-          {/* <DisplayShortPollInfo topic={poll.topic} id={poll.id} />
-          <WaitingRoomActions poll={poll} /> */}
+          <DisplayShortPollInfo
+            topic={poll?.topic as string}
+            id={poll?.id as string}
+          />
+          <WaitingRoomActions />
         </div>
       </>
     </AnimatedPage>

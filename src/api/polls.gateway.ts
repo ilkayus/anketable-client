@@ -7,14 +7,14 @@ import {
   RemoveParticipantDto,
   SubmitRankingsDto,
 } from '../types/polls.types';
-import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 
-const subscribeToPoll = (
-  token: string,
-  cb: ActionCreatorWithPayload<Poll, 'pollState/setPoll'>,
-) => {
+import store from '../store/store';
+import { setConnected, setPoll, setUpdated } from '../features/poll/pollSlice';
+
+const subscribeToPoll = (token: string) => {
   webSocket.createSocketConnection(token);
-  getPollUpdates(cb);
+  getPollUpdates();
+  getConnected();
 };
 
 const unSubscribeFromPoll = () => {
@@ -24,11 +24,15 @@ const unSubscribeFromPoll = () => {
 const getSocket = (token: string) => webSocket.getSocket(token);
 const isConnected = () => webSocket.isConnected();
 
-const getPollUpdates = (
-  cb: ActionCreatorWithPayload<Poll, 'pollState/setPoll'>,
-) => {
+const getPollUpdates = () => {
   webSocket.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
-    cb(updatedPoll);
+    store.dispatch(setPoll(updatedPoll));
+    store.dispatch(setUpdated(true));
+  });
+};
+const getConnected = () => {
+  webSocket.listenSocket(WebSocketActions.CONNECT, () => {
+    store.dispatch(setConnected(true));
   });
 };
 

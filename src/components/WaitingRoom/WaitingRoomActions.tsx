@@ -3,10 +3,9 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { MdPeopleOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import * as WS from '../../api/polls.gateway';
-import {
-  getPollInfoFromStorage,
-  removeAccessToPoll,
-} from '../../helpers/app.helpers';
+import { selectPollState } from '../../features/poll/pollSlice';
+import { removeAccessToPoll } from '../../helpers/app.helpers';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
 import { Poll } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
@@ -14,12 +13,9 @@ import LinkButton from '../utils/LinkButton';
 import NominationForm from './NominationForm';
 import ParticipantList from './ParticipantList';
 
-export interface Props {
-  poll: Poll;
-}
-
-const WaitingRoomActions = ({ poll }: Props) => {
+const WaitingRoomActions = () => {
   const navigate = useNavigate();
+  const { poll, user } = useAppSelector(selectPollState);
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
@@ -34,7 +30,7 @@ const WaitingRoomActions = ({ poll }: Props) => {
   const handleStartVoteClick = () => WS.startVote();
 
   const handleLeavePollClick = () => {
-    if (pollInfo) WS.removeParticipant({ id: pollInfo.sub });
+    WS.removeParticipant({ id: user.sub });
     navigate(`/${PageLinks.HOMEPAGE}`);
     removeAccessToPoll();
   };
@@ -59,12 +55,10 @@ const WaitingRoomActions = ({ poll }: Props) => {
   const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
   const canStart = Object.keys(poll.nominations).length >= minimumNominations;
 
-  const pollInfo = getPollInfoFromStorage();
-  if (!pollInfo) return null;
-  const isAdmin = poll.adminID === pollInfo.sub;
+  const isAdmin = poll.adminID === user.sub;
 
   useEffect(() => {
-    if (!poll.participants[pollInfo.sub]) {
+    if (!poll.participants[user.sub]) {
       navigate(`/${PageLinks.HOMEPAGE}`);
     }
   }, [poll.participants]);
@@ -127,7 +121,7 @@ const WaitingRoomActions = ({ poll }: Props) => {
         participants={poll.participants}
         onRemoveParticipant={handleRemoveParticipant}
         isAdmin={isAdmin}
-        userID={pollInfo.sub}
+        userID={user.sub}
       />
       <NominationForm
         title={poll.topic}
@@ -135,7 +129,7 @@ const WaitingRoomActions = ({ poll }: Props) => {
         onClose={() => setShowNominationForm(false)}
         onSubmitNomination={handleSubmitNomination}
         nominations={poll.nominations}
-        userID={pollInfo.sub}
+        userID={user.sub}
         onRemoveNomination={handleRemoveNomination}
         isAdmin={isAdmin}
       />
