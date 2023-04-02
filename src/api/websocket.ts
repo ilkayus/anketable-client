@@ -5,17 +5,17 @@ import { WebSocketActions, webSocketHelper } from './api.helpers';
 let socket: Socket | undefined;
 
 const createSocketConnection = (token: string) => {
-  if (socket) {
-    if (!socket.connected) socket.connect();
-  }
-  if (socket === undefined) {
-    socket = io(webSocketHelper.WS_URL, {
-      auth: {
-        token: token,
-      },
-      transports: ['websocket', 'polling'],
-    });
-  }
+  // if (socket) {
+  //   if (!socket.connected) socket.connect();
+  // }
+  // if (socket === undefined) {
+  socket = io(webSocketHelper.WS_URL, {
+    auth: {
+      token: token,
+    },
+    transports: ['websocket', 'polling'],
+  });
+  // }
   return socket;
 };
 

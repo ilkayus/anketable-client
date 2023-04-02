@@ -3,10 +3,9 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { MdPeopleOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import * as WS from '../../api/polls.gateway';
-import { selectPollState } from '../../features/poll/pollSlice';
-import { removeAccessToPoll } from '../../helpers/app.helpers';
-import { useAppSelector } from '../../hooks/typedReduxHooks';
-import { Poll } from '../../types/polls.types';
+import { leavePoll, selectPollState } from '../../features/poll/pollSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
+import { Poll, UserInfo } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
@@ -15,7 +14,11 @@ import ParticipantList from './ParticipantList';
 
 const WaitingRoomActions = () => {
   const navigate = useNavigate();
-  const { poll, user } = useAppSelector(selectPollState);
+  const { poll, user } = useAppSelector(selectPollState) as {
+    poll: Poll;
+    user: UserInfo;
+  };
+  const dispatch = useAppDispatch();
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
@@ -30,9 +33,8 @@ const WaitingRoomActions = () => {
   const handleStartVoteClick = () => WS.startVote();
 
   const handleLeavePollClick = () => {
-    WS.removeParticipant({ id: user.sub });
+    dispatch(leavePoll());
     navigate(`/${PageLinks.HOMEPAGE}`);
-    removeAccessToPoll();
   };
 
   const submitRemoveParticipant = () => {
@@ -52,7 +54,8 @@ const WaitingRoomActions = () => {
   const handleRemoveNomination = (nominationID: string) =>
     WS.removeNomination({ id: nominationID });
 
-  const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
+  const minimumNominations =
+    (poll.votesPerVoter as number) < 2 ? 2 : poll.votesPerVoter;
   const canStart = Object.keys(poll.nominations).length >= minimumNominations;
 
   const isAdmin = poll.adminID === user.sub;

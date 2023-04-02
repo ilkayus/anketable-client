@@ -11,9 +11,9 @@ export type JoinPollFields = {
 
 export type RejoinPollFields = {
   token: string;
-  pollID: string;
-  userID: string;
-  name: string;
+  pollID?: string;
+  userID?: string;
+  name?: string;
 };
 
 export type CreatePollData = {

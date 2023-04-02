@@ -26,6 +26,7 @@ const isConnected = () => webSocket.isConnected();
 
 const getPollUpdates = () => {
   webSocket.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
+    console.log('updatedPoll', updatedPoll);
     store.dispatch(setPoll(updatedPoll));
     store.dispatch(setUpdated(true));
   });

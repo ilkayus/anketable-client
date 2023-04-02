@@ -1,6 +1,6 @@
 import LinkButton from '../utils/LinkButton';
 import { PageLinks, LinkButtonTitles } from '../utils/constants';
-import GoToLastPoll from '../utils/GoToLastPoll';
+import GoToLastPoll from './GoToLastPoll';
 
 const HomepageActions = () => {
   return (

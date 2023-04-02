@@ -5,8 +5,11 @@ import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
 import * as API from '../../api';
+import { useAppDispatch } from '../../hooks/typedReduxHooks';
+import { joinPoll } from '../../features/poll/pollSlice';
 
 const JoinPollForm = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [pollID, setPollID] = useState('');
   const [username, setUsername] = useState(generateUsername);
@@ -15,11 +18,13 @@ const JoinPollForm = () => {
   const isFieldsValid = isUsernameValid && isPollIDValid;
 
   const handleJoinClick = async () => {
-    const pollData = await API.joinPoll({
-      pollID: pollID.toUpperCase(),
-      name: username,
-    });
-    navigate(`/${PageLinks.WAITING_ROOM}`, { state: pollData });
+    dispatch(
+      joinPoll({
+        pollID: pollID.toUpperCase(),
+        name: username,
+      }),
+    );
+    navigate(`/${PageLinks.WAITING_ROOM}`, { state: 'JOIN' });
   };
 
   return (
