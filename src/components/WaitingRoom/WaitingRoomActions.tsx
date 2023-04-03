@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as WS from '../../api/polls.gateway';
 import { leavePoll, selectPollState } from '../../features/poll/pollSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
-import { Poll, UserInfo } from '../../types/polls.types';
+import type { Poll, UserInfo } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
@@ -26,11 +26,17 @@ const WaitingRoomActions = () => {
   const [showParticipantList, setShowParticipantList] = useState(false);
   const [showNominationForm, setShowNominationForm] = useState(false);
 
-  const handleParticipantsClick = () => setShowParticipantList(true);
+  const handleParticipantsClick = () => {
+    setShowParticipantList(true);
+  };
 
-  const handleNominationsClick = () => setShowNominationForm(true);
+  const handleNominationsClick = () => {
+    setShowNominationForm(true);
+  };
 
-  const handleStartVoteClick = () => WS.startVote();
+  const handleStartVoteClick = () => {
+    WS.startVote();
+  };
 
   const handleLeavePollClick = () => {
     dispatch(leavePoll());
@@ -38,7 +44,7 @@ const WaitingRoomActions = () => {
   };
 
   const submitRemoveParticipant = () => {
-    participantToRemove && WS.removeParticipant({ id: participantToRemove });
+    WS.removeParticipant({ id: participantToRemove });
     setShowConfirmationMessage(false);
   };
 
@@ -48,20 +54,21 @@ const WaitingRoomActions = () => {
     setShowConfirmationMessage(true);
   };
 
-  const handleSubmitNomination = (nomination: string) =>
+  const handleSubmitNomination = (nomination: string) => {
     WS.nominate({ text: nomination });
+  };
 
-  const handleRemoveNomination = (nominationID: string) =>
+  const handleRemoveNomination = (nominationID: string) => {
     WS.removeNomination({ id: nominationID });
+  };
 
-  const minimumNominations =
-    (poll.votesPerVoter as number) < 2 ? 2 : poll.votesPerVoter;
+  const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
   const canStart = Object.keys(poll.nominations).length >= minimumNominations;
 
   const isAdmin = poll.adminID === user.sub;
 
   useEffect(() => {
-    if (!poll.participants[user.sub]) {
+    if (poll.participants[user.sub].length === 0) {
       navigate(`/${PageLinks.HOMEPAGE}`);
     }
   }, [poll.participants]);
@@ -109,18 +116,26 @@ const WaitingRoomActions = () => {
         <LinkButton
           color="purple"
           label={LinkButtonTitles.LEAVE_POLL}
-          handleClick={() => setShowLeaveConfirmation(true)}
+          handleClick={() => {
+            setShowLeaveConfirmation(true);
+          }}
         />
         <ConfirmationDialog
           message="You'll be kicked out of the poll"
           showDialog={showLeaveConfirmation}
-          onCancel={() => setShowLeaveConfirmation(false)}
-          onConfirm={() => handleLeavePollClick()}
+          onCancel={() => {
+            setShowLeaveConfirmation(false);
+          }}
+          onConfirm={() => {
+            handleLeavePollClick();
+          }}
         />
       </div>
       <ParticipantList
         isOpen={showParticipantList}
-        onClose={() => setShowParticipantList(false)}
+        onClose={() => {
+          setShowParticipantList(false);
+        }}
         participants={poll.participants}
         onRemoveParticipant={handleRemoveParticipant}
         isAdmin={isAdmin}
@@ -129,7 +144,9 @@ const WaitingRoomActions = () => {
       <NominationForm
         title={poll.topic}
         isOpen={showNominationForm}
-        onClose={() => setShowNominationForm(false)}
+        onClose={() => {
+          setShowNominationForm(false);
+        }}
         onSubmitNomination={handleSubmitNomination}
         nominations={poll.nominations}
         userID={user.sub}
@@ -139,8 +156,12 @@ const WaitingRoomActions = () => {
       <ConfirmationDialog
         showDialog={showConfirmationMessage}
         message={confirmationMessage}
-        onConfirm={() => submitRemoveParticipant()}
-        onCancel={() => setShowConfirmationMessage(false)}
+        onConfirm={() => {
+          submitRemoveParticipant();
+        }}
+        onCancel={() => {
+          setShowConfirmationMessage(false);
+        }}
       />
     </>
   );

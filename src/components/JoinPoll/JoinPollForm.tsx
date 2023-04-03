@@ -16,8 +16,8 @@ const JoinPollForm = () => {
   const isPollIDValid = pollID.length === 6;
   const isFieldsValid = isUsernameValid && isPollIDValid;
 
-  const handleJoinClick = async () => {
-    dispatch(
+  const handleJoinClick = () => {
+    void dispatch(
       joinPoll({
         pollID: pollID.toUpperCase(),
         name: username,

@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { Routes, Route, Outlet, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import { PageLinks } from './components/utils/constants';
 import Pages from './pages';

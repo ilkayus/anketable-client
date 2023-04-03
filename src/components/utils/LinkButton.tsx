@@ -1,5 +1,9 @@
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useNavigate } from 'react-router-dom';
-import { WaitingRoomState } from '../../types/polls.types';
+import type { WaitingRoomState } from '../../types/polls.types';
 import type { ButtonColors } from './constants';
 
 export interface Props {
@@ -26,10 +30,11 @@ const LinkButton = ({
   const navigate = useNavigate();
   const onClick = handleClick
     ? handleClick
-    : () => navigate(`/${link}`, { state: state });
+    : () => navigate(`/${link}`, { state });
   const defStyle = style ? style : `box my-2 btn-${color}`;
   return (
     <button
+      type="button"
       className={defStyle}
       onClick={onClick}
       name={link}

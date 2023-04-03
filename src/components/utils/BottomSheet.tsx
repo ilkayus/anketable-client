@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import React from 'react';
 import { MdCancel } from 'react-icons/md';
 
@@ -10,8 +11,8 @@ const BottomSheet = ({
   isOpen = false,
   onClose,
   children,
-}: Props & { children: JSX.Element }) => {
-  return isOpen ? (
+}: Props & { children: JSX.Element }) =>
+  isOpen ? (
     <div className="absolute left-0 right-0 max-w-screen-sm bg-gray-50 bottom-0 z-10 overflow-y-hidden top-16 flex flex-col">
       <div className="sticky top-0 flex justify-end flex-grow-0">
         <MdCancel
@@ -27,6 +28,5 @@ const BottomSheet = ({
       </div>
     </div>
   ) : null;
-};
 
 export default BottomSheet;

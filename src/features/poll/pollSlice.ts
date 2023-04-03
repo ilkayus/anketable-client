@@ -1,18 +1,19 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
-import {
+import type {
   CreatePollFields,
   JoinPollFields,
   Poll,
   UserInfo,
 } from '../../types/polls.types';
-import { PageLinks } from '../../components/utils/constants';
+import type { PageLinks } from '../../components/utils/constants';
 import * as helpers from '../../helpers/app.helpers';
 import * as WS from '../../api/polls.gateway';
 import * as API from '../../api';
 
-type PollState = {
+interface PollState {
   poll?: Poll;
   user?: UserInfo;
   accessToken: string | null;
@@ -28,7 +29,7 @@ type PollState = {
   hasVoted: boolean;
   rankingsCount: number;
   leavePoll: boolean;
-};
+}
 const initialState: PollState = {
   poll: undefined,
   user: undefined,
@@ -80,10 +81,10 @@ export const pollSlice = createSlice({
   name: 'pollState',
   initialState,
   reducers: {
-    initSocket: (state, action: PayloadAction<undefined>) => {
-      WS.getSocket(state.accessToken as string);
+    initSocket: () => {
+      WS.getSocket();
     },
-    checkLastPoll: (state, action: PayloadAction<undefined>) => {
+    checkLastPoll: (state) => {
       if (state.leavePoll) {
         helpers.removeAccessToPoll();
         state.poll = undefined;
@@ -92,7 +93,7 @@ export const pollSlice = createSlice({
       } else {
         state.user = helpers.getPollInfoFromStorage() as UserInfo;
         state.pollExists = true;
-        if (!state.user?.sub) {
+        if (state.user?.sub === '') {
           state.pollExists = false;
           state.accessToken = null;
         } else state.accessToken = helpers.getAccessToken();
@@ -107,15 +108,15 @@ export const pollSlice = createSlice({
     setUpdated: (state, action: PayloadAction<boolean>) => {
       state.updated = action.payload;
     },
-    enterRoom: (state, action: PayloadAction<undefined>) => {
+    enterRoom: (state) => {
       WS.subscribeToPoll(state.accessToken as string);
     },
-    exitRoom: (state, action: PayloadAction<undefined>) => {
+    exitRoom: (state) => {
       WS.unSubscribeFromPoll();
       state.connected = false;
       state.updated = false;
     },
-    leavePoll: (state, action: PayloadAction<undefined>) => {
+    leavePoll: (state) => {
       WS.unSubscribeFromPoll();
       state.leavePoll = true;
     },

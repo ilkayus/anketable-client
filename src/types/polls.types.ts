@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 export type CreatePollFields = {
   topic: string;
   votesPerVoter: number;
@@ -29,9 +30,7 @@ export type AddParticipantData = {
   name: string;
 };
 
-export type Participants = {
-  [participantID: string]: string;
-};
+export type Participants = Record<string, string>;
 
 export type Nomination = {
   userID: string;
@@ -40,13 +39,9 @@ export type Nomination = {
 
 type NominationID = string;
 
-export type Nominations = {
-  [nominationID: NominationID]: Nomination;
-};
+export type Nominations = Record<NominationID, Nomination>;
 
-export type Rankings = {
-  [userID: string]: NominationID[];
-};
+export type Rankings = Record<string, NominationID[]>;
 
 export type Results = Array<{
   nominationID: NominationID;

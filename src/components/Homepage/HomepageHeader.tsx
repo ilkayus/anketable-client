@@ -1,8 +1,7 @@
-import React from "react";
-import { HomepageHeaderText } from "./HomepageHelpers";
+import { HomepageHeaderText } from './HomepageHelpers';
 
-const HomepageHeader = () => {
-  return <h1 className="text-center my-12">{HomepageHeaderText}</h1>;
-};
+const HomepageHeader = () => (
+  <h1 className="text-center my-12">{HomepageHeaderText}</h1>
+);
 
 export default HomepageHeader;

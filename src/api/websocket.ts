@@ -1,27 +1,23 @@
-import io, { Socket } from 'socket.io-client';
-
-import { WebSocketActions, webSocketHelper } from './api.helpers';
+import io from 'socket.io-client';
+import type { Socket } from 'socket.io-client';
+import { webSocketHelper } from './api.helpers';
+import type { WebSocketActions } from './api.helpers';
 
 let socket: Socket | undefined;
 
 const createSocketConnection = (token: string) => {
-  // if (socket) {
-  //   if (!socket.connected) socket.connect();
-  // }
-  // if (socket === undefined) {
   socket = io(webSocketHelper.WS_URL, {
     auth: {
-      token: token,
+      token,
     },
     transports: ['websocket', 'polling'],
   });
-  // }
   return socket;
 };
 
 const updateSocket = (action: WebSocketActions, data?: any | undefined) => {
   if (socket === undefined) return;
-  console.log('socket update with action:', action, ' // data:', data);
+  // console.log('socket update with action:', action, ' // data:', data);
   socket.emit(action, data);
 };
 
@@ -40,15 +36,9 @@ const closeSocket = () => {
   socket.close();
 };
 
-const isConnected = () => {
-  return socket?.connected;
-};
+const isConnected = () => socket?.connected;
 
-const getSocket = (token: string) => {
-  // if (socket) return socket;
-  // createSocketConnection(token);
-  return socket;
-};
+const getSocket = () => socket;
 
 export {
   createSocketConnection,

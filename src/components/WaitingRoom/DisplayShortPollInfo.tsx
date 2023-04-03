@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { useState } from 'react';
 import { MdContentCopy } from 'react-icons/md';
 import ColorizedText from '../utils/ColorizedText';
-import { useState } from 'react';
 import { copyToClipboard } from '../../helpers/app.helpers';
 
 export interface Props {
@@ -12,9 +14,11 @@ const DisplayShortPollInfo = ({ topic, id }: Props) => {
   const [tooltip, setTooltip] = useState('Click to copy!');
 
   const handleCopyClick = () => {
-    copyToClipboard(id);
+    void copyToClipboard(id);
     setTooltip('Copied!');
-    setTimeout(() => setTooltip('Click to copy!'), 2000);
+    setTimeout(() => {
+      setTooltip('Click to copy!');
+    }, 2000);
   };
 
   return (

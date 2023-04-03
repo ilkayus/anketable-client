@@ -20,15 +20,13 @@ const WaitingRoom = () => {
   }, []);
   return !(connected && updated) ? null : (
     <AnimatedPage>
-      <>
-        <div className="flex flex-col w-full justify-between items-center h-full">
-          <DisplayShortPollInfo
-            topic={poll?.topic as string}
-            id={poll?.id as string}
-          />
-          <WaitingRoomActions />
-        </div>
-      </>
+      <div className="flex flex-col w-full justify-between items-center h-full">
+        <DisplayShortPollInfo
+          topic={poll?.topic as string}
+          id={poll?.id as string}
+        />
+        <WaitingRoomActions />
+      </div>
     </AnimatedPage>
   );
 };

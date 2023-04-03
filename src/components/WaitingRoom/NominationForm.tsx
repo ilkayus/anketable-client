@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+/* eslint-disable no-confusing-arrow */
+import { useState } from 'react';
 import { MdCancel } from 'react-icons/md';
-import { Nominations } from '../../types/polls.types';
-import BottomSheet, { Props as BottomSheetProps } from '../utils/BottomSheet';
+import type { Nominations } from '../../types/polls.types';
+import BottomSheet from '../utils/BottomSheet';
+import type { Props as BottomSheetProps } from '../utils/BottomSheet';
 
 export interface Props {
   title?: string;
@@ -24,16 +26,13 @@ const NominationForm = ({
 }: Props & BottomSheetProps) => {
   const [nominationText, setNominationText] = useState<string>('');
 
-  const handleSubmitNomination = (nominationText: string) => {
+  const handleSubmitNomination = () => {
     onSubmitNomination(nominationText);
     setNominationText('');
   };
 
-  const getBoxStyle = (id: string): string => {
-    return id === userID
-      ? 'bg-orange-100 flex-row'
-      : 'bg-gray-100 flex-row-reverse';
-  };
+  const getBoxStyle = (id: string): string =>
+    id === userID ? 'bg-orange-100 flex-row' : 'bg-gray-100 flex-row-reverse';
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
@@ -45,13 +44,16 @@ const NominationForm = ({
             maxLength={100}
             className="box info w-full"
             value={nominationText}
-            onChange={(e) => setNominationText(e.currentTarget.value)}
+            onChange={(e) => {
+              setNominationText(e.currentTarget.value);
+            }}
           />
         </div>
         <button
+          type="button"
           className="box btn-purple"
-          disabled={!nominationText.length || nominationText.length > 100}
-          onClick={() => handleSubmitNomination(nominationText)}
+          disabled={nominationText.length === 0 || nominationText.length > 100}
+          onClick={handleSubmitNomination}
         >
           Nominate
         </button>
@@ -70,7 +72,9 @@ const NominationForm = ({
                 <div className="ml-2">
                   <MdCancel
                     className="fill-current cursor-pointer hover:opacity-80"
-                    onClick={() => onRemoveNomination(nominationID)}
+                    onClick={() => {
+                      onRemoveNomination(nominationID);
+                    }}
                     size={24}
                   />
                 </div>

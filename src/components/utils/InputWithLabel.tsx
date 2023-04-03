@@ -1,3 +1,4 @@
+/* eslint-disable nonblock-statement-body-position */
 export interface Props<T> {
   label: string;
   value: T;
@@ -6,7 +7,6 @@ export interface Props<T> {
   log?: boolean;
   placeholder?: string;
   invalid?: boolean;
-  autoCapitalize?: string;
   maxLength?: number;
 }
 
@@ -23,7 +23,9 @@ const InputWithLabel = <T extends string | number>({
   if (log) console.log(`${label}:${value}`);
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (typeof value === 'string') setValue(event.target.value as T);
-    if (typeof value === 'number') setValue(parseInt(event.target.value) as T);
+    if (typeof value === 'number') {
+      setValue(parseInt(event.target.value, 10) as T);
+    }
   };
 
   return (
@@ -42,7 +44,7 @@ const InputWithLabel = <T extends string | number>({
         onChange={onChange}
         placeholder={placeholder}
         maxLength={maxLength}
-      ></input>
+      />
     </div>
   );
 };

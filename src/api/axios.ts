@@ -9,8 +9,7 @@ const setBearerToken = (token: string) => {
   axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;
 };
 
-const getBearerToken = (): string => {
-  return (axiosInstance.defaults.headers.Authorization as string).split(' ')[1];
-};
+const getBearerToken = (): string =>
+  (axiosInstance.defaults.headers.Authorization as string).split(' ')[1];
 
 export { axiosInstance, setBearerToken, getBearerToken };

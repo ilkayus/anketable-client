@@ -1,6 +1,6 @@
 import * as webSocket from './websocket';
 import { WebSocketActions } from './api.helpers';
-import {
+import type {
   NominationDto,
   Poll,
   RemoveNominationDto,
@@ -11,22 +11,12 @@ import {
 import store from '../store/store';
 import { setConnected, setPoll, setUpdated } from '../features/poll/pollSlice';
 
-const subscribeToPoll = (token: string) => {
-  webSocket.createSocketConnection(token);
-  getPollUpdates();
-  getConnected();
-};
-
-const unSubscribeFromPoll = () => {
-  webSocket.closeSocket();
-};
-
-const getSocket = (token: string) => webSocket.getSocket(token);
+const getSocket = () => webSocket.getSocket();
 const isConnected = () => webSocket.isConnected();
 
 const getPollUpdates = () => {
   webSocket.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
-    console.log('updatedPoll', updatedPoll);
+    // console.log('updatedPoll', updatedPoll);
     store.dispatch(setPoll(updatedPoll));
     store.dispatch(setUpdated(true));
   });
@@ -35,6 +25,16 @@ const getConnected = () => {
   webSocket.listenSocket(WebSocketActions.CONNECT, () => {
     store.dispatch(setConnected(true));
   });
+};
+
+const subscribeToPoll = (token: string) => {
+  webSocket.createSocketConnection(token);
+  getPollUpdates();
+  getConnected();
+};
+
+const unSubscribeFromPoll = () => {
+  webSocket.closeSocket();
 };
 
 const nominate = (data: NominationDto) => {

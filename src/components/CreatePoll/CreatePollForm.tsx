@@ -17,8 +17,8 @@ const CreatePollForm = () => {
   const isVotesValid = votesPerVoter > 0 && votesPerVoter < 6;
   const isCreateable = !(isNameValid && isTopicValid && isVotesValid);
 
-  const handleCreateClick = async () => {
-    dispatch(
+  const handleCreateClick = () => {
+    void dispatch(
       createPoll({
         name,
         topic,

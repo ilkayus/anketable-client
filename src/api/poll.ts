@@ -1,5 +1,5 @@
 import { axiosInstance as axios, setBearerToken } from './axios';
-import {
+import type {
   CreatePollFields,
   CreatePollReturn,
   JoinPollFields,

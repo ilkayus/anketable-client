@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import classes from './Loader.module.css';
 
 export interface Props {
@@ -26,10 +27,10 @@ const Loader = ({ color = 'orange', isLoading = true, width = 80 }: Props) => {
   return isLoading ? (
     <div className={classes.overlay}>
       <div className={classes.ldsEllipsis} style={{ height: 3 * d, width }}>
-        <div className={colorStyle} style={{ ...dotStyles, left: left1 }}></div>
-        <div className={colorStyle} style={{ ...dotStyles, left: left1 }}></div>
-        <div className={colorStyle} style={{ ...dotStyles, left: left2 }}></div>
-        <div className={colorStyle} style={{ ...dotStyles, left: left3 }}></div>
+        <div className={colorStyle} style={{ ...dotStyles, left: left1 }} />
+        <div className={colorStyle} style={{ ...dotStyles, left: left1 }} />
+        <div className={colorStyle} style={{ ...dotStyles, left: left2 }} />
+        <div className={colorStyle} style={{ ...dotStyles, left: left3 }} />
       </div>
     </div>
   ) : null;
