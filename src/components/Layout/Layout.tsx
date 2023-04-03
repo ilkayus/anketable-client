@@ -1,7 +1,11 @@
 import { Link, Outlet } from 'react-router-dom';
 import NavbarHeader from './NavbarHeader';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
+import { selectPollState } from '../../features/poll/pollSlice';
+import Loader from '../utils/Loader';
 
 const Layout = () => {
+  const state = useAppSelector(selectPollState);
   return (
     <div>
       <nav>
@@ -10,9 +14,13 @@ const Layout = () => {
         </Link>
       </nav>
       <hr />
-      <div className="max-w-screen-sm h-screen mx-auto py-8 px-4 overflow-y-hidden flex flex-col justify-center">
-        <Outlet />
-      </div>
+      {state.pending ? (
+        <Loader />
+      ) : (
+        <div className="max-w-screen-sm h-screen mx-auto py-8 px-4 overflow-y-hidden flex flex-col justify-center">
+          <Outlet />
+        </div>
+      )}
     </div>
   );
 };

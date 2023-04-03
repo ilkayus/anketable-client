@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/typedReduxHooks';
 import {
   selectPollState,
-  checkLastPoll,
   enterRoom,
   exitRoom,
-  setPoll,
 } from '../features/poll/pollSlice';
-import * as gateway from '../api/polls.gateway';
 import AnimatedPage from '../components/utils/AnimatedPage';
-import { Poll } from '../types/polls.types';
 import DisplayShortPollInfo from '../components/WaitingRoom/DisplayShortPollInfo';
 import WaitingRoomActions from '../components/WaitingRoom/WaitingRoomActions';
-import ErrorPage from './ErrorPage';
-import Loader from '../components/utils/Loader';
 
 const WaitingRoom = () => {
   const dispatch = useAppDispatch();
@@ -25,9 +18,7 @@ const WaitingRoom = () => {
       dispatch(exitRoom());
     };
   }, []);
-  return !(connected && updated) ? (
-    <Loader />
-  ) : (
+  return !(connected && updated) ? null : (
     <AnimatedPage>
       <>
         <div className="flex flex-col w-full justify-between items-center h-full">

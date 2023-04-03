@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { generateUsername } from '../../helpers/app.helpers';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
-import * as API from '../../api';
 import { useAppDispatch } from '../../hooks/typedReduxHooks';
 import { joinPoll } from '../../features/poll/pollSlice';
 

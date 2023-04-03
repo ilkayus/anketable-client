@@ -5,25 +5,12 @@ import {
   CreatePollFields,
   JoinPollFields,
   Poll,
-  RejoinPollFields,
   UserInfo,
 } from '../../types/polls.types';
 import { PageLinks } from '../../components/utils/constants';
-import {
-  getAccessToken,
-  getPollInfoFromStorage,
-  getPollInfoFromToken,
-  removeAccessToPoll,
-} from '../../helpers/app.helpers';
-import jwtDecode from 'jwt-decode';
+import * as helpers from '../../helpers/app.helpers';
 import * as WS from '../../api/polls.gateway';
-import { WebSocketActions } from '../../api/api.helpers';
 import * as API from '../../api';
-import store from '../../store/store';
-import { Action } from '@remix-run/router';
-
-// type ValueOf<T> = T[keyof T];
-// currentPage: (typeof PageLinks)[keyof typeof PageLinks];
 
 type PollState = {
   poll?: Poll;
@@ -43,7 +30,6 @@ type PollState = {
   leavePoll: boolean;
 };
 const initialState: PollState = {
-  // socket: socket,
   poll: undefined,
   user: undefined,
   leavePoll: false,
@@ -94,25 +80,22 @@ export const pollSlice = createSlice({
   name: 'pollState',
   initialState,
   reducers: {
-    hello: (state) => {
-      console.log('first');
-    },
     initSocket: (state, action: PayloadAction<undefined>) => {
       WS.getSocket(state.accessToken as string);
     },
     checkLastPoll: (state, action: PayloadAction<undefined>) => {
       if (state.leavePoll) {
-        removeAccessToPoll();
+        helpers.removeAccessToPoll();
         state.poll = undefined;
         state.user = undefined;
         state.leavePoll = false;
       } else {
-        state.user = getPollInfoFromStorage() as UserInfo;
+        state.user = helpers.getPollInfoFromStorage() as UserInfo;
         state.pollExists = true;
         if (!state.user?.sub) {
           state.pollExists = false;
           state.accessToken = null;
-        } else state.accessToken = getAccessToken();
+        } else state.accessToken = helpers.getAccessToken();
       }
     },
     setPoll: (state, action: PayloadAction<Poll>) => {
@@ -133,36 +116,46 @@ export const pollSlice = createSlice({
       state.updated = false;
     },
     leavePoll: (state, action: PayloadAction<undefined>) => {
-      // WS.removeParticipant({ id: state.user?.sub as string });
       WS.unSubscribeFromPoll();
       state.leavePoll = true;
     },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createPoll.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(joinPoll.pending, (state) => {
+        state.pending = true;
+      })
+      .addCase(rejoinPoll.pending, (state) => {
+        state.pending = true;
+      })
       .addCase(createPoll.fulfilled, (state, action) => {
         state.poll = action.payload.poll;
         state.accessToken = action.payload.accessToken;
-        state.user = getPollInfoFromToken(
+        state.user = helpers.getPollInfoFromToken(
           action.payload.accessToken,
         ) as UserInfo;
+        state.pending = false;
       })
       .addCase(joinPoll.fulfilled, (state, action) => {
         state.poll = action.payload.poll;
         state.accessToken = action.payload.accessToken;
-        state.user = getPollInfoFromToken(
+        state.user = helpers.getPollInfoFromToken(
           action.payload.accessToken,
         ) as UserInfo;
+        state.pending = false;
       })
       .addCase(rejoinPoll.fulfilled, (state, action) => {
         state.poll = action.payload;
+        state.pending = false;
       });
   },
 });
 
 export const {
   initSocket,
-  hello,
   checkLastPoll,
   enterRoom,
   setPoll,
