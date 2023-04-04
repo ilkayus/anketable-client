@@ -24,10 +24,9 @@ const Voting = () => {
   const toggleNomination = (id: string) => {
     const position = rankings.findIndex((ranking) => ranking === id);
     const hasVotesRemaining = (poll?.votesPerVoter ?? 0) - rankings.length > 0;
-
     if (position < 0 && hasVotesRemaining) {
       setRankings([...rankings, id]);
-    } else {
+    } else if (position > -1) {
       setRankings([
         ...rankings.slice(0, position),
         ...rankings.slice(position + 1, rankings.length),
