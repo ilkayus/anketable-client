@@ -7,7 +7,7 @@ import Pages from './pages';
 function App() {
   const location = useLocation();
   return (
-    <div className="page mobile-height max-w-screen-sm mx-auto py-8 px-4 overflow-y-hidden">
+    <div className="page mobile-height max-w-screen-sm mx-auto  overflow-y-hidden">
       <AnimatePresence mode="wait">
         <Routes key={location.pathname} location={location}>
           <Route path="/" element={<Layout />}>
