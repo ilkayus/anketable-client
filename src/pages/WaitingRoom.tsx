@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable operator-linebreak */
 /* eslint-disable no-nested-ternary */
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/typedReduxHooks';
@@ -14,21 +16,19 @@ import Results from '../components/WaitingRoom/Results';
 
 const WaitingRoom = () => {
   const dispatch = useAppDispatch();
-  // eslint-disable-next-line object-curly-newline
-  const { poll, connected, updated, user } = useAppSelector(selectPollState);
+  const { poll, connected, updated, hasVoted } =
+    useAppSelector(selectPollState);
   useEffect(() => {
     dispatch(enterRoom());
     return () => {
       dispatch(exitRoom());
     };
   }, []);
-  const hasPollStarted = poll?.hasStarted ?? false;
-  const hasUserVoted = poll?.rankings[user?.sub as string] !== undefined;
 
   return !(connected && updated) ? null : (
     <AnimatedPage>
-      {hasPollStarted ? (
-        hasUserVoted ? (
+      {poll?.hasStarted ?? false ? (
+        hasVoted ? (
           <Results />
         ) : (
           <Voting />

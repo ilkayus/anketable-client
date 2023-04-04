@@ -18,6 +18,13 @@ const WaitingRoomActions = () => {
     poll: Poll;
     user: UserInfo;
   };
+  const {
+    isAdmin,
+    minimumNominations,
+    canVotingStart,
+    participantCount,
+    nominationCount,
+  } = useAppSelector(selectPollState);
   const dispatch = useAppDispatch();
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
@@ -62,11 +69,6 @@ const WaitingRoomActions = () => {
     WS.removeNomination({ id: nominationID });
   };
 
-  const minimumNominations = poll.votesPerVoter < 2 ? 2 : poll.votesPerVoter;
-  const canStart = Object.keys(poll.nominations).length >= minimumNominations;
-
-  const isAdmin = poll.adminID === user.sub;
-
   useEffect(() => {
     if (poll.participants[user.sub].length === 0) {
       navigate(`/${PageLinks.HOMEPAGE}`);
@@ -81,14 +83,14 @@ const WaitingRoomActions = () => {
           handleClick={handleParticipantsClick}
         >
           <MdPeopleOutline size={24} />
-          <span>{Object.keys(poll.participants).length}</span>
+          <span>{participantCount}</span>
         </LinkButton>
         <LinkButton
           style="box btn-purple mx-2 pulsate"
           handleClick={handleNominationsClick}
         >
           <BsPencilSquare size={24} />
-          <span>{Object.keys(poll.nominations).length}</span>
+          <span>{nominationCount}</span>
         </LinkButton>
       </div>
       <div className="flex flex-col my-4 w-full">
@@ -100,7 +102,7 @@ const WaitingRoomActions = () => {
             <LinkButton
               color="orange"
               label={LinkButtonTitles.START_VOTING}
-              disabled={!canStart}
+              disabled={!canVotingStart}
               handleClick={handleStartVoteClick}
             />
           </>

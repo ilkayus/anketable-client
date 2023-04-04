@@ -16,11 +16,10 @@ import { LinkButtonTitles, PageLinks } from '../utils/constants';
 const Voting = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { poll, user } = useAppSelector(selectPollState);
+  const { poll, isAdmin } = useAppSelector(selectPollState);
   const [rankings, setRankings] = useState<string[]>([]);
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [confirmVotes, setConfirmVotes] = useState(false);
-  const isAdmin = poll?.adminID === user?.sub;
 
   const toggleNomination = (id: string) => {
     const position = rankings.findIndex((ranking) => ranking === id);

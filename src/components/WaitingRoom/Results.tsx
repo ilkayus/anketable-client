@@ -17,11 +17,10 @@ import ResultCard from './ResultCard';
 const Results = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { poll, user, participantCount, rankingsCount } =
+  const { poll, participantCount, rankingsCount, isAdmin } =
     useAppSelector(selectPollState);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isLeavePollOpen, setIsLeavePollOpen] = useState(false);
-  const isAdmin = poll?.adminID === user?.sub;
 
   const handleLeavePoll = () => {
     dispatch(leavePoll());

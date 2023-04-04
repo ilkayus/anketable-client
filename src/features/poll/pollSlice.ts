@@ -25,6 +25,7 @@ interface PollState {
   currentPage: keyof typeof PageLinks;
   isAdmin: boolean;
   nominationCount: number;
+  minimumNominations: number;
   participantCount: number;
   hasVoted: boolean;
   rankingsCount: number;
@@ -43,6 +44,7 @@ const initialState: PollState = {
   connected: false,
   pollExists: false,
   nominationCount: 0,
+  minimumNominations: 2,
   participantCount: 0,
   rankingsCount: 0,
   currentPage: 'HOMEPAGE',
@@ -108,6 +110,10 @@ export const pollSlice = createSlice({
       state.nominationCount = Object.keys(action.payload.nominations).length;
       state.participantCount = Object.keys(action.payload.participants).length;
       state.rankingsCount = Object.keys(action.payload.rankings).length;
+      state.minimumNominations = Math.max(2, action.payload.votesPerVoter);
+      state.canVotingStart =
+        Object.keys(action.payload.nominations).length >=
+        Math.max(2, action.payload.votesPerVoter);
     },
     setConnected: (state, action: PayloadAction<boolean>) => {
       state.connected = action.payload;
@@ -153,7 +159,6 @@ export const pollSlice = createSlice({
           type: '',
           payload: action.payload.poll,
         });
-        // state.poll = action.payload.poll;
         state.accessToken = action.payload.accessToken;
         state.user = helpers.getPollInfoFromToken(
           action.payload.accessToken,

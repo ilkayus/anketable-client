@@ -9,12 +9,9 @@ export interface Props {
 
 const ResultsList = ({ results }: Props) => (
   <div className="mx-auto max-h-full flex flex-col">
-    {/* <HorizontalSwipeList> */}
     {results.map((result, i) => (
-      // Can use index as we'll never change list
       <ResultCard key={i} results={result} />
     ))}
-    {/* </HorizontalSwipeList> */}
   </div>
 );
 

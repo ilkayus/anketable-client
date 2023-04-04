@@ -27,6 +27,7 @@
     "@typescript-eslint/member-delimiter-style": "off",
     "react/require-default-props": "off",
     "react/style-prop-object": "off",
+    "operator-linebreak": "off",
     "react/jsx-one-expression-per-line": "off"
   }
 }
