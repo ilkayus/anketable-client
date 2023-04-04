@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
@@ -25,9 +26,9 @@ interface PollState {
   isAdmin: boolean;
   nominationCount: number;
   participantCount: number;
-  canVotingStart: boolean;
   hasVoted: boolean;
   rankingsCount: number;
+  canVotingStart: boolean;
   leavePoll: boolean;
 }
 const initialState: PollState = {
@@ -101,6 +102,12 @@ export const pollSlice = createSlice({
     },
     setPoll: (state, action: PayloadAction<Poll>) => {
       state.poll = action.payload;
+      state.isAdmin = action.payload.adminID === state.user?.sub;
+      state.hasVoted =
+        action.payload.rankings[state.user?.sub ?? ''] !== undefined;
+      state.nominationCount = Object.keys(action.payload.nominations).length;
+      state.participantCount = Object.keys(action.payload.participants).length;
+      state.rankingsCount = Object.keys(action.payload.rankings).length;
     },
     setConnected: (state, action: PayloadAction<boolean>) => {
       state.connected = action.payload;
@@ -123,6 +130,9 @@ export const pollSlice = createSlice({
     cancelPoll: () => {
       WS.cancelPoll();
     },
+    closePoll: () => {
+      WS.closePoll();
+    },
     submitRankings: (state, action: PayloadAction<string[]>) => {
       WS.submitRankings({ rankings: action.payload });
     },
@@ -139,7 +149,11 @@ export const pollSlice = createSlice({
         state.pending = true;
       })
       .addCase(createPoll.fulfilled, (state, action) => {
-        state.poll = action.payload.poll;
+        pollSlice.caseReducers.setPoll(state, {
+          type: '',
+          payload: action.payload.poll,
+        });
+        // state.poll = action.payload.poll;
         state.accessToken = action.payload.accessToken;
         state.user = helpers.getPollInfoFromToken(
           action.payload.accessToken,
@@ -147,7 +161,10 @@ export const pollSlice = createSlice({
         state.pending = false;
       })
       .addCase(joinPoll.fulfilled, (state, action) => {
-        state.poll = action.payload.poll;
+        pollSlice.caseReducers.setPoll(state, {
+          type: '',
+          payload: action.payload.poll,
+        });
         state.accessToken = action.payload.accessToken;
         state.user = helpers.getPollInfoFromToken(
           action.payload.accessToken,
@@ -155,7 +172,10 @@ export const pollSlice = createSlice({
         state.pending = false;
       })
       .addCase(rejoinPoll.fulfilled, (state, action) => {
-        state.poll = action.payload;
+        pollSlice.caseReducers.setPoll(state, {
+          type: '',
+          payload: action.payload,
+        });
         state.pending = false;
       });
   },
@@ -171,6 +191,7 @@ export const {
   exitRoom,
   leavePoll,
   cancelPoll,
+  closePoll,
   submitRankings,
 } = pollSlice.actions;
 export const selectPollState = (state: RootState) => state.pollState;
