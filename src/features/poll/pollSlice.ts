@@ -120,6 +120,12 @@ export const pollSlice = createSlice({
       WS.unSubscribeFromPoll();
       state.leavePoll = true;
     },
+    cancelPoll: () => {
+      WS.cancelPoll();
+    },
+    submitRankings: (state, action: PayloadAction<string[]>) => {
+      WS.submitRankings({ rankings: action.payload });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -164,6 +170,8 @@ export const {
   setUpdated,
   exitRoom,
   leavePoll,
+  cancelPoll,
+  submitRankings,
 } = pollSlice.actions;
 export const selectPollState = (state: RootState) => state.pollState;
 export default pollSlice.reducer;

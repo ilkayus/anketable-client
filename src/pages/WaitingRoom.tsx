@@ -8,6 +8,7 @@ import {
 import AnimatedPage from '../components/utils/AnimatedPage';
 import DisplayShortPollInfo from '../components/WaitingRoom/DisplayShortPollInfo';
 import WaitingRoomActions from '../components/WaitingRoom/WaitingRoomActions';
+import Voting from '../components/WaitingRoom/Voting';
 
 const WaitingRoom = () => {
   const dispatch = useAppDispatch();
@@ -20,13 +21,17 @@ const WaitingRoom = () => {
   }, []);
   return !(connected && updated) ? null : (
     <AnimatedPage>
-      <div className="flex flex-col w-full justify-between items-center h-full">
-        <DisplayShortPollInfo
-          topic={poll?.topic as string}
-          id={poll?.id as string}
-        />
-        <WaitingRoomActions />
-      </div>
+      {poll?.hasStarted ?? false ? (
+        <Voting />
+      ) : (
+        <div className="flex flex-col w-full justify-between items-center h-full">
+          <DisplayShortPollInfo
+            topic={poll?.topic as string}
+            id={poll?.id as string}
+          />
+          <WaitingRoomActions />
+        </div>
+      )}
     </AnimatedPage>
   );
 };

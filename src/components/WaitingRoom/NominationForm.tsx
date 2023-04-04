@@ -24,7 +24,7 @@ const NominationForm = ({
   userID,
   isAdmin,
 }: Props & BottomSheetProps) => {
-  const [nominationText, setNominationText] = useState<string>('');
+  const [nominationText, setNominationText] = useState('');
 
   const handleSubmitNomination = () => {
     onSubmitNomination(nominationText);
@@ -68,7 +68,7 @@ const NominationForm = ({
               )}`}
             >
               <div>{nomination.text}</div>
-              {isAdmin && (
+              {(isAdmin || nomination.userID === userID) && (
                 <div className="ml-2">
                   <MdCancel
                     className="fill-current cursor-pointer hover:opacity-80"

@@ -7,6 +7,8 @@ export enum LinkButtonTitles {
   GOTO_LAST_BUTTON = 'Go To Last Poll',
   START_VOTING = 'Start Voting',
   LEAVE_POLL = 'Leave Poll',
+  CANCEL_POLL = 'Cancel Poll',
+  SUBMIT_VOTES = 'Submit Votes',
 }
 
 export enum PageLinks {
