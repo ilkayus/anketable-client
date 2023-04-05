@@ -13,6 +13,7 @@ const GoToLastPoll = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { pollExists } = useAppSelector(selectPollState);
+  console.log('first', pollExists);
   useEffect(() => {
     dispatch(checkLastPoll());
   }, []);

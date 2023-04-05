@@ -16,7 +16,7 @@
 @tailwind utilities;
 
 body {
-  @apply antialiased text-gray-900 dark:text-darkprimary-100 tracking-tight bg-white dark:bg-darkprimary-900 overflow-x-hidden;
+  @apply antialiased text-gray-900 dark:text-darkprimary-100 tracking-tight bg-white dark:bg-darkprimary-900 overflow-x-hidden h-[100dvh];
 }
 
 .box {

@@ -4,11 +4,10 @@ import type { PollAccessTokenDecodeReturn } from '../types/polls.types';
 export const generateUsername = () =>
   `anon-${Math.floor(Math.random() * 1000)}`;
 
-export const getAccessToken = () =>
-  window.localStorage.getItem('pollAccessToken');
+export const getAccessToken = () => localStorage.getItem('pollAccessToken');
 
 export const removeAccessToPoll = () => {
-  window.localStorage.removeItem('pollAccessToken');
+  localStorage.removeItem('pollAccessToken');
 };
 
 export const getPollInfoFromToken = (token: string) => {

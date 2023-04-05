@@ -33,7 +33,7 @@ const DisplayShortPollInfo = ({ topic, id }: Props) => {
           {tooltip}
         </span>
         <h2 className="text-center">Poll ID</h2>
-        <div className="font-extrabold text-center mr-2 flex flex-row gap-3">
+        <div className="font-extrabold mr-2 flex flex-row gap-3 text-center justify-center">
           <ColorizedText text={id} />
           <MdContentCopy size={24} />
         </div>

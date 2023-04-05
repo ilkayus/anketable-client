@@ -94,9 +94,10 @@ export const pollSlice = createSlice({
         state.user = undefined;
         state.leavePoll = false;
       } else {
-        state.user = helpers.getPollInfoFromStorage() as UserInfo;
+        const lastUser = helpers.getPollInfoFromStorage() as UserInfo;
+        state.user = lastUser;
         state.pollExists = true;
-        if (state.user?.sub === '') {
+        if (lastUser === undefined) {
           state.pollExists = false;
           state.accessToken = null;
         } else state.accessToken = helpers.getAccessToken();

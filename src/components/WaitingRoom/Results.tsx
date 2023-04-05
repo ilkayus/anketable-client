@@ -41,13 +41,18 @@ const Results = () => {
             <ResultCard results={poll?.results} />
           ) : (
             <p className="text-center text-xl">
-              <span className="text-orange-600">{rankingsCount}</span> of{' '}
-              <span className="text-purple-600">{participantCount}</span>{' '}
+              <span className="text-primary-600 dark:text-primary-300 font-extrabold">
+                {rankingsCount}
+              </span>{' '}
+              of{' '}
+              <span className="text-secondary-600 dark:text-secondary-300 font-extrabold">
+                {participantCount}
+              </span>{' '}
               participants have voted
             </p>
           )}
         </div>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mt-4">
           {isAdmin && !poll?.results.length && (
             <LinkButton
               color="orange"

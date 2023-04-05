@@ -36,8 +36,7 @@ const NominationForm = ({
       <div className="flex flex-col px-4 items-center mb-2">
         <h3 className="font-semibold">{title}</h3>
         <div className="w-full my-4 mx-2">
-          <textarea
-            rows={1}
+          <input
             maxLength={100}
             className="box info w-full"
             value={nominationText}
