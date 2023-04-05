@@ -31,7 +31,7 @@ const LinkButton = ({
   const onClick = handleClick
     ? handleClick
     : () => navigate(`/${link}`, { state });
-  const defStyle = style ? style : `box my-2 btn-${color}`;
+  const defStyle = style ? style : `box  btn-${color}`;
   return (
     <button
       type="button"
