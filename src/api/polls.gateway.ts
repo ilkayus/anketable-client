@@ -8,29 +8,26 @@ import type {
   SubmitRankingsDto,
 } from '../types/polls.types';
 
-import store from '../store/store';
-import { setConnected, setPoll, setUpdated } from '../features/poll/pollSlice';
+// import store from '../store/store';
+// import { setConnected, setPoll, setUpdated } from '../features/poll/pollSlice';
 
 const getSocket = () => webSocket.getSocket();
 const isConnected = () => webSocket.isConnected();
 
-const getPollUpdates = () => {
+const getPollUpdates = (dispatch: any) => (setPoll: any, setUpdated: any) => {
   webSocket.listenSocket(WebSocketActions.POLL_UPDATE, (updatedPoll: Poll) => {
-    // console.log('updatedPoll', updatedPoll);
-    store.dispatch(setPoll(updatedPoll));
-    store.dispatch(setUpdated(true));
+    dispatch(setPoll(updatedPoll));
+    dispatch(setUpdated(true));
   });
 };
-const getConnected = () => {
+const getConnected = (dispatch: any) => (setConnected: any) => {
   webSocket.listenSocket(WebSocketActions.CONNECT, () => {
-    store.dispatch(setConnected(true));
+    dispatch(setConnected(true));
   });
 };
 
 const subscribeToPoll = (token: string) => {
   webSocket.createSocketConnection(token);
-  getPollUpdates();
-  getConnected();
 };
 
 const unSubscribeFromPoll = () => {
@@ -69,6 +66,7 @@ export {
   unSubscribeFromPoll,
   subscribeToPoll,
   getPollUpdates,
+  getConnected,
   nominate,
   removeNomination,
   removeParticipant,

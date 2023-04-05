@@ -7,12 +7,16 @@ import {
   selectPollState,
   enterRoom,
   exitRoom,
+  setConnected,
+  setPoll,
+  setUpdated,
 } from '../features/poll/pollSlice';
 import AnimatedPage from '../components/utils/AnimatedPage';
 import DisplayShortPollInfo from '../components/WaitingRoom/DisplayShortPollInfo';
 import WaitingRoomActions from '../components/WaitingRoom/WaitingRoomActions';
 import Voting from '../components/WaitingRoom/Voting';
 import Results from '../components/WaitingRoom/Results';
+import { getConnected, getPollUpdates } from '../api/polls.gateway';
 
 const WaitingRoom = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +24,8 @@ const WaitingRoom = () => {
     useAppSelector(selectPollState);
   useEffect(() => {
     dispatch(enterRoom());
+    getConnected(dispatch)(setConnected);
+    getPollUpdates(dispatch)(setPoll, setUpdated);
     return () => {
       dispatch(exitRoom());
     };
