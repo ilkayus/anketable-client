@@ -23,6 +23,14 @@ body {
   @apply bg-gray-200 dark:bg-darkprimary-800 border-2 h-16 my-1 mx-2 sm:mx-10 rounded-2xl border-gray-500 px-4 text-xl font-medium transition duration-300 ease-in-out hover:border-opacity-50 hover:shadow-lg;
 }
 
+.boxSq {
+  @apply bg-gray-200 dark:bg-darkprimary-800 border-2 h-20 my-1 mx-2 rounded-2xl border-gray-500 px-4 text-xl font-medium transition duration-300 ease-in-out hover:border-opacity-50 hover:shadow-lg;
+}
+
+.nominated {
+  @apply bg-secondary-100 dark:bg-secondary-200 dark:text-darkprimary-900;
+}
+
 .boxless {
   @apply py-2 px-4 font-semibold text-gray-700 my-2 transition duration-300 ease-in-out hover:shadow-lg;
 }
@@ -31,12 +39,20 @@ body {
   @apply text-opacity-50 opacity-50 cursor-not-allowed;
 }
 
+.btn-primary {
+  @apply border-primary-700 bg-primary-100 dark:bg-primary-900;
+}
+
+.btn-secondary {
+  @apply border-secondary-700 bg-secondary-100 dark:bg-secondary-900;
+}
+
 .btn-blue {
-  @apply border-blue-700 bg-blue-700/60 text-blue-800;
+  @apply border-blue-700 bg-blue-100 dark:bg-blue-900;
 }
 
 .btn-red {
-  @apply border-red-600 text-red-800;
+  @apply border-red-600 bg-red-100 dark:bg-red-900;
 }
 
 .btn-green {
@@ -52,7 +68,7 @@ body {
 }
 
 .info {
-  @apply focus:ring-0 focus:outline-none;
+  @apply focus:ring-0 focus:outline-1 mx-0;
 }
 
 .bg-blue {

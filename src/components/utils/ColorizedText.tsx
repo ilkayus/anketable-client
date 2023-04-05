@@ -11,11 +11,17 @@ const ColorizedText = ({ text }: Props) => {
     <div>
       {textArray.map((val, index) =>
         val.charCodeAt(0) >= 48 && val.charCodeAt(0) <= 57 ? (
-          <span key={index} className="text-orange-600">
+          <span
+            key={index}
+            className="text-primary-600 dark:text-primary-300 ml-1"
+          >
             {val}
           </span>
         ) : (
-          <span key={index} className="text-indigo-600">
+          <span
+            key={index}
+            className="text-secondary-600 dark:text-secondary-300 ml-1"
+          >
             {val}
           </span>
         ),

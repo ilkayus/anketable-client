@@ -21,15 +21,13 @@ const ParticipantList = ({
   isAdmin,
 }: Props & BottomSheetProps) => (
   <BottomSheet isOpen={isOpen} onClose={onClose}>
-    <div className="px-8 flex flex-wrap justify-center mb-2">
+    <div className="px-8 flex flex-wrap justify-center mb-2 ">
       {Object.entries(participants).map(([id, participant]) => (
         <div
           key={id}
-          className="mx-1 my-1 p-4 shadow-xl bg-white flex justify-between items-center rounded-md"
+          className="mx-1 my-1 p-4 shadow-xl flex justify-between bg-white text-darkprimary-900 items-center rounded-md"
         >
-          <span className="ml-2 mr-1 text-indigo-700 text-xl text-center">
-            {participant}
-          </span>
+          <span className="ml-2 mr-1 text-xl text-center">{participant}</span>
           {isAdmin && userID !== id && (
             <span
               className="ml-1 mr-2 cursor-pointer"

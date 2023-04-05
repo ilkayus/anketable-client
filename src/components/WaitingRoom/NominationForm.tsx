@@ -31,16 +31,13 @@ const NominationForm = ({
     setNominationText('');
   };
 
-  const getBoxStyle = (id: string): string =>
-    id === userID ? 'bg-orange-100 flex-row' : 'bg-gray-100 flex-row-reverse';
-
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col px-4 items-center mb-2">
         <h3 className="font-semibold">{title}</h3>
-        <div className="w-full my-4">
+        <div className="w-full my-4 mx-2">
           <textarea
-            rows={2}
+            rows={1}
             maxLength={100}
             className="box info w-full"
             value={nominationText}
@@ -63,9 +60,9 @@ const NominationForm = ({
           {Object.entries(nominations).map(([nominationID, nomination]) => (
             <div
               key={nominationID}
-              className={`my-2 flex justify-between items-center p-2 rounded-md ${getBoxStyle(
-                nomination.userID,
-              )}`}
+              className={`box flex justify-between items-center ${
+                nomination.userID === userID ? 'nominated' : ''
+              }`}
             >
               <div>{nomination.text}</div>
               {(isAdmin || nomination.userID === userID) && (

@@ -7,20 +7,36 @@ export interface Props {
   onSelect: () => void;
 }
 
-const RankedCheckBox = ({ value, rank, onSelect }: Props) => (
-  <div
-    className="my-4 box btn-orange relative"
-    onClick={() => {
-      onSelect();
-    }}
-  >
-    <div>{value}</div>
-    {rank && (
-      <div className="absolute w-6 h-6 -top-3 -right-3 rounded-full bg-purple-600">
-        <div className="text-center font-medium text-white">{rank}</div>
+const RankedCheckBox = ({ value, rank, onSelect }: Props) => {
+  const rankColor = (t?: number) => {
+    switch (t) {
+      case 1:
+        return 'bg-green-300/50 border-green-600';
+      case 2:
+        return 'bg-yellow-300/50 border-yellow-600';
+      case 3:
+        return 'bg-orange-300/50 border-orange-600';
+      case 4:
+        return 'bg-red-300/50 border-red-600';
+      case 5:
+        return 'bg-blue-300/50 border-blue-600';
+      default:
+        return '';
+    }
+  };
+  return (
+    <div
+      className="my-4 box relative flex flex-row justify-between items-center"
+      onClick={() => {
+        onSelect();
+      }}
+    >
+      <div>{value}</div>
+      <div className={`w-10 h-10 rounded-xl border-2 ${rankColor(rank)}`}>
+        {rank && <div className="text-center text-2xl">{rank}</div>}
       </div>
-    )}
-  </div>
-);
+    </div>
+  );
+};
 
 export default RankedCheckBox;

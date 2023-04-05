@@ -60,7 +60,7 @@ const Voting = () => {
             <div className="text-center text-xl font-semibold mb-6">
               Select Your Top {poll?.votesPerVoter} Choices
             </div>
-            <div className="text-center text-lg font-semibold mb-6 text-indigo-700">
+            <div className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
               {poll.votesPerVoter - rankings.length} Votes remaining
             </div>
           </>
@@ -81,7 +81,7 @@ const Voting = () => {
       <div className="my-12 flex flex-col">
         <LinkButton
           disabled={rankings.length < (poll?.votesPerVoter ?? 100)}
-          color="purple"
+          color="green"
           label={LinkButtonTitles.SUBMIT_VOTES}
           handleClick={() => {
             setConfirmVotes(true);
@@ -98,7 +98,7 @@ const Voting = () => {
         {isAdmin && (
           <>
             <LinkButton
-              color="orange"
+              color="red"
               label={LinkButtonTitles.CANCEL_POLL}
               handleClick={() => {
                 setConfirmCancel(true);

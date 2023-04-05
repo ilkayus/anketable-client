@@ -20,4 +20,11 @@ export enum PageLinks {
   ERROR_PAGE = 'error',
 }
 
-export type ButtonColors = 'orange' | 'purple' | 'blue' | 'red' | 'green';
+export type ButtonColors =
+  | 'orange'
+  | 'purple'
+  | 'blue'
+  | 'red'
+  | 'green'
+  | 'secondary'
+  | 'primary';

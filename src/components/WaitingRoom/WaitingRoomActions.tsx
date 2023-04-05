@@ -79,14 +79,14 @@ const WaitingRoomActions = () => {
     <>
       <div className="flex justify-center">
         <LinkButton
-          style="box btn-orange mx-2 pulsate"
+          style="boxSq btn-red pulsate"
           handleClick={handleParticipantsClick}
         >
           <MdPeopleOutline size={24} />
           <span>{participantCount}</span>
         </LinkButton>
         <LinkButton
-          style="box btn-purple mx-2 pulsate"
+          style="boxSq btn-secondary pulsate"
           handleClick={handleNominationsClick}
         >
           <BsPencilSquare size={24} />
