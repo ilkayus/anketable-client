@@ -10,7 +10,7 @@ const Layout = () => {
 
   return (
     <div>
-      <nav className="flex flex-row justify-between items-center sticky top-0 z-40 mt-2 mb-1 w-full bg-white/60 dark:bg-darkprimary-900/60 backdrop-blur-[5px]">
+      <nav className="flex flex-row justify-between items-center sticky top-0 z-40 mt-2 mb-1 h-12 w-full bg-white/60 dark:bg-darkprimary-900/60 backdrop-blur-[5px]">
         <Link to="/">
           <NavbarHeader />
         </Link>
@@ -20,7 +20,7 @@ const Layout = () => {
       {state.pending ? (
         <Loader />
       ) : (
-        <div className="max-w-screen-sm h-screen mx-auto py-8 px-4 overflow-y-hidden flex flex-col justify-center">
+        <div className="max-w-screen-sm mx-auto py-4 px-4 overflow-y-scroll flex flex-col justify-center">
           <Outlet />
         </div>
       )}

@@ -8,9 +8,6 @@ import type {
   SubmitRankingsDto,
 } from '../types/polls.types';
 
-// import store from '../store/store';
-// import { setConnected, setPoll, setUpdated } from '../features/poll/pollSlice';
-
 const getSocket = () => webSocket.getSocket();
 const isConnected = () => webSocket.isConnected();
 

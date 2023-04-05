@@ -1,7 +1,7 @@
-// const API_URL = 'http://192.168.1.143:4000/';
-// const WS_BASE_URL = '192.168.1.143';
+const API_URL = 'http://192.168.1.143:4000/';
+const WS_BASE_URL = '192.168.1.143';
 
-const API_URL = 'http://localhost:4000/';
+// const API_URL = 'http://localhost:4000/';
 const API_POLLS_ROUTE = 'polls';
 const API_JOIN_POLL = 'polls/join';
 const API_REJOIN_POLL = 'polls/rejoin';
@@ -13,7 +13,7 @@ export const urlHelper = {
   API_REJOIN_POLL,
 };
 
-const WS_BASE_URL = '127.0.0.1';
+// const WS_BASE_URL = '127.0.0.1';
 const WS_PORT = '4000';
 const WS_NAMESPACE = 'polls';
 const WS_URL = `http://${WS_BASE_URL}:${WS_PORT}/${WS_NAMESPACE}`;
