@@ -50,33 +50,29 @@ const Voting = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className="w-full">
-        <h1 className="text-center">Voting Page</h1>
-      </div>
-      <div className="w-full">
-        {poll && (
-          <>
-            <div className="text-center text-xl font-semibold mb-6">
-              Select Your Top {poll?.votesPerVoter} Choices
-            </div>
-            <div className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
-              {poll.votesPerVoter - rankings.length} Votes remaining
-            </div>
-          </>
-        )}
-        <div className="px-2">
-          {Object.entries(poll?.nominations ?? {}).map(([id, nomination]) => (
-            <RankedCheckBox
-              key={id}
-              value={nomination.text}
-              rank={getRank(id)}
-              onSelect={() => {
-                toggleNomination(id);
-              }}
-            />
-          ))}
-        </div>
+    <div className="flex flex-col">
+      <h1 className="text-center">Voting Page</h1>
+      {poll && (
+        <>
+          <h3 className="text-center text-xl font-semibold mb-6">
+            Select Your Top {poll?.votesPerVoter} Choices
+          </h3>
+          <h3 className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
+            {poll.votesPerVoter - rankings.length} Votes remaining
+          </h3>
+        </>
+      )}
+      <div className="px-2">
+        {Object.entries(poll?.nominations ?? {}).map(([id, nomination]) => (
+          <RankedCheckBox
+            key={id}
+            value={nomination.text}
+            rank={getRank(id)}
+            onSelect={() => {
+              toggleNomination(id);
+            }}
+          />
+        ))}
       </div>
       <div className="my-12 flex flex-col">
         <LinkButton
