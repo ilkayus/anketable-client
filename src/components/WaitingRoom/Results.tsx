@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
-// import ResultCard from './ResultCard';
 import ResultList from './ResultList';
 
 const Results = () => {
@@ -40,11 +39,11 @@ const Results = () => {
 
   return (
     <>
-      <div className="flex flex-col w-full justify-between items-center h-full max-w-screen-sm">
+      <div className="flex flex-col w-full justify-between h-full max-w-screen-sm">
         <div className="w-full">
           <h1 className="text-center mt-12 mb-4">Results</h1>
           {poll?.hasEnded ? (
-            <ResultList results={poll?.results} />
+            <ResultList poll={poll} />
           ) : (
             <p className="text-center text-xl">
               <span className="text-primary-600 dark:text-primary-300 font-extrabold">
@@ -58,7 +57,7 @@ const Results = () => {
             </p>
           )}
         </div>
-        <div className="flex flex-col justify-center mt-4">
+        <div className="flex flex-col justify-center mt-4 items-center">
           {isAdmin && !poll?.hasEnded && (
             <>
               <LinkButton
@@ -98,7 +97,9 @@ const Results = () => {
           )}
         </div>
         {!poll?.hasEnded && poll?.showResults ? (
-          <ResultList results={poll?.results} />
+          <div className="max-h-[50vh] mt-10">
+            <ResultList poll={poll} />
+          </div>
         ) : null}
       </div>
       {isAdmin && (

@@ -149,3 +149,19 @@ body {
 .has-tooltip:hover .tooltip {
   @apply visible z-50;
 }
+
+.meterGreen::-webkit-meter-optimum-value {
+  @apply bg-green-300;
+}
+.meterYellow::-webkit-meter-optimum-value {
+  @apply bg-yellow-300;
+}
+.meterOrange::-webkit-meter-optimum-value {
+  @apply bg-orange-300;
+}
+.meterRed::-webkit-meter-optimum-value {
+  @apply bg-red-300;
+}
+.meterDarkred::-webkit-meter-optimum-value {
+  @apply bg-[#FF0000];
+}

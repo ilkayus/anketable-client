@@ -2,9 +2,10 @@ import type { Results } from '../../types/polls.types';
 
 export interface Props {
   results: Readonly<Results>;
+  percentages: Record<string, number>;
 }
 
-const ResultCard = ({ results }: Props) => (
+const ResultCardPercentage = ({ results, percentages }: Props) => (
   <>
     <div className="grid grid-cols-3 gap-4 pb-2 my-2 border-b-2 border-solid border-purple-70 pr-4">
       <div className="col-span-2 font-semibold">Candidate</div>
@@ -17,11 +18,13 @@ const ResultCard = ({ results }: Props) => (
           className="grid grid-cols-3 gap-4 my-1 items-center"
         >
           <div className="col-span-2">{result.nominationText}</div>
-          <div className="col-span-1 text-right">{result.score.toFixed(2)}</div>
+          <div className="col-span-1 text-right">
+            {percentages[result.nominationID].toFixed(2)} %
+          </div>
         </div>
       ))}
     </div>
   </>
 );
 
-export default ResultCard;
+export default ResultCardPercentage;
