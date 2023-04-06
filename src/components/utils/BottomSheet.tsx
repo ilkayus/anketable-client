@@ -22,7 +22,7 @@ const BottomSheet = ({
         />
       </div>
       <div className="relative overflow-y-hidden flex-grow">
-        <div className="absolute top-0 bottom-0 left-0 right-0 overflow-y-auto">
+        <div className="absolute top-0 bottom-0 left-0 right-0 overflow-y-auto noScrollbar">
           {children}
         </div>
       </div>

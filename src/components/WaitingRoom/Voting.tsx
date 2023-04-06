@@ -16,7 +16,7 @@ import { LinkButtonTitles, PageLinks } from '../utils/constants';
 const Voting = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { poll, isAdmin } = useAppSelector(selectPollState);
+  const { poll, isAdmin, nominationCount } = useAppSelector(selectPollState);
   const [rankings, setRankings] = useState<string[]>([]);
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [confirmVotes, setConfirmVotes] = useState(false);
@@ -54,15 +54,18 @@ const Voting = () => {
       <h1 className="text-center">Voting Page</h1>
       {poll && (
         <>
-          <h3 className="text-center text-xl font-semibold mb-6">
-            Select Your Top {poll?.votesPerVoter} Choices
+          <h3 className="text-center text-lg font-semibold mb-6">
+            Select Your Top {poll?.votesPerVoter}{' '}
+            {poll?.votesPerVoter > 1 ? 'Choices' : 'Choice'} in{' '}
+            {nominationCount} nominated
           </h3>
           <h3 className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
             {poll.votesPerVoter - rankings.length} Votes remaining
           </h3>
         </>
       )}
-      <div className="px-2">
+      <hr />
+      <div className="px-2 max-h-[50vh] overflow-x-hidden overflow-y-scroll noScrollbar ">
         {Object.entries(poll?.nominations ?? {}).map(([id, nomination]) => (
           <RankedCheckBox
             key={id}
@@ -74,6 +77,7 @@ const Voting = () => {
           />
         ))}
       </div>
+      <hr />
       <div className="my-12 flex flex-col">
         <LinkButton
           disabled={rankings.length < (poll?.votesPerVoter ?? 100)}

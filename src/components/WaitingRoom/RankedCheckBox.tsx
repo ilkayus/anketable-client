@@ -21,7 +21,7 @@ const RankedCheckBox = ({ value, rank, onSelect }: Props) => {
       case 5:
         return 'bg-blue-300/50 border-blue-600';
       default:
-        return '';
+        return 'border-darkprimary-700 dark:border-gray-300';
     }
   };
   return (
@@ -33,7 +33,11 @@ const RankedCheckBox = ({ value, rank, onSelect }: Props) => {
     >
       <div>{value}</div>
       <div className={`w-10 h-10 rounded-xl border-2 ${rankColor(rank)}`}>
-        {rank && <div className="text-center text-2xl">{rank}</div>}
+        {rank && (
+          <span className="flex justify-center items-center pt-[2px] text-2xl">
+            {rank}
+          </span>
+        )}
       </div>
     </div>
   );
