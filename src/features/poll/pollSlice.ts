@@ -140,6 +140,9 @@ export const pollSlice = createSlice({
     closePoll: () => {
       WS.closePoll();
     },
+    showResults: (state, action: PayloadAction<boolean>) => {
+      WS.showResults({ showResults: action.payload });
+    },
     submitRankings: (state, action: PayloadAction<string[]>) => {
       WS.submitRankings({ rankings: action.payload });
     },
@@ -198,6 +201,7 @@ export const {
   leavePoll,
   cancelPoll,
   closePoll,
+  showResults,
   submitRankings,
 } = pollSlice.actions;
 export const selectPollState = (state: RootState) => state.pollState;

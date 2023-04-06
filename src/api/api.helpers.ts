@@ -37,4 +37,5 @@ export enum WebSocketActions {
   SUBMIT_RANKINGS = 'submit_rankings',
   CLOSE_POLL = 'close_poll',
   CANCEL_POLL = 'cancel_poll',
+  SHOW_RESULTS = 'show_results',
 }

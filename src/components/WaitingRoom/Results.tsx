@@ -7,12 +7,14 @@ import {
   selectPollState,
   closePoll,
   leavePoll,
+  showResults,
 } from '../../features/poll/pollSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
-import ResultCard from './ResultCard';
+// import ResultCard from './ResultCard';
+import ResultList from './ResultList';
 
 const Results = () => {
   const dispatch = useAppDispatch();
@@ -32,13 +34,17 @@ const Results = () => {
     setIsConfirmationOpen(false);
   };
 
+  const handleShowResults = (event: any) => {
+    dispatch(showResults(event.target.checked));
+  };
+
   return (
     <>
-      <div className="mx-auto flex flex-col w-full justify-between items-center h-full max-w-sm">
+      <div className="flex flex-col w-full justify-between items-center h-full max-w-screen-sm">
         <div className="w-full">
           <h1 className="text-center mt-12 mb-4">Results</h1>
           {poll?.hasEnded ? (
-            <ResultCard results={poll?.results} />
+            <ResultList results={poll?.results} />
           ) : (
             <p className="text-center text-xl">
               <span className="text-primary-600 dark:text-primary-300 font-extrabold">
@@ -53,16 +59,26 @@ const Results = () => {
           )}
         </div>
         <div className="flex flex-col justify-center mt-4">
-          {isAdmin && !poll?.results.length && (
-            <LinkButton
-              color="orange"
-              label={LinkButtonTitles.END_POLL}
-              handleClick={() => {
-                setIsConfirmationOpen(true);
-              }}
-            />
+          {isAdmin && !poll?.hasEnded && (
+            <>
+              <LinkButton
+                color="orange"
+                label={LinkButtonTitles.END_POLL}
+                handleClick={() => {
+                  setIsConfirmationOpen(true);
+                }}
+              />
+              <div className="flex flex-row gap-3 justify-center mt-6">
+                <input
+                  id="showResult"
+                  type="checkbox"
+                  onChange={handleShowResults}
+                />
+                <h3>Show momentry results.</h3>
+              </div>
+            </>
           )}
-          {!isAdmin && !poll?.results.length && (
+          {!isAdmin && !poll?.hasEnded && (
             <div className="my-2 italic">
               Waiting for Admin,{' '}
               <span className="font-semibold">
@@ -71,7 +87,7 @@ const Results = () => {
               , to finalize the poll.
             </div>
           )}
-          {!!poll?.results.length && (
+          {!!poll?.hasEnded && (
             <LinkButton
               color="purple"
               label={LinkButtonTitles.LEAVE_POLL}
@@ -81,6 +97,9 @@ const Results = () => {
             />
           )}
         </div>
+        {!poll?.hasEnded && poll?.showResults ? (
+          <ResultList results={poll?.results} />
+        ) : null}
       </div>
       {isAdmin && (
         <ConfirmationDialog

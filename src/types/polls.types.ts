@@ -130,4 +130,8 @@ export type SubmitRankingsDto = {
   rankings: string[];
 };
 
+export type ShowResultsDto = {
+  showResults: boolean;
+};
+
 export type WaitingRoomState = 'CREATE' | 'JOIN' | 'REJOIN';

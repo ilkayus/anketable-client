@@ -4,15 +4,11 @@ import ResultCard from './ResultCard';
 import type { Results } from '../../types/polls.types';
 
 export interface Props {
-  results: Results[];
+  results: Results;
 }
-
+// TODO show results with piechart
 const ResultsList = ({ results }: Props) => (
-  <div className="mx-auto max-h-full flex flex-col">
-    {results.map((result, i) => (
-      <ResultCard key={i} results={result} />
-    ))}
-  </div>
+  <ResultCard key={1} results={results} />
 );
 
 export default ResultsList;

@@ -5,6 +5,7 @@ import type {
   Poll,
   RemoveNominationDto,
   RemoveParticipantDto,
+  ShowResultsDto,
   SubmitRankingsDto,
 } from '../types/polls.types';
 
@@ -54,6 +55,9 @@ const submitRankings = (data: SubmitRankingsDto) => {
 const closePoll = () => {
   webSocket.updateSocket(WebSocketActions.CLOSE_POLL);
 };
+const showResults = (data: ShowResultsDto) => {
+  webSocket.updateSocket(WebSocketActions.SHOW_RESULTS, data);
+};
 
 const cancelPoll = () => {
   webSocket.updateSocket(WebSocketActions.CANCEL_POLL);
@@ -71,6 +75,7 @@ export {
   submitRankings,
   cancelPoll,
   closePoll,
+  showResults,
   isConnected,
   getSocket,
 };
