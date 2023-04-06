@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/indent */
 import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import ResultCardScores from './ResultCardScores';
 import type { Poll } from '../../types/polls.types';
 import ResultCardPercentage from './ResultCardPercentage';
@@ -12,6 +14,10 @@ export interface Props {
 // TODO show results with piechart
 const ResultsList = ({ poll }: Props) => {
   const [card, setCard] = useState(0);
+  const [animationType, setAnimationType] = useState<
+    'horizontal-toleft' | 'horizontal-toright'
+  >('horizontal-toleft');
+
   const { results } = poll;
   const totalScore =
     results.reduce((prev, result) => prev + result.score, 0) / 100;
@@ -19,25 +25,54 @@ const ResultsList = ({ poll }: Props) => {
   results.forEach((result) => {
     percentages[result.nominationID] = result.score / totalScore;
   });
-
+  const handleDotClick = (selected: number) => {
+    if (card === selected) return;
+    setAnimationType(
+      card > selected ? 'horizontal-toleft' : 'horizontal-toright',
+    );
+    setCard(selected);
+  };
   return (
     <>
-      {card === 0 && <ResultCardScores results={results} />}
-      {card === 1 && (
-        <ResultCardPercentage results={results} percentages={percentages} />
-      )}
-      {card === 2 && (
-        <ResultCardVotes results={results} votesPerVoter={poll.votesPerVoter} />
-      )}
-      {card === 3 && (
-        <ResultCardMeter key={3} results={results} percentages={percentages} />
-      )}
-      <div className="flex flex-row justify-center gap-4 my-2">
-        <SelectorDot selected={card} setSelected={setCard} value={0} />
-        <SelectorDot selected={card} setSelected={setCard} value={1} />
-        <SelectorDot selected={card} setSelected={setCard} value={2} />
-        <SelectorDot selected={card} setSelected={setCard} value={3} />
+      <div className="flex flex-row justify-center gap-6 my-1">
+        <SelectorDot selected={card} onClick={handleDotClick} value={0} />
+        <SelectorDot selected={card} onClick={handleDotClick} value={1} />
+        <SelectorDot selected={card} onClick={handleDotClick} value={2} />
+        <SelectorDot selected={card} onClick={handleDotClick} value={3} />
       </div>
+      <AnimatePresence mode="wait">
+        {card === 0 && (
+          <ResultCardScores
+            key={0}
+            results={results}
+            animationType={animationType}
+          />
+        )}
+        {card === 1 && (
+          <ResultCardPercentage
+            key={1}
+            results={results}
+            percentages={percentages}
+            animationType={animationType}
+          />
+        )}
+        {card === 2 && (
+          <ResultCardVotes
+            key={2}
+            results={results}
+            votesPerVoter={poll.votesPerVoter}
+            animationType={animationType}
+          />
+        )}
+        {card === 3 && (
+          <ResultCardMeter
+            key={3}
+            results={results}
+            percentages={percentages}
+            animationType={animationType}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

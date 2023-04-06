@@ -5,10 +5,15 @@ import AnimatedPage from '../utils/AnimatedPage';
 export interface Props {
   results: Readonly<Results>;
   percentages: Record<string, number>;
+  animationType?: 'horizontal-toleft' | 'horizontal-toright';
 }
 
-const ResultCardMeter = ({ results, percentages }: Props) => (
-  <AnimatedPage>
+const ResultCardMeter = ({
+  results,
+  percentages,
+  animationType = 'horizontal-toright',
+}: Props) => (
+  <AnimatedPage animationType={animationType}>
     <>
       <div className="grid grid-cols-3 gap-4 pb-2 my-2 border-b-2 border-solid border-purple-70 pr-4">
         <div className="col-span-2 font-semibold">Candidate</div>
