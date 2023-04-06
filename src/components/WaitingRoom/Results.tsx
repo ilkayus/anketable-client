@@ -37,7 +37,7 @@ const Results = () => {
       <div className="mx-auto flex flex-col w-full justify-between items-center h-full max-w-sm">
         <div className="w-full">
           <h1 className="text-center mt-12 mb-4">Results</h1>
-          {poll?.results.length ? (
+          {poll?.hasEnded ? (
             <ResultCard results={poll?.results} />
           ) : (
             <p className="text-center text-xl">

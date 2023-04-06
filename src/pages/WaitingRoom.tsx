@@ -30,11 +30,10 @@ const WaitingRoom = () => {
       dispatch(exitRoom());
     };
   }, []);
-
   return !(connected && updated) ? null : (
     <AnimatedPage>
       {poll?.hasStarted ?? false ? (
-        hasVoted ? (
+        (poll?.hasEnded ?? false) || hasVoted ? (
           <Results />
         ) : (
           <Voting />

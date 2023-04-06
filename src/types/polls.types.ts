@@ -47,6 +47,7 @@ export type Results = Array<{
   nominationID: NominationID;
   nominationText: string;
   score: number;
+  votes: [number, number, number, number, number];
 }>;
 
 export type Poll = {
@@ -57,8 +58,10 @@ export type Poll = {
   adminID: string;
   nominations: Nominations;
   rankings: Rankings;
+  showResults: boolean;
   results: Results;
   hasStarted: boolean;
+  hasEnded: boolean;
 };
 export type AddParticipantFields = {
   pollID: string;
