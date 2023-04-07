@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
@@ -30,7 +30,13 @@ const ResultsList = ({ poll }: Props) => {
   const handleDotClick = (selected: number) => {
     if (card === selected) return;
     setAnimationType(
-      card > selected ? 'horizontal-toleft' : 'horizontal-toright',
+      card > selected
+        ? card === 3 && selected === 0
+          ? 'horizontal-toright'
+          : 'horizontal-toleft'
+        : card === 0 && selected === 3
+        ? 'horizontal-toleft'
+        : 'horizontal-toright',
     );
     setCard(selected);
   };

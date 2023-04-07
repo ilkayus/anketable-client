@@ -2,8 +2,8 @@ import { Link, Outlet } from 'react-router-dom';
 import NavbarHeader from './NavbarHeader';
 import { useAppSelector } from '../../hooks/typedReduxHooks';
 import { selectPollState } from '../../features/poll/pollSlice';
-import Loader from '../utils/Loader';
 import ToggleTheme from './ToggleTheme';
+import Loader from '../utils/Loader';
 
 const Layout = () => {
   const state = useAppSelector(selectPollState);

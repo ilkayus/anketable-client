@@ -165,3 +165,38 @@ body {
 .meterDarkred::-webkit-meter-optimum-value {
   @apply bg-[#FF0000];
 }
+
+.loader {
+  @apply bg-darkprimary-300/30 dark:bg-darkprimary-700/30 backdrop-blur-[5px] overflow-hidden w-full h-full fixed top-0 left-0 flex items-center justify-center content-center z-[10000];
+}
+
+.loaderElement {
+  @apply rounded-full border-[5px] border-solid border-[#555] m-3;
+}
+
+.loaderElement:nth-child(1) {
+  -webkit-animation: preloader 0.6s ease-in-out alternate infinite;
+  animation: preloader 0.6s ease-in-out alternate infinite;
+}
+
+.loaderElement:nth-child(2) {
+  -webkit-animation: preloader 0.6s ease-in-out alternate 0.2s infinite;
+  animation: preloader 0.6s ease-in-out alternate 0.2s infinite;
+}
+
+.loaderElement:nth-child(3) {
+  -webkit-animation: preloader 0.6s ease-in-out alternate 0.4s infinite;
+  animation: preloader 0.6s ease-in-out alternate 0.4s infinite;
+}
+
+@-webkit-keyframes preloader {
+  100% {
+    transform: scale(2);
+  }
+}
+
+@keyframes preloader {
+  100% {
+    transform: scale(2);
+  }
+}
