@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/indent */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ResultCardScores from './ResultCardScores';
 import type { Poll } from '../../types/polls.types';
@@ -21,12 +21,17 @@ const ResultsList = ({ poll }: Props) => {
   >('horizontal-toright');
 
   const { results } = poll;
-  const totalScore =
-    results.reduce((prev, result) => prev + result.score, 0) / 100;
-  const percentages: Record<string, number> = {};
-  results.forEach((result) => {
-    percentages[result.nominationID] = result.score / totalScore;
-  });
+
+  const percentages: Record<string, number> = useMemo(() => {
+    const p: Record<string, number> = {};
+    const totalScore =
+      results.reduce((prev, result) => prev + result.score, 0) / 100;
+    results.forEach((result) => {
+      p[result.nominationID] = result.score / totalScore;
+    });
+    return p;
+  }, [results]);
+
   const handleDotClick = (selected: number) => {
     if (card === selected) return;
     setAnimationType(
