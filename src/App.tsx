@@ -12,7 +12,7 @@ function App() {
         <Routes key={location.pathname} location={location}>
           <Route path="/" element={<Layout />}>
             <Route index element={<Pages.Homepage />} />
-            <Route path="anketable-client" element={<Pages.Homepage />} />
+            {/* <Route path="anketable-client" element={<Pages.Homepage />} /> */}
             <Route path={PageLinks.HOMEPAGE} element={<Pages.Homepage />} />
             <Route
               path={PageLinks.CREATE_POLL_PAGE}
