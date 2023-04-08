@@ -32,12 +32,9 @@ const ResultCardMeter = ({
               <div className=" grid sm:grid-cols-5 grid-cols-3 w-full h-full">
                 <meter
                   className={`sm:col-span-4 col-span-2 w-full h-full ${rankMeterColor(
-                    i,
+                    i + 1 < results.length ? i : 99,
                   )}`}
                   min="0"
-                  // optimum={100}
-                  // low={10}
-                  // high={40}
                   max="100"
                   value={percentages[result.nominationID]}
                 >
