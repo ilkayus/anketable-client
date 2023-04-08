@@ -49,6 +49,60 @@ export const LinkButtonTitles = {
   },
 } as const;
 
+export const InputLabels = {
+  ROOM_OWNER: {
+    en: 'Who is creating',
+    tr: 'Anket Sahibi',
+    placeholder: {
+      en: 'John Doe',
+      tr: 'İsminizi giriniz',
+    },
+  },
+  POLL_TOPIC: {
+    en: 'Poll Topic',
+    tr: 'Anket Konusu',
+    placeholder: {
+      en: 'Which comes first? Chicken or egg?',
+      tr: 'Menemen soğanlı mı olur soğansız mı?',
+    },
+  },
+  VOTES_PER_PARTICIPANT: {
+    en: 'Votes Per Participant',
+    tr: 'Katılımcı Başına Oy',
+  },
+  ROOM_CODE: {
+    en: 'Enter Code Provided by "Friend"',
+    tr: 'Katılman İçin Verilmiş Kodu Gir',
+    placeholder: {
+      en: 'XXXXXX',
+      tr: 'XXXXXX',
+    },
+  },
+  USERNAME: {
+    en: 'Your Name',
+    tr: 'Katılımcı',
+    placeholder: {
+      en: 'John Doe',
+      tr: 'İsminizi giriniz',
+    },
+  },
+};
+
+export const Headers = {
+  HOMEPAGE: {
+    en: 'Wellcome to Pollable',
+    tr: "Pollable'a Hoşgeldin",
+  },
+  POLL_TOPIC: {
+    en: 'Poll Topic',
+    tr: 'Anket Konusu',
+  },
+  POLL_ID: {
+    en: 'Poll Code',
+    tr: 'Anket Kodu',
+  },
+};
+
 export const PageLinks = {
   HOMEPAGE: '',
   CREATE_POLL_PAGE: 'createPoll',

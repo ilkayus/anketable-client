@@ -1,6 +1,8 @@
 /* eslint-disable no-confusing-arrow */
 export interface Props {
   message: string;
+  cancelButtonTitle?: string;
+  confirmButtonTitle?: string;
   showDialog: boolean;
   onCancel: () => void;
   onConfirm: () => void;
@@ -8,6 +10,8 @@ export interface Props {
 const ConfirmationDialog = ({
   message,
   showDialog,
+  cancelButtonTitle = 'Cancel',
+  confirmButtonTitle = 'Confirm',
   onCancel,
   onConfirm,
 }: Props) =>
@@ -19,10 +23,10 @@ const ConfirmationDialog = ({
         </div>
         <div className="flex flex-col justify-around my-2">
           <button type="button" className="box btn-red" onClick={onCancel}>
-            Cancel
+            {cancelButtonTitle}
           </button>
           <button type="button" className="box btn-green" onClick={onConfirm}>
-            Confirm
+            {confirmButtonTitle}
           </button>
         </div>
       </div>

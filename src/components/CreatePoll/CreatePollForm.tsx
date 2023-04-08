@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PageLinks, LinkButtonTitles } from '../utils/constants';
+import { PageLinks, LinkButtonTitles, InputLabels } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
 import { createPoll, selectPollState } from '../../features/poll/pollSlice';
@@ -33,21 +33,21 @@ const CreatePollForm = () => {
     <div className="flex flex-col w-full justify-around gap-[10vh] items-stretch h-full mx-auto">
       <div>
         <InputWithLabel
-          label="Who is creating"
+          label={InputLabels.ROOM_OWNER[l]}
           value={name}
           setValue={setName}
-          placeholder="John Doe"
+          placeholder={InputLabels.ROOM_OWNER.placeholder[l]}
           invalid={!isNameValid}
         />
         <InputWithLabel
-          label="Poll Topic"
+          label={InputLabels.POLL_TOPIC[l]}
           value={topic}
           setValue={setTopic}
-          placeholder="Which comes first? Chicken or egg?"
+          placeholder={InputLabels.POLL_TOPIC.placeholder[l]}
           invalid={!isTopicValid}
         />
         <InputWithLabel
-          label="Votes Per Participant"
+          label={InputLabels.VOTES_PER_PARTICIPANT[l]}
           value={votesPerVoter}
           setValue={setVotesPerVoter}
           type="number"

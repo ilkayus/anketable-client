@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { generateUsername } from '../../helpers/app.helpers';
-import { LinkButtonTitles, PageLinks } from '../utils/constants';
+import { InputLabels, LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
@@ -31,18 +31,18 @@ const JoinPollForm = () => {
     <div className="flex flex-col w-full justify-around gap-[10vh] items-stretch h-full mx-auto">
       <div>
         <InputWithLabel
-          label='Enter Code Provided by "Friend"'
+          label={InputLabels.ROOM_CODE[l]}
           value={pollID.toUpperCase()}
           setValue={setPollID}
-          placeholder="XXXXXX"
+          placeholder={InputLabels.ROOM_CODE.placeholder[l]}
           maxLength={6}
           invalid={!isPollIDValid}
         />
         <InputWithLabel
-          label="Your Name"
+          label={InputLabels.USERNAME[l]}
           value={username}
           setValue={setUsername}
-          placeholder="john doe"
+          placeholder={InputLabels.USERNAME.placeholder[l]}
           invalid={!isUsernameValid}
         />
       </div>
