@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks/typedReduxHooks';
 import { selectPollState } from '../../features/poll/pollSlice';
 import ToggleTheme from './ToggleTheme';
 import Loader from '../utils/Loader';
+import ToggleLang from './ToggleLang';
 
 const Layout = () => {
   const state = useAppSelector(selectPollState);
@@ -14,7 +15,10 @@ const Layout = () => {
         <Link to="/">
           <NavbarHeader />
         </Link>
-        <ToggleTheme />
+        <div>
+          <ToggleLang />
+          <ToggleTheme />
+        </div>
       </nav>
       <hr className=" border-gray-900 dark:border-darkprimary-300" />
       {state.pending ? (

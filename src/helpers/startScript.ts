@@ -16,6 +16,9 @@ const firebaseConfig = {
 const startScript = () => {
   const app = initializeApp(firebaseConfig);
   getAnalytics(app);
+  if (localStorage.lang === undefined) {
+    localStorage.lang = navigator.language.slice(0, 2);
+  }
   if (localStorage.theme === undefined) {
     localStorage.theme = 'light';
   }
