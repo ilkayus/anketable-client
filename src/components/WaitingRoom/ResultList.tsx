@@ -37,11 +37,11 @@ const ResultsList = ({ poll }: Props) => {
     setAnimationType(
       card > selected
         ? card === 3 && selected === 0
-          ? 'horizontal-toright'
-          : 'horizontal-toleft'
+          ? 'horizontal-toleft'
+          : 'horizontal-toright'
         : card === 0 && selected === 3
-        ? 'horizontal-toleft'
-        : 'horizontal-toright',
+        ? 'horizontal-toright'
+        : 'horizontal-toleft',
     );
     setCard(selected);
   };

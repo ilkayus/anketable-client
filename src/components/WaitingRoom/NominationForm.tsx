@@ -4,6 +4,8 @@ import { MdCancel } from 'react-icons/md';
 import type { Nominations } from '../../types/polls.types';
 import BottomSheet from '../utils/BottomSheet';
 import type { Props as BottomSheetProps } from '../utils/BottomSheet';
+import LinkButton from '../utils/LinkButton';
+import { LinkButtonTitles } from '../utils/constants';
 
 export interface Props {
   title?: string;
@@ -45,15 +47,12 @@ const NominationForm = ({
             }}
           />
         </div>
-        <button
-          type="button"
-          className="box btn-purple"
+        <LinkButton
+          color="purple"
           disabled={nominationText.length === 0 || nominationText.length > 100}
-          onClick={handleSubmitNomination}
-        >
-          Nominate
-        </button>
-
+          handleClick={handleSubmitNomination}
+          label={LinkButtonTitles.NOMINATE}
+        />
         <h2 className="text-center text-xl my-4 font-medium">Nominations</h2>
         <div className="w-full mb-2">
           {Object.entries(nominations).map(([nominationID, nomination]) => (

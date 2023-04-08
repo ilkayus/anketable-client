@@ -26,7 +26,7 @@ const AnimatedPage = ({ children, animationType = 'vertical' }: Props) => {
           <motion.div
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -400 }}
+            // exit={{ opacity: 0, x: -400 }}
             transition={{ duration: 0.2 }}
           >
             {children}
@@ -39,7 +39,7 @@ const AnimatedPage = ({ children, animationType = 'vertical' }: Props) => {
           <motion.div
             initial={{ opacity: 0, x: -400 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 400 }}
+            // exit={{ opacity: 0, x: 400 }}
             transition={{ duration: 0.2 }}
           >
             {children}
