@@ -4,11 +4,12 @@ import { generateUsername } from '../../helpers/app.helpers';
 import { LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
-import { useAppDispatch } from '../../hooks/typedReduxHooks';
-import { joinPoll } from '../../features/poll/pollSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
+import { joinPoll, selectPollState } from '../../features/poll/pollSlice';
 
 const JoinPollForm = () => {
   const dispatch = useAppDispatch();
+  const { l } = useAppSelector(selectPollState);
   const navigate = useNavigate();
   const [pollID, setPollID] = useState('');
   const [username, setUsername] = useState(generateUsername);
@@ -47,14 +48,14 @@ const JoinPollForm = () => {
       </div>
       <div className="flex flex-col">
         <LinkButton
-          label={LinkButtonTitles.JOIN_BUTTON}
+          label={LinkButtonTitles.JOIN_BUTTON[l]}
           link={PageLinks.HOMEPAGE}
           color="orange"
           disabled={!isFieldsValid}
           handleClick={handleJoinClick}
         />
         <LinkButton
-          label={LinkButtonTitles.START_OVER}
+          label={LinkButtonTitles.START_OVER[l]}
           link={PageLinks.HOMEPAGE}
           color="purple"
         />

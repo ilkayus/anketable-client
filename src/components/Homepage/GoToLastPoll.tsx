@@ -12,7 +12,7 @@ import {
 const GoToLastPoll = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { pollExists } = useAppSelector(selectPollState);
+  const { pollExists, l } = useAppSelector(selectPollState);
   useEffect(() => {
     dispatch(checkLastPoll());
   }, []);
@@ -22,7 +22,7 @@ const GoToLastPoll = () => {
   };
   return (
     <LinkButton
-      label={LinkButtonTitles.GOTO_LAST_BUTTON}
+      label={LinkButtonTitles.GOTO_LAST_BUTTON[l]}
       link={PageLinks.WAITING_ROOM}
       state="REJOIN"
       color="green"

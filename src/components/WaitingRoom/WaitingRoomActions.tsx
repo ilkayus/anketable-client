@@ -24,6 +24,7 @@ const WaitingRoomActions = () => {
     canVotingStart,
     participantCount,
     nominationCount,
+    l,
   } = useAppSelector(selectPollState);
   const dispatch = useAppDispatch();
   const [confirmationMessage, setConfirmationMessage] = useState('');
@@ -101,7 +102,7 @@ const WaitingRoomActions = () => {
             </div>
             <LinkButton
               color="orange"
-              label={LinkButtonTitles.START_VOTING}
+              label={LinkButtonTitles.START_VOTING[l]}
               disabled={!canVotingStart}
               handleClick={handleStartVoteClick}
             />
@@ -117,7 +118,7 @@ const WaitingRoomActions = () => {
         )}
         <LinkButton
           color="purple"
-          label={LinkButtonTitles.LEAVE_POLL}
+          label={LinkButtonTitles.LEAVE_POLL[l]}
           handleClick={() => {
             setShowLeaveConfirmation(true);
           }}
@@ -146,6 +147,7 @@ const WaitingRoomActions = () => {
       <NominationForm
         title={poll.topic}
         isOpen={showNominationForm}
+        buttonLabel={LinkButtonTitles.NOMINATE[l]}
         onClose={() => {
           setShowNominationForm(false);
         }}

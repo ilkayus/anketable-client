@@ -5,10 +5,10 @@ import type { Nominations } from '../../types/polls.types';
 import BottomSheet from '../utils/BottomSheet';
 import type { Props as BottomSheetProps } from '../utils/BottomSheet';
 import LinkButton from '../utils/LinkButton';
-import { LinkButtonTitles } from '../utils/constants';
 
 export interface Props {
   title?: string;
+  buttonLabel?: string;
   nominations?: Nominations;
   userID?: string;
   isAdmin: boolean;
@@ -20,6 +20,7 @@ const NominationForm = ({
   isOpen,
   onClose,
   title,
+  buttonLabel,
   nominations = {},
   onSubmitNomination,
   onRemoveNomination,
@@ -51,7 +52,7 @@ const NominationForm = ({
           color="purple"
           disabled={nominationText.length === 0 || nominationText.length > 100}
           handleClick={handleSubmitNomination}
-          label={LinkButtonTitles.NOMINATE}
+          label={buttonLabel}
         />
         <h2 className="text-center text-xl my-4 font-medium">Nominations</h2>
         <div className="w-full mb-2">

@@ -16,7 +16,7 @@ import { LinkButtonTitles, PageLinks } from '../utils/constants';
 const Voting = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { poll, isAdmin, nominationCount } = useAppSelector(selectPollState);
+  const { poll, isAdmin, nominationCount, l } = useAppSelector(selectPollState);
   const [rankings, setRankings] = useState<string[]>([]);
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [confirmVotes, setConfirmVotes] = useState(false);
@@ -82,7 +82,7 @@ const Voting = () => {
         <LinkButton
           disabled={rankings.length < (poll?.votesPerVoter ?? 100)}
           color="green"
-          label={LinkButtonTitles.SUBMIT_VOTES}
+          label={LinkButtonTitles.SUBMIT_VOTES[l]}
           handleClick={() => {
             setConfirmVotes(true);
           }}
@@ -99,7 +99,7 @@ const Voting = () => {
           <>
             <LinkButton
               color="red"
-              label={LinkButtonTitles.CANCEL_POLL}
+              label={LinkButtonTitles.CANCEL_POLL[l]}
               handleClick={() => {
                 setConfirmCancel(true);
               }}

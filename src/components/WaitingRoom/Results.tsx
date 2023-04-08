@@ -18,7 +18,7 @@ import ResultList from './ResultList';
 const Results = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { poll, participantCount, rankingsCount, isAdmin } =
+  const { poll, participantCount, rankingsCount, isAdmin, l } =
     useAppSelector(selectPollState);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isLeavePollOpen, setIsLeavePollOpen] = useState(false);
@@ -62,7 +62,7 @@ const Results = () => {
             <>
               <LinkButton
                 color="orange"
-                label={LinkButtonTitles.END_POLL}
+                label={LinkButtonTitles.END_POLL[l]}
                 handleClick={() => {
                   setIsConfirmationOpen(true);
                 }}
@@ -89,7 +89,7 @@ const Results = () => {
           {!!poll?.hasEnded && (
             <LinkButton
               color="purple"
-              label={LinkButtonTitles.LEAVE_POLL}
+              label={LinkButtonTitles.LEAVE_POLL[l]}
               handleClick={() => {
                 setIsLeavePollOpen(true);
               }}

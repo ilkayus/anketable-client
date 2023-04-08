@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { PageLinks, LinkButtonTitles } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
 import LinkButton from '../utils/LinkButton';
-import { createPoll } from '../../features/poll/pollSlice';
-import { useAppDispatch } from '../../hooks/typedReduxHooks';
+import { createPoll, selectPollState } from '../../features/poll/pollSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 
 const CreatePollForm = () => {
   const dispatch = useAppDispatch();
+  const { l } = useAppSelector(selectPollState);
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [topic, setTopic] = useState('');
@@ -55,14 +56,14 @@ const CreatePollForm = () => {
       </div>
       <div className="flex flex-col">
         <LinkButton
-          label={LinkButtonTitles.CREATE_BUTTON}
+          label={LinkButtonTitles.CREATE_BUTTON[l]}
           link={PageLinks.HOMEPAGE}
           color="orange"
           disabled={isCreateable}
           handleClick={handleCreateClick}
         />
         <LinkButton
-          label={LinkButtonTitles.START_OVER}
+          label={LinkButtonTitles.START_OVER[l]}
           link={PageLinks.HOMEPAGE}
           color="purple"
         />
