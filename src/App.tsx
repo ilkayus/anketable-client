@@ -7,7 +7,7 @@ import Pages from './pages';
 function App() {
   const location = useLocation();
   return (
-    <div className="max-w-screen-sm mx-auto mt-2 pb-4 h-[100vh]">
+    <div className="max-w-screen-sm mx-auto pb-4 h-[100vh]">
       <AnimatePresence mode="wait">
         <Routes key={location.pathname} location={location}>
           <Route path="/" element={<Layout />}>
