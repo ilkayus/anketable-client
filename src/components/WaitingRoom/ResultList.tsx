@@ -9,6 +9,7 @@ import ResultCardVotes from './ResultCardVotes';
 import ResultCardMeter from './ResultCardMeter';
 import SelectorDot from '../utils/SelectorDot';
 import SwipeableWrapper from '../utils/SwipeableWrapper';
+import ResultCardHeader from './ResultCardHeader';
 
 export interface Props {
   poll: Poll;
@@ -55,6 +56,7 @@ const ResultsList = ({ poll }: Props) => {
         <SelectorDot selected={card} onClick={handleDotClick} value={3} />
       </div>
       <SwipeableWrapper value={card} handler={handleDotClick}>
+        <ResultCardHeader />
         <AnimatePresence mode="wait">
           {card === 0 && (
             <ResultCardScores

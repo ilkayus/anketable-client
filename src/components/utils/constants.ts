@@ -101,6 +101,29 @@ export const Headers = {
     en: 'Poll Code',
     tr: 'Anket Kodu',
   },
+  RESULTS_PAGE: {
+    en: 'Results',
+    tr: 'Sonuçlar',
+  },
+  VOTING_PAGE: {
+    en: 'Voting Page',
+    tr: 'Oylama Sayfası',
+  },
+};
+
+export const PollRoomLabels = {
+  CANDIDATE: {
+    en: 'Candidate',
+    tr: 'Aday',
+  },
+  SCORE: {
+    en: 'Score',
+    tr: 'Skor',
+  },
+  VOTES_REMAINING: {
+    en: 'Remaining votes:',
+    tr: 'Kalan oy sayısı:',
+  },
 };
 
 export const PageLinks = {

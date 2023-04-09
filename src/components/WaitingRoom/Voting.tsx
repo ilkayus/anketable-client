@@ -11,7 +11,12 @@ import {
   submitRankings,
 } from '../../features/poll/pollSlice';
 import LinkButton from '../utils/LinkButton';
-import { LinkButtonTitles, PageLinks } from '../utils/constants';
+import {
+  Headers,
+  LinkButtonTitles,
+  PageLinks,
+  PollRoomLabels,
+} from '../utils/constants';
 
 const Voting = () => {
   const dispatch = useAppDispatch();
@@ -51,7 +56,7 @@ const Voting = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-center">Voting Page</h1>
+      <h1 className="text-center">{Headers.VOTING_PAGE[l]}</h1>
       {poll && (
         <>
           <h3 className="text-center text-lg font-semibold mb-6">
@@ -60,7 +65,8 @@ const Voting = () => {
             {nominationCount} nominated
           </h3>
           <h3 className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
-            {poll.votesPerVoter - rankings.length} Votes remaining
+            {PollRoomLabels.VOTES_REMAINING[l]}{' '}
+            {poll.votesPerVoter - rankings.length}
           </h3>
         </>
       )}
