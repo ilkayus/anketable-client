@@ -5,11 +5,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  selectPollState,
   closePoll,
-  leavePoll,
   showResults,
-} from '../../features/poll/pollSlice';
+  unSubscribeFromPoll,
+} from '../../api/polls.gateway';
+import { selectPollState, leavePoll } from '../../features/poll/pollSlice';
 import { replaceJSX } from '../../helpers/app.helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
@@ -32,17 +32,18 @@ const Results = () => {
   const [isLeavePollOpen, setIsLeavePollOpen] = useState(false);
 
   const handleLeavePoll = () => {
+    unSubscribeFromPoll();
     dispatch(leavePoll());
     navigate(`/${PageLinks.HOMEPAGE}`);
   };
 
   const handleClosePoll = () => {
-    dispatch(closePoll());
+    closePoll();
     setIsConfirmationOpen(false);
   };
 
-  const handleShowResults = (event: any) => {
-    dispatch(showResults(event.target.checked));
+  const handleShowResults = (event: React.ChangeEvent<HTMLInputElement>) => {
+    showResults({ showResults: event.target.checked });
   };
 
   return (
@@ -114,9 +115,7 @@ const Results = () => {
           )}
         </div>
         {!poll?.hasEnded && poll?.showResults ? (
-          <div className="max-h-[50vh] mt-10">
-            <ResultList poll={poll} />
-          </div>
+          <ResultList poll={poll} />
         ) : null}
       </div>
       {isAdmin && (

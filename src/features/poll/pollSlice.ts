@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store/store';
 import type {
+  AveliableLanguages,
   CreatePollFields,
   JoinPollFields,
   Poll,
@@ -11,8 +12,13 @@ import type {
 } from '../../types/polls.types';
 import type { PageLinks } from '../../components/utils/constants';
 import * as helpers from '../../helpers/app.helpers';
-import * as WS from '../../api/polls.gateway';
 import * as API from '../../api';
+
+const getLanguage = () => {
+  const ln = localStorage.lang ?? navigator.language.slice(0, 2);
+  if (ln === 'tr') return 'tr';
+  return 'en';
+};
 
 interface PollState {
   poll?: Poll;
@@ -31,7 +37,7 @@ interface PollState {
   rankingsCount: number;
   canVotingStart: boolean;
   leavePoll: boolean;
-  l: 'tr' | 'en';
+  l: AveliableLanguages;
 }
 const initialState: PollState = {
   poll: undefined,
@@ -50,7 +56,7 @@ const initialState: PollState = {
   rankingsCount: 0,
   currentPage: 'HOMEPAGE',
   accessToken: null,
-  l: localStorage.lang ?? 'tr',
+  l: getLanguage(),
 };
 // __________________________________________________________________________
 export const createPoll = createAsyncThunk(
@@ -86,10 +92,8 @@ export const pollSlice = createSlice({
   name: 'pollState',
   initialState,
   reducers: {
-    initSocket: () => {
-      WS.getSocket();
-    },
     toggleLanguage: (state) => {
+      localStorage.lang = state.l === 'tr' ? 'en' : 'tr';
       state.l = state.l === 'tr' ? 'en' : 'tr';
     },
     checkLastPoll: (state) => {
@@ -127,29 +131,12 @@ export const pollSlice = createSlice({
     setUpdated: (state, action: PayloadAction<boolean>) => {
       state.updated = action.payload;
     },
-    enterRoom: (state) => {
-      WS.subscribeToPoll(state.accessToken as string);
-    },
     exitRoom: (state) => {
-      WS.unSubscribeFromPoll();
       state.connected = false;
       state.updated = false;
     },
     leavePoll: (state) => {
-      WS.unSubscribeFromPoll();
       state.leavePoll = true;
-    },
-    cancelPoll: () => {
-      WS.cancelPoll();
-    },
-    closePoll: () => {
-      WS.closePoll();
-    },
-    showResults: (state, action: PayloadAction<boolean>) => {
-      WS.showResults({ showResults: action.payload });
-    },
-    submitRankings: (state, action: PayloadAction<string[]>) => {
-      WS.submitRankings({ rankings: action.payload });
     },
   },
   extraReducers: (builder) => {
@@ -196,18 +183,12 @@ export const pollSlice = createSlice({
 });
 
 export const {
-  initSocket,
   checkLastPoll,
-  enterRoom,
   setPoll,
   setConnected,
   setUpdated,
   exitRoom,
   leavePoll,
-  cancelPoll,
-  closePoll,
-  showResults,
-  submitRankings,
   toggleLanguage,
 } = pollSlice.actions;
 export const selectPollState = (state: RootState) => state.pollState;

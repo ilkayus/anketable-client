@@ -4,12 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
 import RankedCheckBox from './RankedCheckBox';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
-import {
-  cancelPoll,
-  leavePoll,
-  selectPollState,
-  submitRankings,
-} from '../../features/poll/pollSlice';
+import { leavePoll, selectPollState } from '../../features/poll/pollSlice';
 import LinkButton from '../utils/LinkButton';
 import {
   ConfirmationMessages,
@@ -18,6 +13,11 @@ import {
   PageLinks,
   PollRoomLabels,
 } from '../utils/constants';
+import {
+  cancelPoll,
+  submitRankings,
+  unSubscribeFromPoll,
+} from '../../api/polls.gateway';
 
 const Voting = () => {
   const dispatch = useAppDispatch();
@@ -46,13 +46,14 @@ const Voting = () => {
   };
 
   const handleCancelPoll = () => {
-    dispatch(cancelPoll());
+    cancelPoll();
+    unSubscribeFromPoll();
     dispatch(leavePoll());
     navigate(`/${PageLinks.HOMEPAGE}`);
   };
 
   const handleSubmitRankings = () => {
-    dispatch(submitRankings(rankings));
+    submitRankings({ rankings });
   };
 
   return (

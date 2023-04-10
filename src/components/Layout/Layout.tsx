@@ -10,7 +10,7 @@ const Layout = () => {
   const state = useAppSelector(selectPollState);
 
   return (
-    <div className="overflow-x-hidden overflow-y-scroll h-full max-w-screen-sm noScrollbar">
+    <div className="overflow-hidden h-full max-w-screen-sm noScrollbar">
       <nav className="flex flex-row justify-between items-center sticky top-0 z-40 my-1 h-12 w-full bg-white/60 dark:bg-darkprimary-900/60 backdrop-blur-[5px]">
         <Link to="/">
           <NavbarHeader />

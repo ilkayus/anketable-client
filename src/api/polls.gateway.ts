@@ -24,8 +24,8 @@ const getConnected = (dispatch: any) => (setConnected: any) => {
   });
 };
 
-const subscribeToPoll = (token: string) => {
-  webSocket.createSocketConnection(token);
+const subscribeToPoll = (token: string | null) => {
+  if (token !== null) webSocket.createSocketConnection(token);
 };
 
 const unSubscribeFromPoll = () => {

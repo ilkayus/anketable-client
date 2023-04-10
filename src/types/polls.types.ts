@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
+
+export type AveliableLanguages = 'tr' | 'en';
+
 export type CreatePollFields = {
   topic: string;
   votesPerVoter: number;

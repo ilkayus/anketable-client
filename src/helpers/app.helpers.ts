@@ -2,7 +2,7 @@ import jwtDecode from 'jwt-decode';
 import type { PollAccessTokenDecodeReturn } from '../types/polls.types';
 
 export const generateUsername = () =>
-  `anon-${Math.floor(Math.random() * 1000)}`;
+  `anon-${Math.floor(Math.random() * 1000000)}`;
 
 export const rankColor = (t?: number) => {
   switch (t) {

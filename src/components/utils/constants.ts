@@ -99,7 +99,7 @@ export const Headers = {
   },
   POLL_ID: {
     en: 'Poll Code',
-    tr: 'Anket Kodu',
+    tr: 'Anket Kodu ',
   },
   RESULTS_PAGE: {
     en: 'Results',
