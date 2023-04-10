@@ -49,48 +49,52 @@ const ResultsList = ({ poll }: Props) => {
 
   return (
     <>
-      <div className="flex flex-row justify-center gap-6 my-1">
-        <SelectorDot selected={card} onClick={handleDotClick} value={0} />
-        <SelectorDot selected={card} onClick={handleDotClick} value={1} />
-        <SelectorDot selected={card} onClick={handleDotClick} value={2} />
-        <SelectorDot selected={card} onClick={handleDotClick} value={3} />
+      <hr />
+      <div className="px-2 py-2 max-h-[60vh] overflow-x-hidden overflow-y-scroll noScrollbar ">
+        <div className="flex flex-row justify-center gap-6 my-1">
+          <SelectorDot selected={card} onClick={handleDotClick} value={0} />
+          <SelectorDot selected={card} onClick={handleDotClick} value={1} />
+          <SelectorDot selected={card} onClick={handleDotClick} value={2} />
+          <SelectorDot selected={card} onClick={handleDotClick} value={3} />
+        </div>
+        <SwipeableWrapper value={card} handler={handleDotClick}>
+          <ResultCardHeader />
+          <AnimatePresence mode="wait">
+            {card === 0 && (
+              <ResultCardScores
+                key={0}
+                results={results}
+                animationType={animationType}
+              />
+            )}
+            {card === 1 && (
+              <ResultCardPercentage
+                key={1}
+                results={results}
+                percentages={percentages}
+                animationType={animationType}
+              />
+            )}
+            {card === 2 && (
+              <ResultCardVotes
+                key={2}
+                results={results}
+                votesPerVoter={poll.votesPerVoter}
+                animationType={animationType}
+              />
+            )}
+            {card === 3 && (
+              <ResultCardMeter
+                key={3}
+                results={results}
+                percentages={percentages}
+                animationType={animationType}
+              />
+            )}
+          </AnimatePresence>
+        </SwipeableWrapper>
       </div>
-      <SwipeableWrapper value={card} handler={handleDotClick}>
-        <ResultCardHeader />
-        <AnimatePresence mode="wait">
-          {card === 0 && (
-            <ResultCardScores
-              key={0}
-              results={results}
-              animationType={animationType}
-            />
-          )}
-          {card === 1 && (
-            <ResultCardPercentage
-              key={1}
-              results={results}
-              percentages={percentages}
-              animationType={animationType}
-            />
-          )}
-          {card === 2 && (
-            <ResultCardVotes
-              key={2}
-              results={results}
-              votesPerVoter={poll.votesPerVoter}
-              animationType={animationType}
-            />
-          )}
-          {card === 3 && (
-            <ResultCardMeter
-              key={3}
-              results={results}
-              percentages={percentages}
-              animationType={animationType}
-            />
-          )}
-        </AnimatePresence>
-      </SwipeableWrapper>
+      <hr />
     </>
   );
 };

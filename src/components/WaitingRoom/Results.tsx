@@ -114,9 +114,7 @@ const Results = () => {
           )}
         </div>
         {!poll?.hasEnded && poll?.showResults ? (
-          <div className="max-h-[50vh] mt-10">
-            <ResultList poll={poll} />
-          </div>
+          <ResultList poll={poll} />
         ) : null}
       </div>
       {isAdmin && (
