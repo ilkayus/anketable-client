@@ -189,6 +189,21 @@ export const ConfirmationMessages = {
   },
 };
 
+export const Tooltips = {
+  COPY_CODE: {
+    en: 'Click to copy poll code!',
+    tr: 'Anket kodunu kopyala!',
+  },
+  COPY_SHARE_LINK: {
+    en: 'Click to copy share link!',
+    tr: 'Ankete davet linkini kopyala!',
+  },
+  COPY_COPIED: {
+    en: 'Copied!',
+    tr: 'Kopyalandı!',
+  },
+};
+
 export const PageLinks = {
   HOMEPAGE: '',
   CREATE_POLL_PAGE: 'createPoll',
