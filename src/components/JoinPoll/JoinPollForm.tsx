@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { generateUsername } from '../../helpers/app.helpers';
 import { InputLabels, LinkButtonTitles, PageLinks } from '../utils/constants';
 import InputWithLabel from '../utils/InputWithLabel';
@@ -11,11 +11,16 @@ const JoinPollForm = () => {
   const dispatch = useAppDispatch();
   const { l } = useAppSelector(selectPollState);
   const navigate = useNavigate();
+  const location = useLocation();
   const [pollID, setPollID] = useState('');
   const [username, setUsername] = useState(generateUsername);
   const isUsernameValid = username.length > 1 && username.length < 25;
   const isPollIDValid = pollID.length === 6;
   const isFieldsValid = isUsernameValid && isPollIDValid;
+
+  useEffect(() => {
+    if (location.search.length === 7) setPollID(location.search.slice(1));
+  }, []);
 
   const handleJoinClick = () => {
     void dispatch(
