@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
@@ -9,9 +10,16 @@ import {
   leavePoll,
   showResults,
 } from '../../features/poll/pollSlice';
+import { replaceJSX } from '../../helpers/app.helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
-import { LinkButtonTitles, PageLinks } from '../utils/constants';
+import {
+  ConfirmationMessages,
+  Headers,
+  LinkButtonTitles,
+  PageLinks,
+  PollRoomLabels,
+} from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
 import ResultList from './ResultList';
 
@@ -41,19 +49,26 @@ const Results = () => {
     <>
       <div className="flex flex-col w-full justify-between h-full max-w-screen-sm">
         <div className="w-full">
-          <h1 className="text-center mt-12 mb-4">Results</h1>
+          <h1 className="text-center mt-12 mb-4">{Headers.RESULTS_PAGE[l]}</h1>
           {poll?.hasEnded ? (
             <ResultList poll={poll} />
           ) : (
             <p className="text-center text-xl">
-              <span className="text-primary-600 dark:text-primary-300 font-extrabold">
-                {rankingsCount}
-              </span>{' '}
-              of{' '}
-              <span className="text-secondary-600 dark:text-secondary-300 font-extrabold">
-                {participantCount}
-              </span>{' '}
-              participants have voted
+              {replaceJSX(
+                PollRoomLabels.RESULTS_PAGE_SUBHEADING[l],
+                '{0}',
+                <span className="text-primary-600 dark:text-primary-300 font-extrabold">
+                  {rankingsCount}
+                </span>,
+              ).map((el) =>
+                replaceJSX(
+                  el,
+                  '{1}',
+                  <span className="text-secondary-600 dark:text-secondary-300 font-extrabold">
+                    {participantCount}
+                  </span>,
+                ),
+              )}
             </p>
           )}
         </div>
@@ -73,17 +88,19 @@ const Results = () => {
                   type="checkbox"
                   onChange={handleShowResults}
                 />
-                <h3>Show momentry results.</h3>
+                <h3>{PollRoomLabels.SHOW_RESULTS_CHECKBOX[l]}</h3>
               </div>
             </>
           )}
           {!isAdmin && !poll?.hasEnded && (
             <div className="my-2 italic">
-              Waiting for Admin,{' '}
-              <span className="font-semibold">
-                {poll?.participants[poll?.adminID]}
-              </span>
-              , to finalize the poll.
+              {replaceJSX(
+                PollRoomLabels.WAITING_POLL_END_MESSAGE[l],
+                '{0}',
+                <span className="font-semibold">
+                  {poll?.participants[poll?.adminID]}
+                </span>,
+              )}
             </div>
           )}
           {!!poll?.hasEnded && (
@@ -104,7 +121,9 @@ const Results = () => {
       </div>
       {isAdmin && (
         <ConfirmationDialog
-          message="Are you sure close the poll and calculate the results?"
+          message={ConfirmationMessages.END_POLL[l]}
+          confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+          cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
           showDialog={isConfirmationOpen}
           onCancel={() => {
             setIsConfirmationOpen(false);
@@ -114,7 +133,9 @@ const Results = () => {
       )}
       {isLeavePollOpen && (
         <ConfirmationDialog
-          message="You'll lose ya results. Dat alright?"
+          message={ConfirmationMessages.LEAVE_POLL[l]}
+          confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+          cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
           showDialog={isLeavePollOpen}
           onCancel={() => {
             setIsLeavePollOpen(false);

@@ -12,6 +12,7 @@ import {
 } from '../../features/poll/pollSlice';
 import LinkButton from '../utils/LinkButton';
 import {
+  ConfirmationMessages,
   Headers,
   LinkButtonTitles,
   PageLinks,
@@ -60,13 +61,15 @@ const Voting = () => {
       {poll && (
         <>
           <h3 className="text-center text-lg font-semibold mb-6">
-            Select Your Top {poll?.votesPerVoter}{' '}
-            {poll?.votesPerVoter > 1 ? 'Choices' : 'Choice'} in{' '}
-            {nominationCount} nominated
+            {PollRoomLabels.VOTING_PAGE_SUBHEADING[l]
+              .replace('{0}', poll?.votesPerVoter.toString())
+              .replace('{1}', nominationCount.toString())}
           </h3>
           <h3 className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
-            {PollRoomLabels.VOTES_REMAINING[l]}{' '}
-            {poll.votesPerVoter - rankings.length}
+            {PollRoomLabels.VOTES_REMAINING[l].replace(
+              '{0}',
+              (poll.votesPerVoter - rankings.length).toString(),
+            )}
           </h3>
         </>
       )}
@@ -94,7 +97,9 @@ const Voting = () => {
           }}
         />
         <ConfirmationDialog
-          message="You cannot change your vote after submitting"
+          message={ConfirmationMessages.SUBMIT_VOTE[l]}
+          confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+          cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
           showDialog={confirmVotes}
           onCancel={() => {
             setConfirmVotes(false);
@@ -111,7 +116,9 @@ const Voting = () => {
               }}
             />
             <ConfirmationDialog
-              message="This will cancel the poll and remove all users"
+              message={ConfirmationMessages.CANCEL_POLL[l]}
+              confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+              cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
               showDialog={confirmCancel}
               onCancel={() => {
                 setConfirmCancel(false);

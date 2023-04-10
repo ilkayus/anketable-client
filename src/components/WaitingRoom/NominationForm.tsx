@@ -9,6 +9,7 @@ import LinkButton from '../utils/LinkButton';
 export interface Props {
   title?: string;
   buttonLabel?: string;
+  subtitle?: string;
   nominations?: Nominations;
   userID?: string;
   isAdmin: boolean;
@@ -21,6 +22,7 @@ const NominationForm = ({
   onClose,
   title,
   buttonLabel,
+  subtitle,
   nominations = {},
   onSubmitNomination,
   onRemoveNomination,
@@ -54,7 +56,7 @@ const NominationForm = ({
           handleClick={handleSubmitNomination}
           label={buttonLabel}
         />
-        <h2 className="text-center text-xl my-4 font-medium">Nominations</h2>
+        <h2 className="text-center text-xl my-4 font-medium">{subtitle}</h2>
         <div className="w-full mb-2">
           {Object.entries(nominations).map(([nominationID, nomination]) => (
             <div

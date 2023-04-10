@@ -121,8 +121,71 @@ export const PollRoomLabels = {
     tr: 'Skor',
   },
   VOTES_REMAINING: {
-    en: 'Remaining votes:',
-    tr: 'Kalan oy sayısı:',
+    en: 'Remaining votes: {0}',
+    tr: 'Kalan oy sayısı: {0}',
+  },
+  VOTING_PAGE_SUBHEADING: {
+    en: 'Select your top {0} choices in {1} nominated',
+    tr: 'Aday gösterilen {1} seçenekten en iyi {0} adayı seç',
+  },
+  RESULTS_PAGE_SUBHEADING: {
+    en: '{0} of {1} participants have voted',
+    tr: '{1} katılımcıdan {0} tanesi oy kullandı',
+  },
+  SHOW_RESULTS_CHECKBOX: {
+    en: 'Show momentry results.',
+    tr: 'Anlık sonuçları göster.',
+  },
+  WAITING_POLL_END_MESSAGE: {
+    en: 'Waiting for Admin, {0}, to finalize the poll.',
+    tr: 'Oda sahibinin, {0}, anketi bitirmesi bekleniyor.',
+  },
+  NOMINATIONS_REQUIRED: {
+    en: '{0} Nominations Required to Start!',
+    tr: '{0} Aday olduğunda oylama başlayabilir!',
+  },
+  WAITING_POLL_START_MESSAGE: {
+    en: 'Waiting for Admin, {0}, to start the poll.',
+    tr: 'Oda sahibinin, {0}, anketi başlatması bekleniyor.',
+  },
+  NOMINATION_SUBTITLE: {
+    en: 'Nominations',
+    tr: 'Adaylar',
+  },
+};
+
+export const ConfirmationMessages = {
+  CONFIRM_BUTTON: {
+    en: 'Confirm',
+    tr: 'Onayla',
+  },
+  CANCEL_BUTTON: {
+    en: 'Cancel',
+    tr: 'İptal',
+  },
+  SUBMIT_VOTE: {
+    en: 'Your selection will be saved and can not change after',
+    tr: 'Emin misin? Son kararın mı?',
+  },
+  CANCEL_POLL: {
+    en: 'This will cancel the poll and remove all users',
+    tr: 'Anket iptal edilecek ve katılımcılar çıkarılacak',
+  },
+  END_POLL: {
+    en: 'Are you sure close the poll and calculate the results?',
+    tr: 'Oylama bitirilecek ve verilmiş olan oylarla sonuçlar kesinleşecek',
+  },
+  LEAVE_POLL: {
+    en: 'You will not access the result after leaving',
+    tr: 'Ayrıldıktan sonra sonuçlara erişemeyeceksin',
+  },
+  REMOVE_PARTICIPANT: {
+    en: 'Remove {0} from poll?',
+    tr: '{0} isimli katılımcı oylamadan çıkakarılsın mı?',
+  },
+  LEAVE_WAITING_ROOM: {
+    en: 'You are leaving the poll',
+    tr: 'Anketten ayrılıyorsunuz!',
   },
 };
 
