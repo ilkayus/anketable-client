@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { MdContentCopy } from 'react-icons/md';
 import ColorizedText from '../utils/ColorizedText';
 import { copyToClipboard } from '../../helpers/app.helpers';
+import { selectPollState } from '../../features/poll/pollSlice';
+import { useAppSelector } from '../../hooks/typedReduxHooks';
+import { Headers } from '../utils/constants';
 
 export interface Props {
   topic: string;
@@ -11,6 +14,7 @@ export interface Props {
 }
 
 const DisplayShortPollInfo = ({ topic, id }: Props) => {
+  const { l } = useAppSelector(selectPollState);
   const [tooltip, setTooltip] = useState('Click to copy!');
 
   const handleCopyClick = () => {
@@ -23,7 +27,7 @@ const DisplayShortPollInfo = ({ topic, id }: Props) => {
 
   return (
     <div>
-      <h2 className="text-center">Poll Topic</h2>
+      <h2 className="text-center">{Headers.POLL_TOPIC[l]}</h2>
       <p className="italic text-center mb-4">{topic}</p>
       <div
         onClick={handleCopyClick}
@@ -32,7 +36,7 @@ const DisplayShortPollInfo = ({ topic, id }: Props) => {
         <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8">
           {tooltip}
         </span>
-        <h2 className="text-center">Poll ID</h2>
+        <h2 className="text-center">{Headers.POLL_ID[l]}</h2>
         <div className="font-extrabold mr-2 flex flex-row gap-3 text-center justify-center">
           <ColorizedText text={id} />
           <MdContentCopy size={24} />

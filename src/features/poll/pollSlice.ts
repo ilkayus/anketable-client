@@ -31,6 +31,7 @@ interface PollState {
   rankingsCount: number;
   canVotingStart: boolean;
   leavePoll: boolean;
+  l: 'tr' | 'en';
 }
 const initialState: PollState = {
   poll: undefined,
@@ -49,6 +50,7 @@ const initialState: PollState = {
   rankingsCount: 0,
   currentPage: 'HOMEPAGE',
   accessToken: null,
+  l: localStorage.lang ?? 'tr',
 };
 // __________________________________________________________________________
 export const createPoll = createAsyncThunk(
@@ -86,6 +88,9 @@ export const pollSlice = createSlice({
   reducers: {
     initSocket: () => {
       WS.getSocket();
+    },
+    toggleLanguage: (state) => {
+      state.l = state.l === 'tr' ? 'en' : 'tr';
     },
     checkLastPoll: (state) => {
       if (state.leavePoll) {
@@ -203,6 +208,7 @@ export const {
   closePoll,
   showResults,
   submitRankings,
+  toggleLanguage,
 } = pollSlice.actions;
 export const selectPollState = (state: RootState) => state.pollState;
 export default pollSlice.reducer;

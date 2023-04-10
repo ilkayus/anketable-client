@@ -9,6 +9,7 @@ import ResultCardVotes from './ResultCardVotes';
 import ResultCardMeter from './ResultCardMeter';
 import SelectorDot from '../utils/SelectorDot';
 import SwipeableWrapper from '../utils/SwipeableWrapper';
+import ResultCardHeader from './ResultCardHeader';
 
 export interface Props {
   poll: Poll;
@@ -37,11 +38,11 @@ const ResultsList = ({ poll }: Props) => {
     setAnimationType(
       card > selected
         ? card === 3 && selected === 0
-          ? 'horizontal-toright'
-          : 'horizontal-toleft'
+          ? 'horizontal-toleft'
+          : 'horizontal-toright'
         : card === 0 && selected === 3
-        ? 'horizontal-toleft'
-        : 'horizontal-toright',
+        ? 'horizontal-toright'
+        : 'horizontal-toleft',
     );
     setCard(selected);
   };
@@ -55,6 +56,7 @@ const ResultsList = ({ poll }: Props) => {
         <SelectorDot selected={card} onClick={handleDotClick} value={3} />
       </div>
       <SwipeableWrapper value={card} handler={handleDotClick}>
+        <ResultCardHeader />
         <AnimatePresence mode="wait">
           {card === 0 && (
             <ResultCardScores

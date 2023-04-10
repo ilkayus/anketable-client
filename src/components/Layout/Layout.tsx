@@ -4,17 +4,21 @@ import { useAppSelector } from '../../hooks/typedReduxHooks';
 import { selectPollState } from '../../features/poll/pollSlice';
 import ToggleTheme from './ToggleTheme';
 import Loader from '../utils/Loader';
+import ToggleLang from './ToggleLang';
 
 const Layout = () => {
   const state = useAppSelector(selectPollState);
 
   return (
     <div className="overflow-x-hidden overflow-y-scroll h-full max-w-screen-sm noScrollbar">
-      <nav className="flex flex-row justify-between items-center sticky top-0 z-40 mb-1 h-10 w-full bg-white/60 dark:bg-darkprimary-900/60 backdrop-blur-[5px]">
+      <nav className="flex flex-row justify-between items-center sticky top-0 z-40 my-1 h-12 w-full bg-white/60 dark:bg-darkprimary-900/60 backdrop-blur-[5px]">
         <Link to="/">
           <NavbarHeader />
         </Link>
-        <ToggleTheme />
+        <div>
+          <ToggleLang />
+          <ToggleTheme />
+        </div>
       </nav>
       <hr className=" border-gray-900 dark:border-darkprimary-300" />
       {state.pending ? (

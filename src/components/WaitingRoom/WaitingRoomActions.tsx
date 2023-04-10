@@ -4,10 +4,16 @@ import { MdPeopleOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import * as WS from '../../api/polls.gateway';
 import { leavePoll, selectPollState } from '../../features/poll/pollSlice';
+import { replaceJSX } from '../../helpers/app.helpers';
 import { useAppDispatch, useAppSelector } from '../../hooks/typedReduxHooks';
 import type { Poll, UserInfo } from '../../types/polls.types';
 import ConfirmationDialog from '../utils/ConfirmationDialog';
-import { LinkButtonTitles, PageLinks } from '../utils/constants';
+import {
+  ConfirmationMessages,
+  LinkButtonTitles,
+  PageLinks,
+  PollRoomLabels,
+} from '../utils/constants';
 import LinkButton from '../utils/LinkButton';
 import NominationForm from './NominationForm';
 import ParticipantList from './ParticipantList';
@@ -24,6 +30,7 @@ const WaitingRoomActions = () => {
     canVotingStart,
     participantCount,
     nominationCount,
+    l,
   } = useAppSelector(selectPollState);
   const dispatch = useAppDispatch();
   const [confirmationMessage, setConfirmationMessage] = useState('');
@@ -56,7 +63,12 @@ const WaitingRoomActions = () => {
   };
 
   const handleRemoveParticipant = (id: string) => {
-    setConfirmationMessage(`Remove ${poll.participants[id]} from poll?`);
+    setConfirmationMessage(
+      ConfirmationMessages.REMOVE_PARTICIPANT[l].replace(
+        '{0}',
+        poll.participants[id],
+      ),
+    );
     setParticipantToRemove(id);
     setShowConfirmationMessage(true);
   };
@@ -97,33 +109,40 @@ const WaitingRoomActions = () => {
         {isAdmin ? (
           <>
             <div className="my-2 italic text-center">
-              {minimumNominations} Nominations Required to Start!
+              {PollRoomLabels.NOMINATIONS_REQUIRED[l].replace(
+                '{0}',
+                minimumNominations.toString(),
+              )}
             </div>
             <LinkButton
               color="orange"
-              label={LinkButtonTitles.START_VOTING}
+              label={LinkButtonTitles.START_VOTING[l]}
               disabled={!canVotingStart}
               handleClick={handleStartVoteClick}
             />
           </>
         ) : (
           <div className="my-2 italic text-center">
-            Waiting for Admin,{' '}
-            <span className="font-semibold">
-              {poll.participants[poll.adminID]}
-            </span>
-            , to start the voting.
+            {replaceJSX(
+              PollRoomLabels.WAITING_POLL_START_MESSAGE[l],
+              '{0}',
+              <span className="font-semibold">
+                {poll.participants[poll.adminID]}
+              </span>,
+            )}
           </div>
         )}
         <LinkButton
           color="purple"
-          label={LinkButtonTitles.LEAVE_POLL}
+          label={LinkButtonTitles.LEAVE_POLL[l]}
           handleClick={() => {
             setShowLeaveConfirmation(true);
           }}
         />
         <ConfirmationDialog
-          message="You'll be kicked out of the poll"
+          message={ConfirmationMessages.LEAVE_WAITING_ROOM[l]}
+          confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+          cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
           showDialog={showLeaveConfirmation}
           onCancel={() => {
             setShowLeaveConfirmation(false);
@@ -146,6 +165,8 @@ const WaitingRoomActions = () => {
       <NominationForm
         title={poll.topic}
         isOpen={showNominationForm}
+        subtitle={PollRoomLabels.NOMINATION_SUBTITLE[l]}
+        buttonLabel={LinkButtonTitles.NOMINATE[l]}
         onClose={() => {
           setShowNominationForm(false);
         }}
@@ -157,6 +178,8 @@ const WaitingRoomActions = () => {
       />
       <ConfirmationDialog
         showDialog={showConfirmationMessage}
+        confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+        cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
         message={confirmationMessage}
         onConfirm={() => {
           submitRemoveParticipant();

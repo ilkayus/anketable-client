@@ -11,12 +11,18 @@ import {
   submitRankings,
 } from '../../features/poll/pollSlice';
 import LinkButton from '../utils/LinkButton';
-import { LinkButtonTitles, PageLinks } from '../utils/constants';
+import {
+  ConfirmationMessages,
+  Headers,
+  LinkButtonTitles,
+  PageLinks,
+  PollRoomLabels,
+} from '../utils/constants';
 
 const Voting = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { poll, isAdmin, nominationCount } = useAppSelector(selectPollState);
+  const { poll, isAdmin, nominationCount, l } = useAppSelector(selectPollState);
   const [rankings, setRankings] = useState<string[]>([]);
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [confirmVotes, setConfirmVotes] = useState(false);
@@ -51,16 +57,19 @@ const Voting = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-center">Voting Page</h1>
+      <h1 className="text-center">{Headers.VOTING_PAGE[l]}</h1>
       {poll && (
         <>
           <h3 className="text-center text-lg font-semibold mb-6">
-            Select Your Top {poll?.votesPerVoter}{' '}
-            {poll?.votesPerVoter > 1 ? 'Choices' : 'Choice'} in{' '}
-            {nominationCount} nominated
+            {PollRoomLabels.VOTING_PAGE_SUBHEADING[l]
+              .replace('{0}', poll?.votesPerVoter.toString())
+              .replace('{1}', nominationCount.toString())}
           </h3>
           <h3 className="text-center text-lg font-semibold mb-6 text-indigo-700 dark:text-secondary-300">
-            {poll.votesPerVoter - rankings.length} Votes remaining
+            {PollRoomLabels.VOTES_REMAINING[l].replace(
+              '{0}',
+              (poll.votesPerVoter - rankings.length).toString(),
+            )}
           </h3>
         </>
       )}
@@ -82,13 +91,15 @@ const Voting = () => {
         <LinkButton
           disabled={rankings.length < (poll?.votesPerVoter ?? 100)}
           color="green"
-          label={LinkButtonTitles.SUBMIT_VOTES}
+          label={LinkButtonTitles.SUBMIT_VOTES[l]}
           handleClick={() => {
             setConfirmVotes(true);
           }}
         />
         <ConfirmationDialog
-          message="You cannot change your vote after submitting"
+          message={ConfirmationMessages.SUBMIT_VOTE[l]}
+          confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+          cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
           showDialog={confirmVotes}
           onCancel={() => {
             setConfirmVotes(false);
@@ -99,13 +110,15 @@ const Voting = () => {
           <>
             <LinkButton
               color="red"
-              label={LinkButtonTitles.CANCEL_POLL}
+              label={LinkButtonTitles.CANCEL_POLL[l]}
               handleClick={() => {
                 setConfirmCancel(true);
               }}
             />
             <ConfirmationDialog
-              message="This will cancel the poll and remove all users"
+              message={ConfirmationMessages.CANCEL_POLL[l]}
+              confirmButtonTitle={ConfirmationMessages.CONFIRM_BUTTON[l]}
+              cancelButtonTitle={ConfirmationMessages.CANCEL_BUTTON[l]}
               showDialog={confirmCancel}
               onCancel={() => {
                 setConfirmCancel(false);

@@ -9,9 +9,9 @@ export interface Props {
 
 const SwipeableWrapper = ({ children, value, handler }: Props) => {
   const handleSwipe = (dir: number, td: number) => {
-    if (td > 200 && td < 2000) {
-      if (dir > 150) handler(value === 3 ? 0 : value + 1);
-      if (dir < -150) handler(value === 0 ? 3 : value - 1);
+    if (td > 100 && td < 2000) {
+      if (dir < -120) handler(value === 3 ? 0 : value + 1);
+      if (dir > 120) handler(value === 0 ? 3 : value - 1);
     }
   };
 
