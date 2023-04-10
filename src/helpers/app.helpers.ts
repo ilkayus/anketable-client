@@ -60,3 +60,17 @@ export const getPollInfoFromStorage = () =>
 export const copyToClipboard = async (text: string) => {
   await window.navigator.clipboard.writeText(text);
 };
+
+export const replaceJSX = (
+  str: any,
+  removeStr: string,
+  addJSX: JSX.Element,
+) => {
+  if (typeof str !== 'string') return [str];
+
+  return str
+    .split(removeStr)
+    .map((s, i) => (i === 0 ? [s] : [addJSX, s]))
+    .concat()
+    .flat();
+};
