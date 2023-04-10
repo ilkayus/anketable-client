@@ -2,26 +2,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState } from 'react';
-import { MdArrowForwardIos, MdContentCopy } from 'react-icons/md';
+import { MdArrowForwardIos } from 'react-icons/md';
 import { selectPollState } from '../../features/poll/pollSlice';
-import { copyToClipboard } from '../../helpers/app.helpers';
 import { useAppSelector } from '../../hooks/typedReduxHooks';
 import ColorizedText from '../utils/ColorizedText';
-import { Headers } from '../utils/constants';
+import { Headers, Tooltips } from '../utils/constants';
+import CopyToClipboardButton from '../utils/CopyToClipboardButton';
 
 const DisplayInfoPopup = () => {
   const { l, poll } = useAppSelector(selectPollState);
   const [isOpen, setisOpen] = useState(false);
-  const [tooltip, setTooltip] = useState('Click to copy!');
-
-  const handleCopyClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-    void copyToClipboard(poll?.id as string);
-    setTooltip('Copied!');
-    setTimeout(() => {
-      setTooltip('Click to copy!');
-    }, 2000);
-  };
 
   return (
     <div className="fixed top-[4.5rem] icon" onClick={() => setisOpen(!isOpen)}>
@@ -38,16 +28,22 @@ const DisplayInfoPopup = () => {
           <span>{Headers.POLL_TOPIC[l]} </span>
           <span className="italic font-semibold">{poll?.topic}</span>
         </div>
-        <div
-          className="flex items-center gap-2 has-tooltip cursor-pointer"
-          onClick={(e) => handleCopyClick(e)}
-        >
-          <span className="tooltip rounded shadow-lg p-1 bg-gray-100 text-red-500 -mt-8">
-            {tooltip}
-          </span>
+        <div className="flex items-center gap-4">
           <span>{Headers.POLL_ID[l]} </span>
           <ColorizedText text={poll?.id as string} />
-          <MdContentCopy size={16} />
+          <CopyToClipboardButton
+            initialTooltip={Tooltips.COPY_CODE[l]}
+            copiedTooltip={Tooltips.COPY_COPIED[l]}
+            copyText={`${poll?.id as string}`}
+            size={20}
+          />
+          <CopyToClipboardButton
+            initialTooltip={Tooltips.COPY_SHARE_LINK[l]}
+            copiedTooltip={Tooltips.COPY_COPIED[l]}
+            copyText={`pollable.web.app/joinPoll?${poll?.id as string}`}
+            size={20}
+            share
+          />
         </div>
       </div>
     </div>
