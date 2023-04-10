@@ -53,6 +53,7 @@ const WaitingRoomActions = () => {
   };
 
   const handleLeavePollClick = () => {
+    WS.unSubscribeFromPoll();
     dispatch(leavePoll());
     navigate(`/${PageLinks.HOMEPAGE}`);
   };
