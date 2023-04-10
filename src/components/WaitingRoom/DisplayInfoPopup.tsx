@@ -31,8 +31,8 @@ const DisplayInfoPopup = () => {
       />
       <div
         className={`${
-          isOpen ? ' w-[20rem] sm:w-[35rem] h-[48px]' : 'w-0 h-0'
-        } overflow-clip transition-all flex flex-col justify-center gap-2 ml-3 text-md font-medium`}
+          isOpen ? ' w-[18rem] sm:w-[35rem] h-[48px]' : 'w-0 h-0'
+        } overflow-scroll noScrollbar transition-all flex flex-col justify-center gap-2 ml-3 text-xs sm:text-md font-medium`}
       >
         <div className="flex flex-row gap-2">
           <span>{Headers.POLL_TOPIC[l]} </span>
