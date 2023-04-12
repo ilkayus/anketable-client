@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
+const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -10,6 +11,9 @@ module.exports = {
         primary: colors.orange,
         darkprimary: colors.gray,
         secondary: colors.lime,
+      },
+      fontFamily: {
+        sans: ["'Rubik'", ...defaultTheme.fontFamily.sans],
       },
     },
   },
