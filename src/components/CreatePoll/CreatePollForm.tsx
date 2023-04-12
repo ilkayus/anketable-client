@@ -14,7 +14,7 @@ const CreatePollForm = () => {
   const [topic, setTopic] = useState('');
   const [votesPerVoter, setVotesPerVoter] = useState(1);
   const isNameValid = name.length > 0 && name.length < 36;
-  const isTopicValid = topic.length > 0 && topic.length < 36;
+  const isTopicValid = topic.length > 0 && topic.length < 60;
   const isVotesValid = votesPerVoter > 0 && votesPerVoter < 6;
   const isCreateable = !(isNameValid && isTopicValid && isVotesValid);
 

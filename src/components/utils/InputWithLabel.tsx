@@ -27,6 +27,11 @@ const InputWithLabel = <T extends string | number>({
       setValue(parseInt(event.target.value, 10) as T);
     }
   };
+  const getTextSize = () => {
+    if (value.toString().length < 30) return 'text-lg sm:text-xl';
+    if (value.toString().length < 40) return 'text-base sm:text-lg';
+    return 'text-sm sm:text-base';
+  };
 
   return (
     <div
@@ -44,7 +49,7 @@ const InputWithLabel = <T extends string | number>({
         {label}
       </h2>
       <input
-        className="focus:outline-none text-lg sm:text-xl text-center p-2 rounded-b-2xl text-gray-900"
+        className={`focus:outline-none ${getTextSize()} text-center p-2 rounded-b-2xl text-gray-900`}
         type={type}
         value={value}
         onChange={onChange}

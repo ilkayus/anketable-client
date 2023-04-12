@@ -22,7 +22,7 @@ const CopyToClipboardButton = ({
   const [copyTooltip, setCopyTooltip] = useState(initialTooltip);
 
   const handleCopyClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
+    e.stopPropagation();
     void copyToClipboard(copyText);
     setCopyTooltip(copiedTooltip);
     setTimeout(() => {
