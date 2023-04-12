@@ -39,12 +39,12 @@ const InputWithLabel = <T extends string | number>({
           invalid
             ? 'bg-red-100 dark:bg-red-900/30'
             : 'bg-green-100 dark:bg-green-900/30'
-        } p-2 rounded-t-2xl text-center text-xl pt-3`}
+        } p-2 rounded-t-2xl text-center text-lg sm:text-xl pt-3`}
       >
         {label}
       </h2>
       <input
-        className="focus:outline-none text-xl text-center p-2 rounded-b-2xl text-gray-900"
+        className="focus:outline-none text-lg sm:text-xl text-center p-2 rounded-b-2xl text-gray-900"
         type={type}
         value={value}
         onChange={onChange}
