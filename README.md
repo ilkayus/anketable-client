@@ -10,7 +10,7 @@
 <h3 align="center">POLLABLE</h3>
 
   <p align="center">
-    Pollable is a web application that allows users to create and vote on polls. It provides a simple and intuitive interface for creating polls, managing poll options, and collecting votes. This project is built using modern web technologies such as React, Redux, and Axios, and it communicates with the Anketable API for managing poll data.
+    Pollable is a web application that allows users to create and vote on polls. It provides a simple and intuitive interface for creating polls, managing poll options, and collecting votes. This project is built using modern web technologies such as Typescript, React, Redux, Socketio and it communicates with the Anketable API for managing poll data.
     <br />
     <a href="https://github.com/ilkayus/anketable-client"><strong>Explore the docs »</strong></a>
     <br />
@@ -34,9 +34,9 @@
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Installation</a>
+      <a href="#installation">Installation</a>
     </li>
-    <li><a href="#usage">Features</a></li>
+    <li><a href="#features">Features</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -60,7 +60,6 @@
 - Tailwindcss
 - Framer-motion
 - Firebase
-- JWT
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
